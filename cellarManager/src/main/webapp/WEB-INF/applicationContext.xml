@@ -22,8 +22,6 @@
 
 	<context:component-scan base-package="hu.pte.schafferg.cellarManager" />
 
-	<import resource="spring-data.xml" />
-	<import resource="spring-aop.xml" />
 
 
 	<bean id="appProperties"

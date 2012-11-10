@@ -16,6 +16,8 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 		/WEB-INF/spring-security.xml
+		/WEB-INF/spring-data.xml
+		/WEB-INF/spring-aop.xml
 		/WEB-INF/applicationContext.xml
 		</param-value>
 	</context-param>
@@ -34,7 +36,11 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/app/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Vaadin Application Servlet</servlet-name>
+		<url-pattern>/VAADIN/*</url-pattern>
 	</servlet-mapping>
 
 	<filter>
@@ -46,4 +52,9 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+	
 </web-app>

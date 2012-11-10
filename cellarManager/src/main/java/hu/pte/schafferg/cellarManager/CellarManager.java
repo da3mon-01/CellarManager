@@ -16,6 +16,7 @@ import com.vaadin.Application;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -50,11 +51,12 @@ public class CellarManager extends Application  implements ClickListener{
 		VerticalLayout layout = new VerticalLayout();
 		
 		setCurrentUser();
-		
-		setLogoutURL("j_spring_security_logout");
+		//setTheme("cellarManager");
+		setLogoutURL("/cellarManager/logout");
 		layout.setSizeFull();
 		layout.addComponent(verticalSplit);
 		layout.setExpandRatio(verticalSplit, 1);
+		verticalSplit.addStyleName(Reindeer.SPLITPANEL_SMALL);
 		verticalSplit.setSplitPosition(25, VerticalSplitPanel.UNITS_PIXELS);
 		verticalSplit.setLocked(true);
 		verticalSplit.setFirstComponent(createMainMenu());
@@ -77,7 +79,7 @@ public class CellarManager extends Application  implements ClickListener{
 	private Component createMainMenu() {
 		HorizontalLayout horiLayout = new HorizontalLayout();
 		horiLayout.setWidth("100%");
-		welcomeLabel = new Label ("Welcome %USER-TODO%");
+		welcomeLabel = new Label ("Welcome "+((hu.pte.schafferg.cellarManager.model.User)getUser()).getPerson().getFirstName());
 		horiLayout.addComponent(welcomeLabel);
 		horiLayout.addComponent(usersButton);
 		horiLayout.addComponent(logoutButton);
