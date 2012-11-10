@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	
+	
+	<bean id="traceInterceptor"
+		class="hu.pte.schafferg.cellarManager.aop.TraceInterceptor">
+		<property name="enterMessage"
+			value="Entering: $[targetClassShortName].$[methodName]($[arguments])">
+		</property>
+		<property name="exitMessage"
+			value="Exiting: $[targetClassShortName].$[methodName]() : returned $[returnValue]">
+		</property>
+		<property name="exceptionMessage"
+			value="Exiting with Exception - $[targetClassShortName].$[methodName] Exception: $[exception] ">
+		</property>
+		<property name="useDynamicLogger" value="true"></property>
+	</bean>
+
+	<aop:config>
+		<aop:advisor advice-ref="traceInterceptor" id="serviceAdvisor"
+			pointcut="execution(* hu.pte.schafferg.cellarManager.services.*.*(..))" />
+		
+	</aop:config>
+</beans>
