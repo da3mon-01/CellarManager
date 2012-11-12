@@ -12,9 +12,11 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
@@ -28,15 +30,38 @@ public class UsersView extends VerticalLayout implements ValueChangeListener, Cl
 	private static Logger logger = Logger.getLogger(UsersView.class);
 	@Autowired
 	private UserList userList;
-	private Button delUser = new Button("Delete User");
+	private Button newUser = new Button("New");
+	private Button editUser = new Button("Edit");
+	private Button saveUser = new Button("Save");
+	private Button delUser = new Button("Delete");
 	private User selectedUser = null;
 	private Label currentSelection = new Label("Currently Selected: ");
+	private HorizontalLayout toolbar = new HorizontalLayout();
 	
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
+		toolbar.setSpacing(true);
+		
+		newUser.addStyleName("icon-on-top");
+		newUser.setIcon(new ThemeResource("icons/add.png"));
+		toolbar.addComponent(newUser);
+		
+		editUser.addStyleName("icon-on-top");
+		editUser.setIcon(new ThemeResource("icons/edit.png"));
+		toolbar.addComponent(editUser);
+		
+		saveUser.addStyleName("icon-on-top");
+		saveUser.setIcon(new ThemeResource("icons/save.png"));
+		toolbar.addComponent(saveUser);
+				
+		delUser.addStyleName("icon-on-top");
+		delUser.setIcon(new ThemeResource("icons/delete.png"));
 		delUser.addListener((ClickListener)this);
-		addComponent(delUser);
+		toolbar.addComponent(delUser);
+		
+		addComponent(toolbar);
+		
 		userList.addListener((ValueChangeListener)this);
 		addComponent(userList);
 		addComponent(currentSelection);
@@ -66,7 +91,7 @@ public class UsersView extends VerticalLayout implements ValueChangeListener, Cl
 	}
 	
 	private void openDeleteConfirmWindow(){
-		ConfirmDialog.show(getWindow(), "Are you sure you want to DELETE the selected user?", new ConfirmDialog.Listener() {
+		ConfirmDialog confirmDialog =ConfirmDialog.show(getWindow(), "Are you sure you want to <b>DELETE</b> the selected user?", new ConfirmDialog.Listener() {
 			
 			/**
 			 * 
@@ -80,6 +105,7 @@ public class UsersView extends VerticalLayout implements ValueChangeListener, Cl
 				
 			}
 		});
+		confirmDialog.setContentMode(ConfirmDialog.CONTENT_HTML);
 	}
 
 	public void buttonClick(ClickEvent event) {

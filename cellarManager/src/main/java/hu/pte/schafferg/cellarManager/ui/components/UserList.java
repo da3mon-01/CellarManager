@@ -57,7 +57,7 @@ public class UserList extends Table {
 		userContainer.addNestedContainerProperty("person.zip");
 		userContainer.addNestedContainerProperty("person.address");
 		
-		setCaption("List of Users");
+		setWidth("100%");
 		setImmediate(true);
 		setContainerDataSource(userContainer);
 		setNullSelectionAllowed(false);

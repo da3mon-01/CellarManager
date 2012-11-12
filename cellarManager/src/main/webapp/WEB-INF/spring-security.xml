@@ -11,9 +11,12 @@
 	<http auto-config='true' use-expressions="true">
 		<intercept-url pattern="/login.jsp" access="permitAll" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-		<form-login login-page="/login.jsp" default-target-url="/app"
+		<form-login login-page="/login.jsp" default-target-url="/app?restartapplication"
 			authentication-failure-url='/login.jsp?login_error=1' />
 		<logout invalidate-session="true" logout-url="/logout" />
+		<session-management>
+			<concurrency-control max-sessions="1" />
+		</session-management>
 	</http>
 
 	<global-method-security pre-post-annotations="enabled"></global-method-security>	
