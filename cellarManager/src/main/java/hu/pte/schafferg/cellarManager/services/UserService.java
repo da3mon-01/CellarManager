@@ -48,25 +48,24 @@ public class UserService {
 	public List<User> readAll(){
 		return userRepo.findAll();
 	}
-	
-	
-	
+
+
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public User update(User user){
 		User existingUser = userRepo.findById(user.getId());
 
 		if(existingUser == null){
+			logger.info("Cannot Update null user");
 			return null;
 		}
-
-		if(existingUser.getPerson() != null){
-			existingUser.getPerson().setFirstName(user.getPerson().getFirstName());
-			existingUser.getPerson().setLastName(user.getPerson().getLastName());
-			existingUser.getPerson().setCity(user.getPerson().getCity());
-			existingUser.getPerson().setZip(user.getPerson().getZip());
-			existingUser.getPerson().setAddress(user.getPerson().getAddress());
-			existingUser.getPerson().setEmail(user.getPerson().getEmail());
-			existingUser.getPerson().setBirthDate(user.getPerson().getBirthDate());
-		}
+		existingUser.setUsername(user.getUsername());
+		existingUser.getPerson().setFirstName(user.getPerson().getFirstName());
+		existingUser.getPerson().setLastName(user.getPerson().getLastName());
+		existingUser.getPerson().setCity(user.getPerson().getCity());
+		existingUser.getPerson().setZip(user.getPerson().getZip());
+		existingUser.getPerson().setAddress(user.getPerson().getAddress());
+		existingUser.getPerson().setEmail(user.getPerson().getEmail());
+		existingUser.getPerson().setBirthDate(user.getPerson().getBirthDate());
 
 		existingUser.setRole(user.getRole());
 
@@ -75,7 +74,9 @@ public class UserService {
 		roleRepo.save(existingUser.getRole());
 		personRepo.save(existingUser.getPerson());
 		userRepo.save(existingUser);
-
+		
+		logger.info(existingUser.getUsername()+"was successfully updated");
+		
 		return existingUser;
 
 	}
@@ -83,13 +84,13 @@ public class UserService {
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public Boolean delete(User user){
 		User existingUser = userRepo.findById(user.getId());
-		
+
 		if(existingUser == null){
 			logger.debug("Cannot delete -> existingUser is null");
 			return false;
 		}
 		logger.debug("Trying to delete: " +existingUser.getUsername());
-			
+
 		personRepo.delete(existingUser.getPerson());
 		roleRepo.delete(existingUser.getRole());
 		userRepo.delete(existingUser);

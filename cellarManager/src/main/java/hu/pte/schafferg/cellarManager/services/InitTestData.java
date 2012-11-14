@@ -38,32 +38,32 @@ public class InitTestData {
 		
 		Date dJohn = sdf.parse("1962-07-07");
 		Role johnRole = new Role(UUID.randomUUID().toString(), 1);
-		Person pJohn = new Person(UUID.randomUUID().toString(), "John", "Johnson", 7754, "Bóly", "Dasdas", "scsc@ji.hu", dJohn);
+		Person pJohn = new Person(UUID.randomUUID().toString(), "John", "Johnson", 7754, "Bóly", "Dasdas", "scsc@ji.hu", dJohn, "+36-20/451-1581", true);
 		User john = new User(UUID.randomUUID().toString(), "john123", sde.encode("john123"), johnRole, pJohn);
 		
 		Date dPeter = sdf.parse("1952-01-05");
 		Role peterRole = new Role(UUID.randomUUID().toString(), 1);
-		Person pPeter = new Person(UUID.randomUUID().toString(), "Peter", "Petersen", 7758, "Bólyadsa", "Daadssdas", "adsadasd@adsd.hu", dPeter);
+		Person pPeter = new Person(UUID.randomUUID().toString(), "Peter", "Petersen", 7758, "Bólyadsa", "Daadssdas", "adsadasd@adsd.hu", dPeter, "+36-20/451-1582", true);
 		User peter = new User(UUID.randomUUID().toString(), "peter123", sde.encode("peter123"), peterRole, pPeter);
 		
 		Date dGabe = sdf.parse("1972-05-05");
 		Role gabeRole = new Role(UUID.randomUUID().toString(), 2);
-		Person pGabe = new Person(UUID.randomUUID().toString(), "Gabe", "Johnson", 854, "Bsadsdóly", "Dasadasdsa", "dsda@adda.hu", dGabe);
+		Person pGabe = new Person(UUID.randomUUID().toString(), "Gabe", "Johnson", 8546, "Bsadsdóly", "Dasadasdsa", "dsda@adda.hu", dGabe, "+36-20/451-1582", true);
 		User gabe = new User(UUID.randomUUID().toString(), "gabe123", sde.encode("gabe123"), gabeRole, pGabe);
 		
 		Date dSteve = sdf.parse("1982-10-05");
 		Role steveRole = new Role(UUID.randomUUID().toString(), 2);
-		Person pSteve = new Person(UUID.randomUUID().toString(), "Steve", "Johnson", 4584, "Basdsady", "Dasdas", "adssd@hu.ju", dSteve);
+		Person pSteve = new Person(UUID.randomUUID().toString(), "Steve", "Johnson", 4584, "Basdsady", "Dasdas", "adssd@hu.ju", dSteve, "+36-20/451-1583", true);
 		User steve = new User(UUID.randomUUID().toString(), "stv123", sde.encode("stv123"), steveRole, pSteve);
 		
 		Date dJani = sdf.parse("1972-02-14");
 		Role janiRole = new Role(UUID.randomUUID().toString(), 2);
-		Person pJani = new Person(UUID.randomUUID().toString(), "Jani", "Johnson", 12454, "Bewrerwóly", "Dadsdarewrs", "adas@ad.com", dJani);
+		Person pJani = new Person(UUID.randomUUID().toString(), "Jani", "Johnson", 1245, "Bewrerwóly", "Dadsdarewrs", "adas@ad.com", dJani, "+36-20/451-1584", true);
 		User jani = new User(UUID.randomUUID().toString(), "jani123", sde.encode("jani123"), janiRole, pJani);
 		
 		Date dTomi = sdf.parse("1987-09-14");
 		Role tomiRole = new Role(UUID.randomUUID().toString(), 2);
-		Person pTomi = new Person(UUID.randomUUID().toString(), "Tom", "Johnson", 7236, "dady", "sgdgss", "dsad@adasd.hu", dTomi);
+		Person pTomi = new Person(UUID.randomUUID().toString(), "Tom", "Johnson", 7236, "dady", "sgdgss", "dsad@adasd.hu", dTomi, "+36-20/451-1585", true);
 		User tomi = new User(UUID.randomUUID().toString(), "tomi123", sde.encode("tomi123"), tomiRole, pTomi);
 		
 		mongotemplate.insert(pJohn, "person");

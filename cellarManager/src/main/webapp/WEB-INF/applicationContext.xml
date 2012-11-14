@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:c="http://www.springframework.org/schema/c"
-	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -28,10 +24,10 @@
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean"
 		p:location="/WEB-INF/app.properties" />
 
-	<bean id="application"
-		class="hu.pte.schafferg.cellarManager.CellarManager" scope="session">
+	<bean id="application" class="hu.pte.schafferg.cellarManager.CellarManager"
+		scope="session">
 		<property value="${application.name}" name="appTitle"></property>
-		
+
 	</bean>
 
 	<bean id="userService" class="hu.pte.schafferg.cellarManager.services.UserService">
@@ -41,9 +37,8 @@
 		<constructor-arg value="yyyy-MMM-dd"></constructor-arg>
 	</bean>
 
-	<bean id="welcomeView"
-		class="hu.pte.schafferg.cellarManager.ui.WelcomeView" scope="session"
-		init-method="initContent">
+	<bean id="welcomeView" class="hu.pte.schafferg.cellarManager.ui.WelcomeView"
+		scope="session" init-method="initContent">
 	</bean>
 
 	<bean id="userList" class="hu.pte.schafferg.cellarManager.ui.components.UserList"
@@ -52,18 +47,26 @@
 	<bean id="userView" class="hu.pte.schafferg.cellarManager.ui.UsersView"
 		scope="session" init-method="initContent">
 	</bean>
-	
-	
-	<bean id="userSettingsView"
-		class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
+
+
+	<bean id="userSettingsView" class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
 		init-method="initContent">
 	</bean>
-	<bean id="mainMenu"
-		class="hu.pte.schafferg.cellarManager.ui.components.MainMenu"
+	<bean id="mainMenu" class="hu.pte.schafferg.cellarManager.ui.components.MainMenu"
 		scope="session" init-method="initContent">
 	</bean>
 	<bean id="roleHelperService"
 		class="hu.pte.schafferg.cellarManager.services.RoleHelperService"
 		scope="session">
+	</bean>
+	<bean id="userForm"
+		class="hu.pte.schafferg.cellarManager.ui.components.UserForm"
+		scope="session" init-method="initContent">
+		<property name="zipRegExp" value="${application.zipRegExp}"></property>
+		<property name="zipRegExpError" value="${application.zipRegExpError}">
+		</property>
+		<property name="phoneRegExp" value="${application.phoneRegExp}"></property>
+		<property name="phoneRegExpError" value="${application.phoneRegExpError}">
+		</property>
 	</bean>
 </beans>

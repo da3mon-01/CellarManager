@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.terminal.ExternalResource;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 
 public class UserList extends Table {
@@ -32,8 +34,8 @@ public class UserList extends Table {
 
 	@Autowired
 	private UserService userService;
-	private Object[] visibleColumns = new Object[]{"username", "person.firstName", "person.lastName", "person.email", "person.birthDate", "person.city", "person.zip", "person.address"};
-	private String[] columnHeaders = new String[]{"Username", "First Name", "Last Name", "E-mail", "Birth Date", "City", "ZIP", "Address"};
+	private Object[] visibleColumns = new Object[]{"username", "person.firstName", "person.lastName", "person.phoneNumber", "person.email", "person.birthDate", "person.city", "person.zip", "person.address"};
+	private String[] columnHeaders = new String[]{"Username", "First Name", "Last Name", "Phone Number", "E-mail", "Birth Date", "City", "ZIP", "Address"};
 	
 	protected static Logger logger = Logger.getLogger(UserList.class);
 
@@ -51,6 +53,7 @@ public class UserList extends Table {
 		
 		userContainer.addNestedContainerProperty("person.firstName");
 		userContainer.addNestedContainerProperty("person.lastName");
+		userContainer.addNestedContainerProperty("person.phoneNumber");
 		userContainer.addNestedContainerProperty("person.email");
 		userContainer.addNestedContainerProperty("person.birthDate");
 		userContainer.addNestedContainerProperty("person.city");
@@ -59,10 +62,28 @@ public class UserList extends Table {
 		
 		setWidth("100%");
 		setImmediate(true);
+		
+		addGeneratedColumn("person.email", new ColumnGenerator() {
+			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8489927179844145811L;
+
+			@Override
+			public Object generateCell(Table source, Object itemId, Object columnId) {
+				User item = (User)itemId;
+				Link link = new Link();
+				link.setResource(new ExternalResource("mailto:"+item.getPerson().getEmail()));
+				link.setCaption(item.getPerson().getEmail());
+				return link;
+			}
+		});
+		
 		setContainerDataSource(userContainer);
 		setNullSelectionAllowed(false);
 		setVisibleColumns(visibleColumns);
-		setColumnHeaders(columnHeaders);
+		setColumnHeaders(columnHeaders);		
 		setSelectable(true);
 		
 
@@ -78,6 +99,16 @@ public class UserList extends Table {
 			logger.debug("UserContainer has stuff in it. for ex: " +userContainer.firstItemId());
 		}
 
+	}
+	
+	public boolean updateUser(User selectedUser){
+		if(userService.update(selectedUser).equals(selectedUser)){
+			logger.info("Update was equal");
+			updateTableContents();
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public boolean deleteUser(User selectedUser) {
