@@ -1,7 +1,7 @@
 package hu.pte.schafferg.cellarManager.ui;
 
-
-
+import hu.pte.schafferg.cellarManager.model.Person;
+import hu.pte.schafferg.cellarManager.model.Role;
 import hu.pte.schafferg.cellarManager.model.User;
 import hu.pte.schafferg.cellarManager.services.RoleHelperService;
 import hu.pte.schafferg.cellarManager.ui.components.UserForm;
@@ -26,7 +26,8 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
-public class UsersView extends VerticalLayout implements ValueChangeListener, ClickListener{
+public class UsersView extends VerticalLayout implements ValueChangeListener,
+		ClickListener {
 
 	/**
 	 * 
@@ -39,6 +40,7 @@ public class UsersView extends VerticalLayout implements ValueChangeListener, Cl
 	private Button editUser = new Button("Edit");
 	private Button saveUser = new Button("Save");
 	private Button delUser = new Button("Delete");
+	private Button resetPass = new Button("Reset Password");
 	private User selectedUser = null;
 	private HorizontalLayout toolbar = new HorizontalLayout();
 	@Autowired
@@ -47,42 +49,46 @@ public class UsersView extends VerticalLayout implements ValueChangeListener, Cl
 	@Autowired
 	private RoleHelperService roleHelper;
 
-	public void initContent(){
+	public void initContent() {
 		setMargin(true);
 		setSpacing(true);
 		toolbar.setSpacing(true);
 
 		newUser.addStyleName("icon-on-top");
 		newUser.setIcon(new ThemeResource("icons/add.png"));
-		newUser.addListener((ClickListener)this);
+		newUser.addListener((ClickListener) this);
 		toolbar.addComponent(newUser);
 
 		editUser.addStyleName("icon-on-top");
 		editUser.setIcon(new ThemeResource("icons/edit.png"));
-		editUser.addListener((ClickListener)this);
+		editUser.addListener((ClickListener) this);
 		toolbar.addComponent(editUser);
 
 		saveUser.addStyleName("icon-on-top");
 		saveUser.setIcon(new ThemeResource("icons/save.png"));
-		saveUser.addListener((ClickListener)this);
+		saveUser.addListener((ClickListener) this);
 		toolbar.addComponent(saveUser);
 
 		delUser.addStyleName("icon-on-top");
 		delUser.setIcon(new ThemeResource("icons/delete.png"));
-		delUser.addListener((ClickListener)this);
+		delUser.addListener((ClickListener) this);
 		toolbar.addComponent(delUser);
 		
+		resetPass.addStyleName("icon-on-top");
+		resetPass.setIcon(new ThemeResource("icons/genNewPass.png"));
+		resetPass.addListener((ClickListener)this);
+		toolbar.addComponent(resetPass);
+
 		addComponent(toolbar);
 
-		userList.addListener((ValueChangeListener)this);
+		userList.addListener((ValueChangeListener) this);
 		addComponent(userList);
 		addComponent(userForm);
-
 
 	}
 
 	private void changeCurrentSelection(Object user) {
-		User selection = (User)user;
+		User selection = (User) user;
 		selectedUser = selection;
 
 		BeanItem<User> editedUser = convertUserToBeanItem(selection);
@@ -92,115 +98,175 @@ public class UsersView extends VerticalLayout implements ValueChangeListener, Cl
 
 	}
 
-	private BeanItem<User> convertUserToBeanItem(User user){
+	private BeanItem<User> convertUserToBeanItem(User user) {
 
-		BeanItem<User> editedUser = new BeanItem<User>(user, new String[]{"username"});	
+		BeanItem<User> editedUser = new BeanItem<User>(user,
+				new String[] { "username" });
 
-		editedUser.addItemProperty("personFirstName", new NestedMethodProperty(user,"person.firstName") );
-		editedUser.addItemProperty("personLastName", new NestedMethodProperty(user,"person.lastName") );
-		editedUser.addItemProperty("personCity", new NestedMethodProperty(user,"person.city") );
-		editedUser.addItemProperty("personAddress", new NestedMethodProperty(user,"person.address") );
-		editedUser.addItemProperty("personZip", new NestedMethodProperty(user,"person.zip") );
-		editedUser.addItemProperty("personBirthDate", new NestedMethodProperty(user,"person.birthDate") );
-		editedUser.addItemProperty("personEmail", new NestedMethodProperty(user,"person.email") );
-		editedUser.addItemProperty("personPhoneNumber", new NestedMethodProperty(user,"person.phoneNumber") );
-		editedUser.addItemProperty("roleRole", new NestedMethodProperty(user,"role.role") );
+		editedUser.addItemProperty("personFirstName", new NestedMethodProperty(
+				user, "person.firstName"));
+		editedUser.addItemProperty("personLastName", new NestedMethodProperty(
+				user, "person.lastName"));
+		editedUser.addItemProperty("personCity", new NestedMethodProperty(user,
+				"person.city"));
+		editedUser.addItemProperty("personAddress", new NestedMethodProperty(
+				user, "person.address"));
+		editedUser.addItemProperty("personZip", new NestedMethodProperty(user,
+				"person.zip"));
+		editedUser.addItemProperty("personBirthDate", new NestedMethodProperty(
+				user, "person.birthDate"));
+		editedUser.addItemProperty("personEmail", new NestedMethodProperty(
+				user, "person.email"));
+		editedUser.addItemProperty("personPhoneNumber",
+				new NestedMethodProperty(user, "person.phoneNumber"));
+		editedUser.addItemProperty("roleRole", new NestedMethodProperty(user,
+				"role.role"));
 
 		return editedUser;
 	}
-	
-	private User commitToUserFromForm(User user){
-		user.setUsername((String) userForm.getItemProperty("username").getValue());
-		user.getPerson().setFirstName((String) userForm.getItemProperty("personFirstName").getValue());
-		user.getPerson().setLastName((String) userForm.getItemProperty("personLastName").getValue());
-		user.getPerson().setCity((String) userForm.getItemProperty("personCity").getValue());
-		user.getPerson().setAddress((String) userForm.getItemProperty("personAddress").getValue());
-		user.getPerson().setZip((int) userForm.getItemProperty("personZip").getValue());
-		user.getPerson().setBirthDate((Date) userForm.getItemProperty("personBirthDate").getValue());
-		user.getPerson().setEmail((String) userForm.getItemProperty("personEmail").getValue());
-		user.getPerson().setPhoneNumber((String) userForm.getItemProperty("personPhoneNumber").getValue());
-		user.getRole().setRole((Integer) userForm.getItemProperty("roleRole").getValue());
-		
+
+	private User commitToUserFromForm(User user) {
+		user.setUsername((String) userForm.getItemProperty("username")
+				.getValue());
+		user.getPerson()
+				.setFirstName(
+						(String) userForm.getItemProperty("personFirstName")
+								.getValue());
+		user.getPerson().setLastName(
+				(String) userForm.getItemProperty("personLastName").getValue());
+		user.getPerson().setCity(
+				(String) userForm.getItemProperty("personCity").getValue());
+		user.getPerson().setAddress(
+				(String) userForm.getItemProperty("personAddress").getValue());
+		user.getPerson().setZip(
+				(int) userForm.getItemProperty("personZip").getValue());
+		user.getPerson().setBirthDate(
+				(Date) userForm.getItemProperty("personBirthDate").getValue());
+		user.getPerson().setEmail(
+				(String) userForm.getItemProperty("personEmail").getValue());
+		user.getPerson().setPhoneNumber(
+				(String) userForm.getItemProperty("personPhoneNumber")
+						.getValue());
+		user.getRole().setRole(
+				(Integer) userForm.getItemProperty("roleRole").getValue());
+
 		return user;
-		
+
 	}
 
 	private void createUser() {
-		// TODO Auto-generated method stub
+		if(selectedUser == null || userForm.getItemDataSource() == null){
+			getWindow().showNotification("Save Failed",
+					"Please click New first!",
+					Notification.TYPE_WARNING_MESSAGE);
+			return;
+		}else{
+			selectedUser = commitToUserFromForm(selectedUser);
+			
+			if(userList.createUser(selectedUser)){
+				getWindow().showNotification("Success!", "User "+selectedUser.getUsername()+" was created successfully", Notification.TYPE_TRAY_NOTIFICATION);
+			}else{
+				getWindow().showNotification("Error!", "There was an error while creating "+selectedUser.getUsername(), Notification.TYPE_ERROR_MESSAGE);
+			}
+		}
 
 	}
 
 	private void updateUser() {
-		logger.info("Trying update method");
+		logger.info("Trying update user method");
 
-		if(selectedUser == null || userForm.getItemDataSource() == null){
-			getWindow().showNotification("Update Failed", "Please select somebody first!", Notification.TYPE_WARNING_MESSAGE);
+		if (selectedUser == null || userForm.getItemDataSource() == null) {
+			getWindow().showNotification("Save Failed",
+					"Please select somebody first!",
+					Notification.TYPE_WARNING_MESSAGE);
 			return;
 		}
-		
+
 		selectedUser = commitToUserFromForm(selectedUser);
 
-		if(userList.updateUser(selectedUser)){
-			getWindow().showNotification("Update successfull", selectedUser.getUsername()+"was updated successfully", Notification.TYPE_TRAY_NOTIFICATION);
-		}else{
-			getWindow().showNotification("Update Error!", selectedUser.getUsername()+"was not updated correctly", Notification.TYPE_ERROR_MESSAGE);
+		if (userList.updateUser(selectedUser)) {
+			getWindow().showNotification("Save successfull",
+					selectedUser.getUsername() + "was updated successfully",
+					Notification.TYPE_TRAY_NOTIFICATION);
+		} else {
+			getWindow().showNotification("Save Error!",
+					selectedUser.getUsername() + "was not updated correctly",
+					Notification.TYPE_ERROR_MESSAGE);
 		}
 	}
 
 	private void deleteUser() {
-		if(userList.deleteUser(selectedUser)){
-			getWindow().showNotification("Delete Successfull", selectedUser.getUsername()+" successfully deleted", Notification.TYPE_TRAY_NOTIFICATION);
-		}else{
-			getWindow().showNotification("Delete Error", selectedUser.getUsername()+ "was not deleted", Notification.TYPE_ERROR_MESSAGE);
+		if (userList.deleteUser(selectedUser)) {
+			getWindow().showNotification("Delete Successfull",
+					selectedUser.getUsername() + " successfully deleted",
+					Notification.TYPE_TRAY_NOTIFICATION);
+		} else {
+			getWindow().showNotification("Delete Error",
+					selectedUser.getUsername() + "was not deleted",
+					Notification.TYPE_ERROR_MESSAGE);
 		}
 		selectedUser = null;
 		userForm.setItemDataSource(null);
 	}
 
-	private void openDeleteConfirmWindow(){
-		ConfirmDialog confirmDialog =ConfirmDialog.show(getWindow(), "Are you sure you want to <b>DELETE</b> the selected user?", new ConfirmDialog.Listener() {
+	private void openDeleteConfirmWindow() {
+		ConfirmDialog confirmDialog = ConfirmDialog.show(getWindow(),
+				"Are you sure you want to <b>DELETE</b> the selected user?",
+				new ConfirmDialog.Listener() {
 
-			/**
+					/**
 			 * 
 			 */
-			private static final long serialVersionUID = -313817438000138156L;
+					private static final long serialVersionUID = -313817438000138156L;
 
-			public void onClose(ConfirmDialog dialog) {
-				if(dialog.isConfirmed()){
-					deleteUser();
-				}
+					public void onClose(ConfirmDialog dialog) {
+						if (dialog.isConfirmed()) {
+							deleteUser();
+						}
 
-			}
-		});
+					}
+				});
 		confirmDialog.setContentMode(ConfirmDialog.CONTENT_HTML);
 	}
 
 	public void buttonClick(ClickEvent event) {
 		Button source = event.getButton();
-		logger.info(source.getCaption() +" was clicked");
-		if(source == delUser){
-			if(selectedUser == null || userForm.getItemDataSource() == null){
-				getWindow().showNotification("Warning", "Please select somebody first!", Notification.TYPE_WARNING_MESSAGE);
-			}else{
-				if(selectedUser.getUsername().equals(roleHelper.getCurrentAuthenticatedUser().getUsername())){
-					getWindow().showNotification("Delete Error", "You cannot delete yourself! Please ask another admin to do it.", Notification.TYPE_ERROR_MESSAGE);
-				}else{
+		logger.info(source.getCaption() + " was clicked");
+		if (source == delUser) {
+			if (selectedUser == null || userForm.getItemDataSource() == null) {
+				getWindow().showNotification("Warning",
+						"Please select somebody first!",
+						Notification.TYPE_WARNING_MESSAGE);
+			} else {
+				if (selectedUser.getUsername().equals(
+						roleHelper.getCurrentAuthenticatedUser().getUsername())) {
+					getWindow()
+							.showNotification(
+									"Delete Error",
+									"You cannot delete yourself! Please ask another admin to do it.",
+									Notification.TYPE_ERROR_MESSAGE);
+				} else {
 					openDeleteConfirmWindow();
 				}
 			}
-		}else if(source == editUser){
-			if(selectedUser == null || userForm.getItemDataSource() == null){
-				getWindow().showNotification("Warning", "Please select somebody first!", Notification.TYPE_WARNING_MESSAGE);
-			}else{
+		} else if (source == editUser) {
+			if (selectedUser == null || userForm.getItemDataSource() == null) {
+				getWindow().showNotification("Warning",
+						"Please select somebody first!",
+						Notification.TYPE_WARNING_MESSAGE);
+			} else {
 				userForm.setReadOnly(false);
 			}
-		}else if(source == saveUser){
-			if(!userForm.isValid()){
-				getWindow().showNotification("Update Error", "Are all the required fields filled out?", Notification.TYPE_WARNING_MESSAGE);
+		} else if (source == saveUser) {
+			if (!userForm.isValid()) {
+				getWindow().showNotification("Update Error",
+						"Are all the required fields filled out?",
+						Notification.TYPE_WARNING_MESSAGE);
 				return;
 			}
 			userForm.commit();
-			if(newUserMode == true){
+
+			if(newUserMode){
 				createUser();
 			}else{
 				updateUser();
@@ -208,17 +274,58 @@ public class UsersView extends VerticalLayout implements ValueChangeListener, Cl
 
 			userForm.setReadOnly(true);
 			setNewUserMode(false);
-		}else if(source == newUser){
+		} else if (source == newUser) {
 			setNewUserMode(true);
-		}
+			User userToAdd = new User();
+			Person personToAdd = new Person();
+			Role roleToAdd = new Role();
 			
+			userToAdd.setPerson(personToAdd);
+			userToAdd.setRole(roleToAdd);
+			
+			userForm.setReadOnly(false);
+			
+			changeCurrentSelection(userToAdd);
+		}else if(source == resetPass){
+			if(selectedUser == null || userForm.getItemDataSource() == null){
+				getWindow().showNotification("Warning", "Please select something first!", Notification.TYPE_WARNING_MESSAGE);
+				return;
+			}else{
+				ConfirmDialog d = ConfirmDialog.show(getWindow(), "Are you sure you want to <b>Reset the password</b> of "+selectedUser.getUsername(), new ConfirmDialog.Listener() {
+					
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 7138346900303614721L;
+
+					@Override
+					public void onClose(ConfirmDialog dialog) {
+						if(dialog.isConfirmed()){
+							resetPassword();
+						}
+						
+					}
+				});
+				d.setContentMode(ConfirmDialog.CONTENT_HTML);
+			}
+		}
+
+	}
+
+	protected void resetPassword() {
+		if(userList.resetPassword(selectedUser)){
+			getWindow().showNotification("Success", "Password Successfully reset", Notification.TYPE_TRAY_NOTIFICATION);
+		}else{
+			getWindow().showNotification("Error", "There was an error while trying to reset the password", Notification.TYPE_ERROR_MESSAGE);
+		}
+		
 	}
 
 	public void valueChange(ValueChangeEvent event) {
-		logger.debug("valuechange. "+event);
+		logger.debug("valuechange. " + event);
 		Property eventProperty = event.getProperty();
-		if(eventProperty == userList){
-			logger.debug("Value changed to: "+userList.getValue());
+		if (eventProperty == userList) {
+			logger.debug("Value changed to: " + userList.getValue());
 			changeCurrentSelection(userList.getValue());
 		}
 
@@ -256,7 +363,5 @@ public class UsersView extends VerticalLayout implements ValueChangeListener, Cl
 		this.newUserMode = newUserMode;
 		this.userForm.setNewUserMode(this.newUserMode);
 	}
-
-
 
 }

@@ -129,7 +129,6 @@ public class Person {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + (isUser ? 1231 : 1237);
 		result = prime * result
 				+ ((lastName == null) ? 0 : lastName.hashCode());
@@ -173,11 +172,6 @@ public class Person {
 				return false;
 		} else if (!firstName.equals(other.firstName))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (isUser != other.isUser)
 			return false;
 		if (lastName == null) {
@@ -194,6 +188,8 @@ public class Person {
 			return false;
 		return true;
 	}
+
+	
 
 	
 	

@@ -101,6 +101,15 @@ public class UserList extends Table {
 
 	}
 	
+	public boolean createUser(User userToCreate){
+		if(userService.create(userToCreate).equals(userToCreate)){
+			updateTableContents();
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	public boolean updateUser(User selectedUser){
 		if(userService.update(selectedUser).equals(selectedUser)){
 			logger.info("Update was equal");
@@ -113,6 +122,15 @@ public class UserList extends Table {
 
 	public boolean deleteUser(User selectedUser) {
 		if(userService.delete(selectedUser)){
+			updateTableContents();
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public boolean resetPassword(User user){
+		if(userService.resetPassword(user)){
 			updateTableContents();
 			return true;
 		}else{
