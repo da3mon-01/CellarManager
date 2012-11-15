@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
@@ -34,8 +35,8 @@ public class UserList extends Table {
 
 	@Autowired
 	private UserService userService;
-	private Object[] visibleColumns = new Object[]{"username", "person.firstName", "person.lastName", "person.phoneNumber", "person.email", "person.birthDate", "person.city", "person.zip", "person.address"};
-	private String[] columnHeaders = new String[]{"Username", "First Name", "Last Name", "Phone Number", "E-mail", "Birth Date", "City", "ZIP", "Address"};
+	private Object[] listOfVisibleColumns = new Object[]{"username", "person.firstName", "person.lastName", "person.phoneNumber", "person.email", "person.birthDate", "person.city", "person.zip", "person.address"};
+	private String[] listOfColumnHeaders = new String[]{"Username", "First Name", "Last Name", "Phone Number", "E-mail", "Birth Date", "City", "ZIP", "Address"};
 	
 	protected static Logger logger = Logger.getLogger(UserList.class);
 
@@ -50,7 +51,7 @@ public class UserList extends Table {
 		logger.debug("Addcomponent Called");
 
 		updateTableContents();
-		
+		this.addStyleName("striped");
 		userContainer.addNestedContainerProperty("person.firstName");
 		userContainer.addNestedContainerProperty("person.lastName");
 		userContainer.addNestedContainerProperty("person.phoneNumber");
@@ -82,8 +83,8 @@ public class UserList extends Table {
 		
 		setContainerDataSource(userContainer);
 		setNullSelectionAllowed(false);
-		setVisibleColumns(visibleColumns);
-		setColumnHeaders(columnHeaders);		
+		setVisibleColumns(listOfVisibleColumns);
+		setColumnHeaders(listOfColumnHeaders);		
 		setSelectable(true);
 		
 
@@ -96,7 +97,7 @@ public class UserList extends Table {
 		users = userService.readAll();
 		userContainer.addAll(users);
 		if(userContainer.size()!=0){
-			logger.debug("UserContainer has stuff in it. for ex: " +userContainer.firstItemId());
+			logger.info("UserContainer has stuff in it. for ex: " +userContainer.firstItemId());
 		}
 
 	}
@@ -137,6 +138,19 @@ public class UserList extends Table {
 			return false;
 		}
 	}
+	
+	public void addFilter(SimpleStringFilter filter){
+		Filterable f = (Filterable)getContainerDataSource();
+		if(filter != null){
+			f.removeAllContainerFilters();
+		}
+		
+		f.addContainerFilter(filter);
+		logger.info("Filter added: "+filter.getFilterString()+" in "+filter.getPropertyId());
+		
+	}
+	
+
 
 	@Override
 	protected String formatPropertyValue(Object rowId, Object colId,
@@ -147,8 +161,30 @@ public class UserList extends Table {
 		return super.formatPropertyValue(rowId, colId, property);
 	}
 
+	@Override
+	public void attach() {
+		super.attach();
+		updateTableContents();
+	}
 
+	public Object[] getListOfVisibleColumns() {
+		return listOfVisibleColumns;
+	}
 
+	public void setListOfVisibleColumns(Object[] listOfVisibleColumns) {
+		this.listOfVisibleColumns = listOfVisibleColumns;
+	}
 
+	public String[] getListOfColumnHeaders() {
+		return listOfColumnHeaders;
+	}
+
+	public void setListOfColumnHeaders(String[] listOfColumnHeaders) {
+		this.listOfColumnHeaders = listOfColumnHeaders;
+	}
+	
+	
+	
+	
 
 }

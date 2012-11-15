@@ -136,3 +136,7 @@ input.v-textfield,textarea.v-textarea,.v-filterselect {
 .sidebar-menu .tab-selected,.sidebar-menu .selected {
 	text-shadow: 0 1px 0 rgb(46, 90, 132);
 }
+
+.v-caption-formcaption {
+	font-weight: bold;
+}

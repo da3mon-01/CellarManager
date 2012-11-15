@@ -49,8 +49,15 @@
 	</bean>
 
 
-	<bean id="userSettingsView" class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
+	<bean id="userSettingsView"
+		class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
 		init-method="initContent">
+	<property name="passwordRegExp"
+		value="${application.passwordRegExp}">
+	</property>
+	<property name="passwordRegExpError"
+		value="${application.passwordRegExpError}">
+	</property>
 	</bean>
 	<bean id="mainMenu" class="hu.pte.schafferg.cellarManager.ui.components.MainMenu"
 		scope="session" init-method="initContent">

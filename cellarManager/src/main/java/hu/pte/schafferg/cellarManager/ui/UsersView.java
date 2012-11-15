@@ -18,16 +18,23 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.NestedMethodProperty;
+import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.Select;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
 public class UsersView extends VerticalLayout implements ValueChangeListener,
-		ClickListener {
+		ClickListener, TextChangeListener {
 
 	/**
 	 * 
@@ -43,6 +50,9 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 	private Button resetPass = new Button("Reset Password");
 	private User selectedUser = null;
 	private HorizontalLayout toolbar = new HorizontalLayout();
+	private TextField searchField = new TextField();
+	private Select searchSelect = new Select();
+	
 	@Autowired
 	private UserForm userForm;
 	private boolean newUserMode = false;
@@ -54,36 +64,60 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 		setSpacing(true);
 		toolbar.setSpacing(true);
 
-		newUser.addStyleName("icon-on-top");
+		newUser.addStyleName("big");
 		newUser.setIcon(new ThemeResource("icons/add.png"));
 		newUser.addListener((ClickListener) this);
 		toolbar.addComponent(newUser);
 
-		editUser.addStyleName("icon-on-top");
+		editUser.addStyleName("big");
 		editUser.setIcon(new ThemeResource("icons/edit.png"));
 		editUser.addListener((ClickListener) this);
 		toolbar.addComponent(editUser);
 
-		saveUser.addStyleName("icon-on-top");
+		saveUser.addStyleName("big");
 		saveUser.setIcon(new ThemeResource("icons/save.png"));
 		saveUser.addListener((ClickListener) this);
 		toolbar.addComponent(saveUser);
 
-		delUser.addStyleName("icon-on-top");
+		delUser.addStyleName("big");
 		delUser.setIcon(new ThemeResource("icons/delete.png"));
 		delUser.addListener((ClickListener) this);
 		toolbar.addComponent(delUser);
 		
-		resetPass.addStyleName("icon-on-top");
+		resetPass.addStyleName("big");
 		resetPass.setIcon(new ThemeResource("icons/genNewPass.png"));
 		resetPass.addListener((ClickListener)this);
 		toolbar.addComponent(resetPass);
+		
+		searchField.addStyleName("search big");
+		searchField.addListener((TextChangeListener)this);
+		toolbar.addComponent(searchField);
+		toolbar.setComponentAlignment(searchField, Alignment.MIDDLE_CENTER);
+		
+		searchSelect.addStyleName("big");
+		Object[] visibleProperties = userList.getListOfVisibleColumns();
+		String[] properNames = userList.getListOfColumnHeaders();
+		for(int i=0; i < visibleProperties.length; i++){
+			searchSelect.addItem(visibleProperties[i]);
+			searchSelect.setItemCaption(visibleProperties[i], properNames[i]);
+		}
+		searchSelect.setNewItemsAllowed(false);
+		searchSelect.setNullSelectionAllowed(false);
+		searchSelect.setImmediate(true);
+		searchSelect.select(visibleProperties[0]);
+		searchSelect.addListener((ValueChangeListener)this);
+		toolbar.addComponent(searchSelect);
+		toolbar.setComponentAlignment(searchSelect, Alignment.MIDDLE_CENTER);
 
 		addComponent(toolbar);
 
 		userList.addListener((ValueChangeListener) this);
 		addComponent(userList);
-		addComponent(userForm);
+		
+		Panel formPanel = new Panel();
+		formPanel.setCaption("User Details");
+		formPanel.addComponent(userForm);
+		addComponent(formPanel);
 
 	}
 
@@ -209,6 +243,15 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 		userForm.setItemDataSource(null);
 	}
 
+	protected void resetPassword() {
+		if(userList.resetPassword(selectedUser)){
+			getWindow().showNotification("Success", "Password Successfully reset", Notification.TYPE_TRAY_NOTIFICATION);
+		}else{
+			getWindow().showNotification("Error", "There was an error while trying to reset the password", Notification.TYPE_ERROR_MESSAGE);
+		}
+		
+	}
+
 	private void openDeleteConfirmWindow() {
 		ConfirmDialog confirmDialog = ConfirmDialog.show(getWindow(),
 				"Are you sure you want to <b>DELETE</b> the selected user?",
@@ -312,23 +355,29 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 
 	}
 
-	protected void resetPassword() {
-		if(userList.resetPassword(selectedUser)){
-			getWindow().showNotification("Success", "Password Successfully reset", Notification.TYPE_TRAY_NOTIFICATION);
-		}else{
-			getWindow().showNotification("Error", "There was an error while trying to reset the password", Notification.TYPE_ERROR_MESSAGE);
-		}
-		
-	}
-
 	public void valueChange(ValueChangeEvent event) {
 		logger.debug("valuechange. " + event);
 		Property eventProperty = event.getProperty();
 		if (eventProperty == userList) {
 			logger.debug("Value changed to: " + userList.getValue());
+			setNewUserMode(false);
 			changeCurrentSelection(userList.getValue());
+		}else if(eventProperty == searchSelect){
+			logger.info("Value changed to: "+searchSelect.getValue());
+			SimpleStringFilter filter = null;
+			filter = new SimpleStringFilter(searchSelect.getValue(), (String) searchField.getValue(), true, false);
+			userList.addFilter(filter);
 		}
 
+	}
+
+	@Override
+	public void textChange(TextChangeEvent event) {
+		SimpleStringFilter filter = null;
+		
+		filter = new SimpleStringFilter(searchSelect.getValue(), event.getText(), true, false);
+		userList.addFilter(filter);
+		
 	}
 
 	public UserList getUserList() {
