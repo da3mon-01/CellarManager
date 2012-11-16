@@ -30,7 +30,9 @@
 
 	</bean>
 
-	<bean id="userService" class="hu.pte.schafferg.cellarManager.services.UserService">
+	<bean id="userService"
+		class="hu.pte.schafferg.cellarManager.services.UserService"
+		scope="session">
 	</bean>
 
 	<bean id="simpleDateFormat" class="java.text.SimpleDateFormat">
@@ -51,7 +53,7 @@
 
 	<bean id="userSettingsView"
 		class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
-		init-method="initContent">
+		init-method="initContent" scope="session">
 	<property name="passwordRegExp"
 		value="${application.passwordRegExp}">
 	</property>

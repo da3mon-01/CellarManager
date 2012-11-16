@@ -102,40 +102,49 @@ public class UserList extends Table {
 
 	}
 	
-	public boolean createUser(User userToCreate){
-		if(userService.create(userToCreate).equals(userToCreate)){
+	public void createUser(User userToCreate){
+		
+		try {
+			userService.create(userToCreate);
+		} catch (RuntimeException e){
+			throw e;
+		} finally {
 			updateTableContents();
-			return true;
-		}else{
-			return false;
 		}
+
 	}
 	
-	public boolean updateUser(User selectedUser){
-		if(userService.update(selectedUser).equals(selectedUser)){
-			logger.info("Update was equal");
+	public void updateUser(User selectedUser){
+		try {
+			userService.update(selectedUser).equals(selectedUser);
+		} catch (RuntimeException e){
+			throw e;
+		}finally {
 			updateTableContents();
-			return true;
-		}else{
-			return false;
 		}
+		
 	}
 
-	public boolean deleteUser(User selectedUser) {
-		if(userService.delete(selectedUser)){
+	public void deleteUser(User selectedUser) {
+		try {
+			userService.delete(selectedUser);
+		} catch (RuntimeException e) {
+			throw e;
+		}finally {
 			updateTableContents();
-			return true;
-		}else{
-			return false;
 		}
+		
 	}
 	
-	public boolean resetPassword(User user){
-		if(userService.resetPassword(user)){
+	public void resetPassword(User user){
+		
+		
+		try {
+			userService.resetPassword(user);
+		} catch (RuntimeException e) {
+			throw e;
+		}finally {
 			updateTableContents();
-			return true;
-		}else{
-			return false;
 		}
 	}
 	

@@ -197,11 +197,17 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 		}else{
 			selectedUser = commitToUserFromForm(selectedUser);
 			
-			if(userList.createUser(selectedUser)){
+			try {
+				userList.createUser(selectedUser);
 				getWindow().showNotification("Success!", "User "+selectedUser.getUsername()+" was created successfully", Notification.TYPE_TRAY_NOTIFICATION);
-			}else{
-				getWindow().showNotification("Error!", "There was an error while creating "+selectedUser.getUsername(), Notification.TYPE_ERROR_MESSAGE);
+			} catch (RuntimeException e) {
+				getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
+			} finally {
+				changeCurrentSelection(selectedUser);
 			}
+			
+			
+			
 		}
 
 	}
@@ -217,39 +223,46 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 		}
 
 		selectedUser = commitToUserFromForm(selectedUser);
-
-		if (userList.updateUser(selectedUser)) {
-			getWindow().showNotification("Save successfull",
-					selectedUser.getUsername() + "was updated successfully",
-					Notification.TYPE_TRAY_NOTIFICATION);
-		} else {
-			getWindow().showNotification("Save Error!",
-					selectedUser.getUsername() + "was not updated correctly",
-					Notification.TYPE_ERROR_MESSAGE);
+		
+		try {
+			userList.updateUser(selectedUser);
+			getWindow().showNotification("Success!", "User "+selectedUser.getUsername()+" was updated successfully", Notification.TYPE_TRAY_NOTIFICATION);
+		} catch (RuntimeException e) {
+			getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
+			return;
+		}finally {
+			changeCurrentSelection(selectedUser);
 		}
+		
+		
 	}
 
 	private void deleteUser() {
-		if (userList.deleteUser(selectedUser)) {
-			getWindow().showNotification("Delete Successfull",
-					selectedUser.getUsername() + " successfully deleted",
-					Notification.TYPE_TRAY_NOTIFICATION);
-		} else {
-			getWindow().showNotification("Delete Error",
-					selectedUser.getUsername() + "was not deleted",
-					Notification.TYPE_ERROR_MESSAGE);
+		try {
+			userList.deleteUser(selectedUser);
+		} catch (RuntimeException e) {
+			getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
+			return;
 		}
+		
+		getWindow().showNotification("Success!", "User "+selectedUser.getUsername()+" was deleted successfully", Notification.TYPE_TRAY_NOTIFICATION);
 		selectedUser = null;
 		userForm.setItemDataSource(null);
 	}
 
 	protected void resetPassword() {
-		if(userList.resetPassword(selectedUser)){
-			getWindow().showNotification("Success", "Password Successfully reset", Notification.TYPE_TRAY_NOTIFICATION);
-		}else{
-			getWindow().showNotification("Error", "There was an error while trying to reset the password", Notification.TYPE_ERROR_MESSAGE);
-		}
 		
+		try {
+			userList.resetPassword(selectedUser);
+			getWindow().showNotification("Success!", selectedUser.getUsername()+"'s was password was changed.", Notification.TYPE_TRAY_NOTIFICATION);
+		} catch (RuntimeException e) {
+			getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
+			
+		}finally {
+			changeCurrentSelection(selectedUser);
+		}
+				
+				
 	}
 
 	private void openDeleteConfirmWindow() {

@@ -6,6 +6,9 @@ import hu.pte.schafferg.cellarManager.model.User;
 import hu.pte.schafferg.cellarManager.repo.PersonRepository;
 import hu.pte.schafferg.cellarManager.repo.RoleRepository;
 import hu.pte.schafferg.cellarManager.repo.UserRepository;
+import hu.pte.schafferg.cellarManager.util.ObjectMisMatchException;
+import hu.pte.schafferg.cellarManager.util.TargetNotFoundInDBException;
+import hu.pte.schafferg.cellarManager.util.UserNameInUseException;
 
 import java.util.List;
 import java.util.Random;
@@ -31,16 +34,33 @@ public class UserService {
 	@Autowired
 	private StandardPasswordEncoder sde;
 
+
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public User create(User user){
-		user.setId(UUID.randomUUID().toString());
-		user.getRole().setId(UUID.randomUUID().toString());
-		user.getPerson().setId(UUID.randomUUID().toString());
-		user.setPassword(sde.encode(generateRandomPassword()));
-		user.getPerson().setUser(true);
+		User userToCreate = user;
+		
+		userToCreate.setId(UUID.randomUUID().toString());
+		userToCreate.getRole().setId(UUID.randomUUID().toString());
+		userToCreate.getPerson().setId(UUID.randomUUID().toString());
+		userToCreate.setPassword(sde.encode(generateRandomPassword()));
+		userToCreate.getPerson().setUser(true);
+		
+		List<User> currentUsers = userRepo.findAll();
+		for(User u: currentUsers){
+			if(u.getUsername().equals(user.getUsername())){
+				throw new UserNameInUseException("The username "+user.getUsername()+" is already in use!");
+			}
+		}		
+		
+		
 		personRepo.save(user.getPerson());
 		roleRepo.save(user.getRole());
-		userRepo.save(user);
+		userToCreate = userRepo.save(user);
+		
+		if(!(user.equals(userToCreate))){
+			throw new ObjectMisMatchException("There was an Object-mismatch error while updating "+user.getUsername()+". Please check the database for irreguralities");
+		}
+		
 		logger.info(user.getUsername()+" was created");
 		return user;
 	}
@@ -67,56 +87,77 @@ public class UserService {
 
 		if(existingUser == null){
 			logger.info("Cannot Update null user");
-			return null;
+			throw new TargetNotFoundInDBException("User could not be found in the database");
 		}
+		
+		List<User> currentUsers = userRepo.findAll();
+		for(User u: currentUsers){
+				if(u.getUsername().equals(user.getUsername()) ){
+					if(!(u.equals(existingUser))){
+						throw new UserNameInUseException("UserName "+u.getUsername()+" is already in use!");
+					}
+							
+				}
+		}
+		
 		existingUser.setUsername(user.getUsername());
 		existingUser.setPerson(user.getPerson());
 		existingUser.setRole(user.getRole());
 		existingUser.setPassword(user.getPassword());
 		
+		
 		roleRepo.save(existingUser.getRole());
 		personRepo.save(existingUser.getPerson());
-		userRepo.save(existingUser);
+		
+		existingUser = userRepo.save(existingUser);
+		
+		if(!(user.equals(existingUser))){
+			throw new ObjectMisMatchException("There was an Object-mismatch error while updating "+user.getUsername()+". Please check the database for irreguralities");
+		}
 		
 		logger.info(existingUser.getUsername()+"was successfully updated");
+		
+		
 		
 		return existingUser;
 
 	}
 	
-	public boolean resetPassword(User user){
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public void resetPassword(User user){
 		User existingUser = userRepo.findById(user.getId());
 		
 		if(existingUser == null){
 			logger.info("Cannot Update null user");
-			return false;
+			throw new TargetNotFoundInDBException("User could not be found in the database");
 		}
 		
 		existingUser.setPassword(sde.encode(generateRandomPassword()));
 		
-		if(update(existingUser).equals(existingUser)){
-			logger.info("Password Change successfull");
-			return true;
-		}else{
-			return false;
+		try {
+			update(existingUser);
+		} catch (Exception e) {
+			throw e;
 		}
+		
+			
 	}
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public Boolean delete(User user){
+	public void delete(User user){
 		User existingUser = userRepo.findById(user.getId());
 
 		if(existingUser == null){
 			logger.debug("Cannot delete -> existingUser is null");
-			return false;
+			throw new TargetNotFoundInDBException("User could not be found in the database");
 		}
 		logger.debug("Trying to delete: " +existingUser.getUsername());
 
 		personRepo.delete(existingUser.getPerson());
 		roleRepo.delete(existingUser.getRole());
 		userRepo.delete(existingUser);
-
-		return true;
+		
+		logger.info("User "+existingUser.getUsername()+" was deleted");
 	}
 	
 	public String generateRandomPassword(){

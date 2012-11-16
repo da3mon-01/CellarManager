@@ -91,14 +91,17 @@ public class UserSettingsView extends VerticalLayout implements ClickListener{
 		if(sde.matches((CharSequence) (passwordForm.getField("currentPass").getValue()), userToChange.getPassword())){
 			userToChange.setPassword(sde.encode((CharSequence) passwordForm.getField("newpass1").getValue()));
 			
-			if(userService.update(userToChange).equals(userToChange)){
-				getWindow().showNotification("Success", "Password changed", Notification.TYPE_TRAY_NOTIFICATION);
-			}else{
-				getWindow().showNotification("Error", "Could not change the passworld", Notification.TYPE_ERROR_MESSAGE);
+			try {
+				userService.update(userToChange);
+			} catch (RuntimeException e) {
+				getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
+				return;
 			}
 			
+			getWindow().showNotification("Success!", "Your password was changed!", Notification.TYPE_TRAY_NOTIFICATION);
+			
 		}else{
-			getWindow().showNotification("Error", "You have entered your current password wrongly!", Notification.TYPE_ERROR_MESSAGE);
+			getWindow().showNotification("Error", "You have entered your current password incorrectly!", Notification.TYPE_ERROR_MESSAGE);
 			return;
 		}
 	}

@@ -1,10 +1,7 @@
 package hu.pte.schafferg.cellarManager.ui.components;
 
-import java.util.Iterator;
-
 import org.apache.log4j.Logger;
 
-import com.google.common.collect.SetMultimap;
 import com.vaadin.data.Item;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.RegexpValidator;
@@ -140,7 +137,6 @@ public class UserForm extends Form {
 	public void setReadOnly(boolean readOnly) {
 		super.setReadOnly(readOnly);
 		logger.info("ReadOnly Called: "+readOnly+" Effect: "+this.isReadOnly());
-		checkReadOnly();
 	}
 
 
@@ -201,16 +197,6 @@ public class UserForm extends Form {
 	}
 
 
-
-
-	public void checkReadOnly() {
-		for(Iterator<Component> iterator = getLayout().getComponentIterator();iterator.hasNext();){
-			Component c = iterator.next();
-			logger.info(c.getCaption()+" is currently Read Only: "+c.isReadOnly());
-		}
-	}
-	
-	
 	
 
 }
