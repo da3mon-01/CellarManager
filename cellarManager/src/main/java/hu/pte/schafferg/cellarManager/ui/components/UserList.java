@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -102,7 +104,7 @@ public class UserList extends Table {
 
 	}
 	
-	public void createUser(User userToCreate){
+	public void createUser(User userToCreate) throws MessagingException{
 		
 		try {
 			userService.create(userToCreate);
@@ -136,7 +138,7 @@ public class UserList extends Table {
 		
 	}
 	
-	public void resetPassword(User user){
+	public void resetPassword(User user) throws Exception{
 		
 		
 		try {

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -12,7 +16,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<context:property-placeholder
-		properties-ref="appProperties" />
+		properties-ref="appProperties" system-properties-mode="FALLBACK" />
 
 	<context:annotation-config />
 
@@ -30,8 +34,7 @@
 
 	</bean>
 
-	<bean id="userService"
-		class="hu.pte.schafferg.cellarManager.services.UserService"
+	<bean id="userService" class="hu.pte.schafferg.cellarManager.services.UserService"
 		scope="session">
 	</bean>
 
@@ -51,15 +54,12 @@
 	</bean>
 
 
-	<bean id="userSettingsView"
-		class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
+	<bean id="userSettingsView" class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
 		init-method="initContent" scope="session">
-	<property name="passwordRegExp"
-		value="${application.passwordRegExp}">
-	</property>
-	<property name="passwordRegExpError"
-		value="${application.passwordRegExpError}">
-	</property>
+		<property name="passwordRegExp" value="${application.passwordRegExp}">
+		</property>
+		<property name="passwordRegExpError" value="${application.passwordRegExpError}">
+		</property>
 	</bean>
 	<bean id="mainMenu" class="hu.pte.schafferg.cellarManager.ui.components.MainMenu"
 		scope="session" init-method="initContent">
@@ -68,8 +68,7 @@
 		class="hu.pte.schafferg.cellarManager.services.RoleHelperService"
 		scope="session">
 	</bean>
-	<bean id="userForm"
-		class="hu.pte.schafferg.cellarManager.ui.components.UserForm"
+	<bean id="userForm" class="hu.pte.schafferg.cellarManager.ui.components.UserForm"
 		scope="session" init-method="initContent">
 		<property name="zipRegExp" value="${application.zipRegExp}"></property>
 		<property name="zipRegExpError" value="${application.zipRegExpError}">
@@ -77,5 +76,22 @@
 		<property name="phoneRegExp" value="${application.phoneRegExp}"></property>
 		<property name="phoneRegExpError" value="${application.phoneRegExpError}">
 		</property>
+	</bean>
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+		scope="session">
+		<property name="host" value="${mailserver.host}"></property>
+		<property name="port" value="${mailserver.port}"></property>
+		<property name="username" value="${mailserver.username}"></property>
+		<property name="password" value="${mailserver.password}"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="emailService"
+		class="hu.pte.schafferg.cellarManager.services.EmailService"
+		scope="session">
 	</bean>
 </beans>

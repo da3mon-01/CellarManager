@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,16 +35,20 @@ public class UserService {
 	private static int randomPasswordLenght = 8;
 	@Autowired
 	private StandardPasswordEncoder sde;
+	@Autowired
+	EmailService mailService;
+	
 
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public User create(User user){
+	public User create(User user) throws MessagingException{
 		User userToCreate = user;
 		
 		userToCreate.setId(UUID.randomUUID().toString());
 		userToCreate.getRole().setId(UUID.randomUUID().toString());
 		userToCreate.getPerson().setId(UUID.randomUUID().toString());
-		userToCreate.setPassword(sde.encode(generateRandomPassword()));
+		String newpass = generateRandomPassword();
+		userToCreate.setPassword(sde.encode(newpass));
 		userToCreate.getPerson().setUser(true);
 		
 		List<User> currentUsers = userRepo.findAll();
@@ -59,6 +65,12 @@ public class UserService {
 		
 		if(!(user.equals(userToCreate))){
 			throw new ObjectMisMatchException("There was an Object-mismatch error while updating "+user.getUsername()+". Please check the database for irreguralities");
+		}
+		
+		try {
+			mailService.sendCreateUserMail(userToCreate, newpass);
+		} catch (MessagingException e) {
+			throw e;
 		}
 		
 		logger.info(user.getUsername()+" was created");
@@ -124,18 +136,20 @@ public class UserService {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public void resetPassword(User user){
+	public void resetPassword(User user) throws Exception{
 		User existingUser = userRepo.findById(user.getId());
 		
 		if(existingUser == null){
 			logger.info("Cannot Update null user");
 			throw new TargetNotFoundInDBException("User could not be found in the database");
 		}
+		String newpass = generateRandomPassword();
 		
-		existingUser.setPassword(sde.encode(generateRandomPassword()));
+		existingUser.setPassword(sde.encode(newpass));
 		
 		try {
 			update(existingUser);
+			mailService.sendResetPasswordMail(existingUser, newpass);
 		} catch (Exception e) {
 			throw e;
 		}

@@ -9,6 +9,8 @@ import hu.pte.schafferg.cellarManager.ui.components.UserList;
 
 import java.util.Date;
 
+import javax.mail.MessagingException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -200,6 +202,8 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 			try {
 				userList.createUser(selectedUser);
 				getWindow().showNotification("Success!", "User "+selectedUser.getUsername()+" was created successfully", Notification.TYPE_TRAY_NOTIFICATION);
+			} catch (MessagingException e) {
+				getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
 			} catch (RuntimeException e) {
 				getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
 			} finally {
@@ -257,7 +261,8 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 			getWindow().showNotification("Success!", selectedUser.getUsername()+"'s was password was changed.", Notification.TYPE_TRAY_NOTIFICATION);
 		} catch (RuntimeException e) {
 			getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
-			
+		} catch (Exception e) {
+			getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
 		}finally {
 			changeCurrentSelection(selectedUser);
 		}
