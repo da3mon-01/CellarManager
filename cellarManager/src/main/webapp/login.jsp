@@ -3,6 +3,7 @@
  
 <html>
   <head>
+  	<link rel="shortcut icon" type="image/x-icon" href="/cellarManager/VAADIN/themes/cellarManager/favicon.ico">
     <title>CellarManager - Login</title>
     <style>
     	body{
