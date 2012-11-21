@@ -24,8 +24,10 @@ public class MainMenu extends CssLayout implements ClickListener {
 	private NativeButton logoutButton = new NativeButton("Log out", (ClickListener)this);
 	private NativeButton usersButton = new NativeButton("Users", (ClickListener)this);
 	private NativeButton userSettingsButton = new NativeButton("User Settings", (ClickListener)this);
+	private NativeButton contactsButton = new NativeButton("Contacts", (ClickListener)this);
 	private Label adminLabel = new Label("Admin");
 	private Label applicationLabel = new Label("Application");
+	private Label manageLabel = new Label("Manage");
 	private Embedded appLogo;
 	private CellarManager application;
 	@Autowired
@@ -43,6 +45,9 @@ public class MainMenu extends CssLayout implements ClickListener {
 			this.addComponent(adminLabel);
 			this.addComponent(usersButton);
 		}
+		
+		this.addComponent(manageLabel);
+		this.addComponent(contactsButton);
 		
 		this.addComponent(applicationLabel);
 		this.addComponent(userSettingsButton);
@@ -78,6 +83,8 @@ public class MainMenu extends CssLayout implements ClickListener {
 			application.switchtoUsers();
 		}else if(event.getButton() == userSettingsButton){
 			application.switchtoUserSettings();
+		}else if(event.getButton() == contactsButton){
+			application.switchtoContacts();
 		}
 	}
 

@@ -2,6 +2,7 @@ package hu.pte.schafferg.cellarManager;
 
 import hu.pte.schafferg.cellarManager.services.RoleHelperService;
 import hu.pte.schafferg.cellarManager.services.UserService;
+import hu.pte.schafferg.cellarManager.ui.ContactsView;
 import hu.pte.schafferg.cellarManager.ui.UserSettingsView;
 import hu.pte.schafferg.cellarManager.ui.UsersView;
 import hu.pte.schafferg.cellarManager.ui.WelcomeView;
@@ -33,7 +34,6 @@ public class CellarManager extends Application{
 	private WelcomeView welcomeView;
 	CssLayout menu = new CssLayout();
 	protected static Logger logger = Logger.getLogger(CellarManager.class);
-	
 	@Autowired
 	private UsersView usersView;
 	@Autowired
@@ -44,6 +44,8 @@ public class CellarManager extends Application{
 	private MainMenu mainMenu;
 	@Autowired
 	private RoleHelperService roleHelper;
+	@Autowired
+	private ContactsView contacts;
 	
 
 
@@ -98,6 +100,10 @@ public class CellarManager extends Application{
 		
 	}
 
+	public void switchtoContacts() {
+		setMainComponent(contacts);		
+	}
+
 	public void switchtoUserSettings() {
 		setMainComponent(userSettingsView);
 		
@@ -139,27 +145,27 @@ public class CellarManager extends Application{
 	public void setUsesView(UsersView usersView) {
 		this.usersView = usersView;
 	}
+
+	public UserSettingsView getUserSettingsView() {
+		return userSettingsView;
+	}
+
+	public void setUserSettingsView(UserSettingsView userSettingsView) {
+		this.userSettingsView = userSettingsView;
+	}
+
+	public ContactsView getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(ContactsView contacts) {
+		this.contacts = contacts;
+	}
+
+	public void setUsersView(UsersView usersView) {
+		this.usersView = usersView;
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

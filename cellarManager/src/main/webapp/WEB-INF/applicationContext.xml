@@ -94,4 +94,16 @@
 		class="hu.pte.schafferg.cellarManager.services.EmailService"
 		scope="session">
 	</bean>
+	<bean id="contactList"
+		class="hu.pte.schafferg.cellarManager.ui.components.ContactList"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="contactsView"
+		class="hu.pte.schafferg.cellarManager.ui.ContactsView" scope="session"
+		init-method="initContent">
+	</bean>
+	<bean id="contactsService"
+		class="hu.pte.schafferg.cellarManager.services.ContactsService"
+		scope="session">
+	</bean>
 </beans>
