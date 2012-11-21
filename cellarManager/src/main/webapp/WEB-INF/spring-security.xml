@@ -9,8 +9,14 @@
 
 
 	<http auto-config='true' use-expressions="true">
+	
+		<intercept-url
+			pattern="/cellarManager/VAADIN/themes/cellarManager/favicon.ico"
+			access="permitAll" requires-channel="https" />
+	
 		<intercept-url pattern="/login.jsp" access="permitAll"
 			requires-channel="https" />
+		
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')"
 			requires-channel="https" />
 		<form-login login-page="/login.jsp" default-target-url="/app?restartapplication"
@@ -22,6 +28,8 @@
 		<port-mappings>
 			<port-mapping http="8080" https="8181" />
 		</port-mappings>
+
+		
 	</http>
 
 	<global-method-security pre-post-annotations="enabled"></global-method-security>	

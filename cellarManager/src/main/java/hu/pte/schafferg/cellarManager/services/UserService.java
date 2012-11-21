@@ -87,7 +87,6 @@ public class UserService {
 		return userRepo.findByUsername(username);
 	}
 
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public List<User> readAll(){
 		return userRepo.findAll();
 	}

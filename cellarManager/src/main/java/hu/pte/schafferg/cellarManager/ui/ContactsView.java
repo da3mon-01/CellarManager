@@ -19,6 +19,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -94,6 +95,10 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 		contactList.addListener((ValueChangeListener) this);
 		addComponent(contactList);
 		
+		Panel contactDetails = new Panel();
+		contactDetails.setCaption("Contact Details");
+		addComponent(contactDetails);
+		
 	}
 	
 	private void changeCurrentSelection(Object select){
@@ -136,7 +141,10 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 
 	@Override
 	public void textChange(TextChangeEvent event) {
-		// TODO Auto-generated method stub
+		SimpleStringFilter filter = null;
+		
+		filter = new SimpleStringFilter(searchSelect.getValue(), event.getText(), true, false);
+		contactList.addFilter(filter);
 		
 	}
 
