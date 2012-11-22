@@ -15,6 +15,9 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 
@@ -29,8 +32,8 @@ public class ContactList extends Table {
 	@Autowired
 	private SimpleDateFormat sdf;
 	private static Logger logger = Logger.getLogger(ContactList.class);
-	private Object[] listOfVisibleColumns = new Object[]{"firstName", "lastName", "phoneNumber", "email", "birthDate", "city", "zip", "address"};
-	private String[] listOfColumnHeaders = new String[]{"First Name", "Last Name", "Phone Number", "E-mail", "Birth date", "City", "Zip", "Address"};
+	private Object[] listOfVisibleColumns = new Object[]{"firstName", "lastName", "phoneNumber", "email", "birthDate", "city", "zip", "address", "isUser"};
+	private String[] listOfColumnHeaders = new String[]{"First Name", "Last Name", "Phone Number", "E-mail", "Birth date", "City", "Zip", "Address", "User?"};
 	private List<Person> contacts = new ArrayList<Person>();
 	private BeanItemContainer<Person> contactsContainer = new BeanItemContainer<Person>(Person.class);
 	
@@ -45,8 +48,7 @@ public class ContactList extends Table {
 		setSelectable(true);
 		setNullSelectionAllowed(false);
 		
-		setVisibleColumns(listOfVisibleColumns);
-		setColumnHeaders(listOfColumnHeaders);
+		
 		setWidth("100%");
 		setImmediate(true);
 		
@@ -67,6 +69,59 @@ public class ContactList extends Table {
 			}
 		});
 		
+		addGeneratedColumn("isUser", new ColumnGenerator() {
+			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8636014969368770784L;
+
+			@Override
+			public Object generateCell(Table source, Object itemId, Object columnId) {
+				Person item = (Person)itemId;
+				if(item.isUser()){
+					Embedded e = new Embedded();
+					e.setHeight("15px");
+					e.setSource(new ThemeResource("icons/pipa.png"));
+					return e;
+				}
+				return null;
+			}
+		});
+		
+		setVisibleColumns(listOfVisibleColumns);
+		setColumnHeaders(listOfColumnHeaders);
+		
+	}
+	
+	public void createContact(Person p) throws RuntimeException{
+		try {
+			contactsService.create(p);
+		} catch (RuntimeException e) {
+			throw e;
+		}finally {
+			updateTableContents();
+		}
+	}
+	
+	public void updateContact(Person p) throws RuntimeException{
+		try {
+			contactsService.update(p);
+		} catch (Exception e) {
+			throw e;
+		}finally{
+			updateTableContents();
+		}
+	}
+	
+	public void deleteContact(Person p) throws RuntimeException {
+		try {
+			contactsService.delete(p);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			updateTableContents();
+		}
 	}
 
 	private void updateTableContents() {

@@ -87,6 +87,16 @@ public class InitTestData {
 		mongotemplate.insert(peter, "user");
 		mongotemplate.insert(john, "user");
 		
+		Date dTomas = sdf.parse("1986-10-14");
+		Person pTomas = new Person(UUID.randomUUID().toString(), "Tomas", "Johnsasson", 8236, "dasady", "sgdsddgss", "dsad@dasdadasd.hu", dTomas, "+36-20/451-1555", false);
+		Date dPetra = sdf.parse("1986-11-14");
+		Person pPetra = new Person(UUID.randomUUID().toString(), "Petra", "Johnsasson", 8236, "djkjhsady", "gjhgggss", "dsasddgrtgsd.hu", dPetra, "+36-20/451-1785", false);
+		Date dJuli = sdf.parse("1985-10-14");
+		Person pJuli = new Person(UUID.randomUUID().toString(), "Juli", "Johnadsson", 8236, "dasdsagrfgsady", "sgdsddgss", "dsad@kljksd.hu", dJuli, "+36-20/451-3555", false);
+		
+		mongotemplate.insert(pTomas, "person");
+		mongotemplate.insert(pPetra, "person");
+		mongotemplate.insert(pJuli, "person");
 		
 	}
 

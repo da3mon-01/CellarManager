@@ -64,7 +64,7 @@ public class ContactsService {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void delete(Person person){
+	public void delete(Person person) throws RuntimeException{
 		Person personInDB = personRepo.findById(person.getId());
 		
 		if(personInDB == null){

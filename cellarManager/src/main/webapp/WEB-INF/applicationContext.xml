@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:c="http://www.springframework.org/schema/c"
-	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -90,20 +86,27 @@
 			</props>
 		</property>
 	</bean>
-	<bean id="emailService"
-		class="hu.pte.schafferg.cellarManager.services.EmailService"
+	<bean id="emailService" class="hu.pte.schafferg.cellarManager.services.EmailService"
 		scope="session">
 	</bean>
 	<bean id="contactList"
 		class="hu.pte.schafferg.cellarManager.ui.components.ContactList"
 		init-method="initContent" scope="session">
 	</bean>
-	<bean id="contactsView"
-		class="hu.pte.schafferg.cellarManager.ui.ContactsView" scope="session"
-		init-method="initContent">
+	<bean id="contactsView" class="hu.pte.schafferg.cellarManager.ui.ContactsView"
+		scope="session" init-method="initContent">
 	</bean>
-	<bean id="contactsService"
-		class="hu.pte.schafferg.cellarManager.services.ContactsService"
+	<bean id="contactsService" class="hu.pte.schafferg.cellarManager.services.ContactsService"
 		scope="session">
+	</bean>
+	<bean id="contactForm"
+		class="hu.pte.schafferg.cellarManager.ui.components.ContactsForm"
+		init-method="initContent" scope="session">
+		<property name="zipRegExp" value="${application.zipRegExp}"></property>
+		<property name="zipRegExpError" value="${application.zipRegExpError}">
+		</property>
+		<property name="phoneRegExp" value="${application.phoneRegExp}"></property>
+		<property name="phoneRegExpError" value="${application.phoneRegExpError}">
+		</property>
 	</bean>
 </beans>

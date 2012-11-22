@@ -143,18 +143,18 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 				user, "person.firstName"));
 		editedUser.addItemProperty("personLastName", new NestedMethodProperty(
 				user, "person.lastName"));
+		editedUser.addItemProperty("personEmail", new NestedMethodProperty(
+				user, "person.email"));
+		editedUser.addItemProperty("personPhoneNumber",
+				new NestedMethodProperty(user, "person.phoneNumber"));
+		editedUser.addItemProperty("personBirthDate", new NestedMethodProperty(
+				user, "person.birthDate"));
 		editedUser.addItemProperty("personCity", new NestedMethodProperty(user,
 				"person.city"));
 		editedUser.addItemProperty("personAddress", new NestedMethodProperty(
 				user, "person.address"));
 		editedUser.addItemProperty("personZip", new NestedMethodProperty(user,
 				"person.zip"));
-		editedUser.addItemProperty("personBirthDate", new NestedMethodProperty(
-				user, "person.birthDate"));
-		editedUser.addItemProperty("personEmail", new NestedMethodProperty(
-				user, "person.email"));
-		editedUser.addItemProperty("personPhoneNumber",
-				new NestedMethodProperty(user, "person.phoneNumber"));
 		editedUser.addItemProperty("roleRole", new NestedMethodProperty(user,
 				"role.role"));
 

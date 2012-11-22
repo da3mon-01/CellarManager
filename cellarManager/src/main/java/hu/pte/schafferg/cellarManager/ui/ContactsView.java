@@ -1,10 +1,14 @@
 package hu.pte.schafferg.cellarManager.ui;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.ui.components.ContactList;
+import hu.pte.schafferg.cellarManager.ui.components.ContactsForm;
+
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.dialogs.ConfirmDialog;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -14,15 +18,16 @@ import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window.Notification;
 
 public class ContactsView extends VerticalLayout implements ClickListener,
 		ValueChangeListener, TextChangeListener {
@@ -32,14 +37,16 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 	 */
 	private static final long serialVersionUID = -3865970177598989349L;
 	private HorizontalLayout toolbar = new HorizontalLayout();
-	private Button newUser = new Button("New");
-	private Button editUser = new Button("Edit");
-	private Button saveUser = new Button("Save");
-	private Button delUser = new Button("Delete");
+	private Button newPerson = new Button("New");
+	private Button editPerson = new Button("Edit");
+	private Button savePerson= new Button("Save");
+	private Button delPerson = new Button("Delete");
 	private TextField searchField = new TextField();
 	private Select searchSelect = new Select();
 	@Autowired
 	private ContactList contactList;
+	@Autowired
+	private ContactsForm contactForm;
 	private Person selection = null;
 	private Logger logger = Logger.getLogger(ContactsView.class);
 	private boolean newPersonMode = false;
@@ -49,25 +56,25 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 		setSpacing(true);
 		toolbar.setSpacing(true);
 
-		newUser.addStyleName("big");
-		newUser.setIcon(new ThemeResource("icons/add.png"));
-		newUser.addListener((ClickListener) this);
-		toolbar.addComponent(newUser);
+		newPerson.addStyleName("big");
+		newPerson.setIcon(new ThemeResource("icons/add.png"));
+		newPerson.addListener((ClickListener) this);
+		toolbar.addComponent(newPerson);
 
-		editUser.addStyleName("big");
-		editUser.setIcon(new ThemeResource("icons/edit.png"));
-		editUser.addListener((ClickListener) this);
-		toolbar.addComponent(editUser);
+		editPerson.addStyleName("big");
+		editPerson.setIcon(new ThemeResource("icons/edit.png"));
+		editPerson.addListener((ClickListener) this);
+		toolbar.addComponent(editPerson);
 
-		saveUser.addStyleName("big");
-		saveUser.setIcon(new ThemeResource("icons/save.png"));
-		saveUser.addListener((ClickListener) this);
-		toolbar.addComponent(saveUser);
+		savePerson.addStyleName("big");
+		savePerson.setIcon(new ThemeResource("icons/save.png"));
+		savePerson.addListener((ClickListener) this);
+		toolbar.addComponent(savePerson);
 
-		delUser.addStyleName("big");
-		delUser.setIcon(new ThemeResource("icons/delete.png"));
-		delUser.addListener((ClickListener) this);
-		toolbar.addComponent(delUser);
+		delPerson.addStyleName("big");
+		delPerson.setIcon(new ThemeResource("icons/delete.png"));
+		delPerson.addListener((ClickListener) this);
+		toolbar.addComponent(delPerson);
 		
 		
 		searchField.addStyleName("search big");
@@ -97,15 +104,76 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 		
 		Panel contactDetails = new Panel();
 		contactDetails.setCaption("Contact Details");
+		contactDetails.addComponent(contactForm);
 		addComponent(contactDetails);
 		
 	}
 	
+	public void createContact(){
+		if(selection == null || contactForm.getItemDataSource() == null){
+			getWindow().showNotification("Save Failed",
+					"Please click New first!",
+					Notification.TYPE_WARNING_MESSAGE);
+			return;
+		}else{
+			selection = commitFromForm(selection);
+			
+			try {
+				contactList.createContact(selection);
+				getWindow().showNotification("Success!", "Contact "+selection.getFirstName()+" "+selection.getLastName()+" was created successfully", Notification.TYPE_TRAY_NOTIFICATION);
+			} catch (RuntimeException e) {
+				getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
+			} finally {
+				changeCurrentSelection(selection);
+			}
+		
+		}
+		
+	}
+	
+	public void updatePerson(){
+		logger.info("Trying update Person method");
+
+		if (selection == null || contactForm.getItemDataSource() == null) {
+			getWindow().showNotification("Save Failed",
+					"Please select somebody first!",
+					Notification.TYPE_WARNING_MESSAGE);
+			return;
+		}
+
+		selection = commitFromForm(selection);
+		
+		try {
+			contactList.updateContact(selection);
+			getWindow().showNotification("Success!", "Contact "+selection.getFirstName()+" "+selection.getLastName()+" was updated successfully", Notification.TYPE_TRAY_NOTIFICATION);
+		} catch (RuntimeException e) {
+			getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
+			return;
+		}finally {
+			changeCurrentSelection(selection);
+		}
+		
+	}
+	
+	public void deletePerson(){
+		try {
+			contactList.deleteContact(selection);
+		} catch (RuntimeException e) {
+			getWindow().showNotification("Error!", e.getMessage() , Notification.TYPE_ERROR_MESSAGE);
+			return;
+		}
+		
+		getWindow().showNotification("Success!", "Contact "+selection.getFirstName()+" "+selection.getLastName()+" was deleted successfully", Notification.TYPE_TRAY_NOTIFICATION);
+		selection = null;
+		contactForm.setItemDataSource(null);
+		
+	}
 	private void changeCurrentSelection(Object select){
 		Person selectedPerson = (Person)select;
 		
 		selection = selectedPerson;
 		BeanItem<Person> personToEdit = convertPersonToBeanItem(selection);
+		contactForm.setItemDataSource(personToEdit);
 		logger.debug("Current selection: " + selection.getFirstName()+" "+selection.getLastName());
 	}
 	
@@ -114,6 +182,39 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 				"firstName", "lastName", "phoneNumber", "email", "birthDate", "city", "zip", "address"
 		});
 		
+	}
+	
+	private Person commitFromForm(Person person){
+		person.setFirstName((String) contactForm.getItemProperty("firstName").getValue());
+		person.setLastName((String) contactForm.getItemProperty("lastName").getValue());
+		person.setPhoneNumber((String) contactForm.getItemProperty("phoneNumber").getValue());
+		person.setEmail((String) contactForm.getItemProperty("email").getValue());
+		person.setBirthDate((Date) contactForm.getItemProperty("birthDate").getValue());
+		person.setCity((String) contactForm.getItemProperty("city").getValue());
+		person.setZip((int) contactForm.getItemProperty("zip").getValue());
+		person.setAddress((String) contactForm.getItemProperty("address").getValue());
+		
+		return person;
+	}
+	
+	private void openDeleteConfirmWindow() {
+		ConfirmDialog confirmDialog = ConfirmDialog.show(getWindow(),
+				"Are you sure you want to <b>DELETE</b> the selected contact?",
+				new ConfirmDialog.Listener() {
+
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = -313817438000138156L;
+
+					public void onClose(ConfirmDialog dialog) {
+						if (dialog.isConfirmed()) {
+							deletePerson();
+						}
+
+					}
+				});
+		confirmDialog.setContentMode(ConfirmDialog.CONTENT_HTML);
 	}
 
 	@Override
@@ -135,7 +236,46 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 
 	@Override
 	public void buttonClick(ClickEvent event) {
-		// TODO Auto-generated method stub
+		Button source = event.getButton();
+		
+		if(source == delPerson){
+			if(selection.isUser()){
+				getWindow().showNotification("Warning", "You cannot delete Users, please contact an Admin to it!", Notification.TYPE_WARNING_MESSAGE);
+			}else{
+				openDeleteConfirmWindow();
+			}
+		} else if (source == editPerson) {
+			if (selection == null || contactForm.getItemDataSource() == null) {
+				getWindow().showNotification("Warning",
+						"Please select somebody first!",
+						Notification.TYPE_WARNING_MESSAGE);
+			} else {
+				contactForm.setReadOnly(false);
+			}
+		} else if (source == savePerson) {
+			if (!contactForm.isValid()) {
+				getWindow().showNotification("Update Error",
+						"Are all the required fields filled out?",
+						Notification.TYPE_WARNING_MESSAGE);
+				return;
+			}
+			contactForm.commit();
+
+			if(newPersonMode){
+				createContact();
+			}else{
+				updatePerson();
+			}
+
+			contactForm.setReadOnly(true);
+			setNewPersonMode(false);
+		} else if (source == newPerson) {
+			setNewPersonMode(true);
+			Person personToAdd = new Person();
+					
+			contactForm.setReadOnly(false);
+			changeCurrentSelection(personToAdd);
+		}
 
 	}
 
@@ -162,6 +302,7 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 
 	public void setNewPersonMode(boolean newPersonMode) {
 		this.newPersonMode = newPersonMode;
+		contactForm.setNewPersonMode(newPersonMode);
 	}
 	
 	
