@@ -16,7 +16,6 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
