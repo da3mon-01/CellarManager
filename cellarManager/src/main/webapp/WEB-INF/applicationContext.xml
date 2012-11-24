@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -108,5 +112,33 @@
 		<property name="phoneRegExp" value="${application.phoneRegExp}"></property>
 		<property name="phoneRegExpError" value="${application.phoneRegExpError}">
 		</property>
+	</bean>
+	<bean id="fieldWorkService"
+		class="hu.pte.schafferg.cellarManager.services.FieldWorkService"
+		scope="session">
+	</bean>
+	<bean id="grapeService"
+		class="hu.pte.schafferg.cellarManager.services.GrapeService"
+		scope="session">
+	</bean>
+	<bean id="landService"
+		class="hu.pte.schafferg.cellarManager.services.LandService"
+		scope="session">
+	</bean>
+	<bean id="grapeMustService"
+		class="hu.pte.schafferg.cellarManager.services.GrapeMustService"
+		scope="session">
+	</bean>
+	<bean id="wineService"
+		class="hu.pte.schafferg.cellarManager.services.WineService"
+		scope="session">
+	</bean>
+	<bean id="analyticService"
+		class="hu.pte.schafferg.cellarManager.services.AnalyticService"
+		scope="session">
+	</bean>
+	<bean id="saleService"
+		class="hu.pte.schafferg.cellarManager.services.SaleService"
+		scope="session">
 	</bean>
 </beans>

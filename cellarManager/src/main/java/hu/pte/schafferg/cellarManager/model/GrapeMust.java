@@ -1,7 +1,5 @@
 package hu.pte.schafferg.cellarManager.model;
 
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -19,13 +17,11 @@ public class GrapeMust {
 	private boolean enriched;
 	private double enrichtmentDegree;
 	private boolean sweetened;
-	private List<Analytic> analytics;
 	
 	@PersistenceConstructor
 	public GrapeMust(String id, Grape madeFrom, double quantityAfterHarvest,
 			double quantityLostAfterRacking, double mustDegree,
-			boolean enriched, double enrichtmentDegree, boolean sweetened,
-			List<Analytic> analytics) {
+			boolean enriched, double enrichtmentDegree, boolean sweetened) {
 		this.id = id;
 		this.madeFrom = madeFrom;
 		this.quantityAfterHarvest = quantityAfterHarvest;
@@ -34,7 +30,6 @@ public class GrapeMust {
 		this.enriched = enriched;
 		this.enrichtmentDegree = enrichtmentDegree;
 		this.sweetened = sweetened;
-		this.analytics = analytics;
 	}
 
 	public GrapeMust() {
@@ -103,16 +98,5 @@ public class GrapeMust {
 	public void setSweetened(boolean sweetened) {
 		this.sweetened = sweetened;
 	}
-
-	public List<Analytic> getAnalytics() {
-		return analytics;
-	}
-
-	public void setAnalytics(List<Analytic> analytics) {
-		this.analytics = analytics;
-	}
-	
-	
-	
 
 }
