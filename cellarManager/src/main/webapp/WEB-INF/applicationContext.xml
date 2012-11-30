@@ -34,49 +34,19 @@
 
 	</bean>
 
-	<bean id="userService" class="hu.pte.schafferg.cellarManager.services.UserService"
-		scope="session">
-	</bean>
-
 	<bean id="simpleDateFormat" class="java.text.SimpleDateFormat">
 		<constructor-arg value="yyyy-MMM-dd"></constructor-arg>
 	</bean>
 
-	<bean id="welcomeView" class="hu.pte.schafferg.cellarManager.ui.WelcomeView"
-		scope="session" init-method="initContent">
-	</bean>
-
-	<bean id="userList" class="hu.pte.schafferg.cellarManager.ui.components.UserList"
-		init-method="initContent" scope="session">
-	</bean>
-	<bean id="userView" class="hu.pte.schafferg.cellarManager.ui.UsersView"
-		scope="session" init-method="initContent">
-	</bean>
-
-
-	<bean id="userSettingsView" class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
-		init-method="initContent" scope="session">
-		<property name="passwordRegExp" value="${application.passwordRegExp}">
-		</property>
-		<property name="passwordRegExpError" value="${application.passwordRegExpError}">
-		</property>
-	</bean>
 	<bean id="mainMenu" class="hu.pte.schafferg.cellarManager.ui.components.MainMenu"
 		scope="session" init-method="initContent">
 	</bean>
+
 	<bean id="roleHelperService"
 		class="hu.pte.schafferg.cellarManager.services.RoleHelperService"
 		scope="session">
 	</bean>
-	<bean id="userForm" class="hu.pte.schafferg.cellarManager.ui.components.UserForm"
-		scope="session" init-method="initContent">
-		<property name="zipRegExp" value="${application.zipRegExp}"></property>
-		<property name="zipRegExpError" value="${application.zipRegExpError}">
-		</property>
-		<property name="phoneRegExp" value="${application.phoneRegExp}"></property>
-		<property name="phoneRegExpError" value="${application.phoneRegExpError}">
-		</property>
-	</bean>
+
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
 		scope="session">
 		<property name="host" value="${mailserver.host}"></property>
@@ -90,9 +60,46 @@
 			</props>
 		</property>
 	</bean>
+
 	<bean id="emailService" class="hu.pte.schafferg.cellarManager.services.EmailService"
 		scope="session">
 	</bean>
+
+	<bean id="welcomeView" class="hu.pte.schafferg.cellarManager.ui.WelcomeView"
+		scope="session" init-method="initContent">
+	</bean>
+
+
+
+	<bean id="userService" class="hu.pte.schafferg.cellarManager.services.UserService"
+		scope="session">
+	</bean>
+	<bean id="userList" class="hu.pte.schafferg.cellarManager.ui.components.UserList"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="userView" class="hu.pte.schafferg.cellarManager.ui.UsersView"
+		scope="session" init-method="initContent">
+	</bean>
+	<bean id="userForm" class="hu.pte.schafferg.cellarManager.ui.components.UserForm"
+		scope="session" init-method="initContent">
+		<property name="zipRegExp" value="${application.zipRegExp}"></property>
+		<property name="zipRegExpError" value="${application.zipRegExpError}">
+		</property>
+		<property name="phoneRegExp" value="${application.phoneRegExp}"></property>
+		<property name="phoneRegExpError" value="${application.phoneRegExpError}">
+		</property>
+	</bean>
+
+
+	<bean id="userSettingsView" class="hu.pte.schafferg.cellarManager.ui.UserSettingsView"
+		init-method="initContent" scope="session">
+		<property name="passwordRegExp" value="${application.passwordRegExp}">
+		</property>
+		<property name="passwordRegExpError" value="${application.passwordRegExpError}">
+		</property>
+	</bean>
+
+
 	<bean id="contactList"
 		class="hu.pte.schafferg.cellarManager.ui.components.ContactList"
 		init-method="initContent" scope="session">
@@ -113,32 +120,56 @@
 		<property name="phoneRegExpError" value="${application.phoneRegExpError}">
 		</property>
 	</bean>
+
+
+	<bean id="landsList" class="hu.pte.schafferg.cellarManager.ui.components.LandsList"
+		scope="session" init-method="initContent">
+	</bean>
+	<bean id="landsForm" class="hu.pte.schafferg.cellarManager.ui.components.LandsForm"
+		scope="session" init-method="initContent">
+	</bean>
+	<bean id="landsView" class="hu.pte.schafferg.cellarManager.ui.LandsView"
+		scope="session" init-method="initContent">
+	</bean>
+	<bean id="landService" class="hu.pte.schafferg.cellarManager.services.LandService"
+		scope="session">
+	</bean>
+
+
+	<bean id="fieldWorkForm"
+		class="hu.pte.schafferg.cellarManager.ui.components.FieldWorkForm"
+		scope="session" init-method="initContent">
+	</bean>
+	<bean id="fieldWorkList"
+		class="hu.pte.schafferg.cellarManager.ui.components.FieldWorkList"
+		scope="session" init-method="initContent">
+	</bean>
 	<bean id="fieldWorkService"
 		class="hu.pte.schafferg.cellarManager.services.FieldWorkService"
 		scope="session">
 	</bean>
-	<bean id="grapeService"
-		class="hu.pte.schafferg.cellarManager.services.GrapeService"
+	<bean id="fieldWorkView"
+		class="hu.pte.schafferg.cellarManager.ui.FieldWorkView"
+		init-method="initContent" scope="session">
+	</bean>
+
+
+	<bean id="grapeService" class="hu.pte.schafferg.cellarManager.services.GrapeService"
 		scope="session">
 	</bean>
-	<bean id="landService"
-		class="hu.pte.schafferg.cellarManager.services.LandService"
-		scope="session">
-	</bean>
+
 	<bean id="grapeMustService"
 		class="hu.pte.schafferg.cellarManager.services.GrapeMustService"
 		scope="session">
 	</bean>
-	<bean id="wineService"
-		class="hu.pte.schafferg.cellarManager.services.WineService"
+	<bean id="wineService" class="hu.pte.schafferg.cellarManager.services.WineService"
 		scope="session">
 	</bean>
-	<bean id="analyticService"
-		class="hu.pte.schafferg.cellarManager.services.AnalyticService"
+	<bean id="analyticService" class="hu.pte.schafferg.cellarManager.services.AnalyticService"
 		scope="session">
 	</bean>
-	<bean id="saleService"
-		class="hu.pte.schafferg.cellarManager.services.SaleService"
+	<bean id="saleService" class="hu.pte.schafferg.cellarManager.services.SaleService"
 		scope="session">
 	</bean>
+
 </beans>

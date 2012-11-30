@@ -131,7 +131,7 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 		
 	}
 	
-	public void updatePerson(){
+	public void updateContact(){
 		logger.info("Trying update Person method");
 
 		if (selection == null || contactForm.getItemDataSource() == null) {
@@ -168,6 +168,8 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 		contactForm.setItemDataSource(null);
 		
 	}
+	
+	
 	private void changeCurrentSelection(Object select){
 		Person selectedPerson = (Person)select;
 		
@@ -264,7 +266,7 @@ public class ContactsView extends VerticalLayout implements ClickListener,
 			if(newPersonMode){
 				createContact();
 			}else{
-				updatePerson();
+				updateContact();
 			}
 
 			contactForm.setReadOnly(true);

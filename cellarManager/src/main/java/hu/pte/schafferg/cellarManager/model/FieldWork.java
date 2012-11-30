@@ -14,6 +14,7 @@ public class FieldWork {
 	
 	@Id
 	private String id;
+	@DBRef
 	private Person who;
 	private Date when;
 	private FieldWorkType work;
@@ -83,8 +84,13 @@ public class FieldWork {
 	public void setOnWhat(Land onWhat) {
 		this.onWhat = onWhat;
 	}
-	
-	
+
+
+	@Override
+	public String toString() {
+		return "FieldWork [id=" + id + ", who=" + who + ", when=" + when
+				+ ", work=" + work + ", onWhat=" + onWhat + "]";
+	}
 	
 	
 	

@@ -3,6 +3,8 @@ package hu.pte.schafferg.cellarManager;
 import hu.pte.schafferg.cellarManager.services.RoleHelperService;
 import hu.pte.schafferg.cellarManager.services.UserService;
 import hu.pte.schafferg.cellarManager.ui.ContactsView;
+import hu.pte.schafferg.cellarManager.ui.FieldWorkView;
+import hu.pte.schafferg.cellarManager.ui.LandsView;
 import hu.pte.schafferg.cellarManager.ui.UserSettingsView;
 import hu.pte.schafferg.cellarManager.ui.UsersView;
 import hu.pte.schafferg.cellarManager.ui.WelcomeView;
@@ -46,6 +48,10 @@ public class CellarManager extends Application{
 	private RoleHelperService roleHelper;
 	@Autowired
 	private ContactsView contacts;
+	@Autowired
+	private LandsView landsView;
+	@Autowired
+	private FieldWorkView fieldWorkView;
 	
 
 
@@ -108,6 +114,14 @@ public class CellarManager extends Application{
 		setMainComponent(userSettingsView);
 		
 	}
+	
+	public void switchtoLands(){
+		setMainComponent(landsView);
+	}
+	
+	public void switchToFieldWorkView(){
+		setMainComponent(fieldWorkView);
+	}
 
 	public void logout() {
 		logger.info("Logging out current User.");
@@ -165,6 +179,40 @@ public class CellarManager extends Application{
 	public void setUsersView(UsersView usersView) {
 		this.usersView = usersView;
 	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public MainMenu getMainMenu() {
+		return mainMenu;
+	}
+
+	public void setMainMenu(MainMenu mainMenu) {
+		this.mainMenu = mainMenu;
+	}
+
+	public RoleHelperService getRoleHelper() {
+		return roleHelper;
+	}
+
+	public void setRoleHelper(RoleHelperService roleHelper) {
+		this.roleHelper = roleHelper;
+	}
+
+	public LandsView getLandsView() {
+		return landsView;
+	}
+
+	public void setLandsView(LandsView landsView) {
+		this.landsView = landsView;
+	}
+	
+	
 	
 	
 

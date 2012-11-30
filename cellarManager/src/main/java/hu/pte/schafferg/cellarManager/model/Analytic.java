@@ -90,6 +90,58 @@ public class Analytic {
 	public void setMust(GrapeMust must) {
 		this.must = must;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(extract);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(iron);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((must == null) ? 0 : must.hashCode());
+		temp = Double.doubleToLongBits(sugar);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(sulfur);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((when == null) ? 0 : when.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Analytic other = (Analytic) obj;
+		if (Double.doubleToLongBits(extract) != Double
+				.doubleToLongBits(other.extract))
+			return false;
+		if (Double.doubleToLongBits(iron) != Double
+				.doubleToLongBits(other.iron))
+			return false;
+		if (must == null) {
+			if (other.must != null)
+				return false;
+		} else if (!must.equals(other.must))
+			return false;
+		if (Double.doubleToLongBits(sugar) != Double
+				.doubleToLongBits(other.sugar))
+			return false;
+		if (Double.doubleToLongBits(sulfur) != Double
+				.doubleToLongBits(other.sulfur))
+			return false;
+		if (when == null) {
+			if (other.when != null)
+				return false;
+		} else if (!when.equals(other.when))
+			return false;
+		return true;
+	}
 	
 	
 

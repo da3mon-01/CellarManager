@@ -67,8 +67,56 @@ public class Sale {
 	public void setWineDocID(String wineDocID) {
 		this.wineDocID = wineDocID;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + numOfBottles;
+		result = prime * result + ((toWho == null) ? 0 : toWho.hashCode());
+		result = prime * result + ((what == null) ? 0 : what.hashCode());
+		result = prime * result
+				+ ((wineDocID == null) ? 0 : wineDocID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sale other = (Sale) obj;
+		if (numOfBottles != other.numOfBottles)
+			return false;
+		if (toWho == null) {
+			if (other.toWho != null)
+				return false;
+		} else if (!toWho.equals(other.toWho))
+			return false;
+		if (what == null) {
+			if (other.what != null)
+				return false;
+		} else if (!what.equals(other.what))
+			return false;
+		if (wineDocID == null) {
+			if (other.wineDocID != null)
+				return false;
+		} else if (!wineDocID.equals(other.wineDocID))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Sale [id=" + id + ", toWho=" + toWho + ", what=" + what
+				+ ", numOfBottles=" + numOfBottles + ", wineDocID=" + wineDocID
+				+ "]";
+	}
 	
 	
-	
+		
 	
 }

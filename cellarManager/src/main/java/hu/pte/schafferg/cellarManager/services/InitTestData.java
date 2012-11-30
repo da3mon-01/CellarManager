@@ -2,9 +2,12 @@ package hu.pte.schafferg.cellarManager.services;
 
 
 
+import hu.pte.schafferg.cellarManager.model.FieldWork;
+import hu.pte.schafferg.cellarManager.model.Land;
 import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.model.Role;
 import hu.pte.schafferg.cellarManager.model.User;
+import hu.pte.schafferg.cellarManager.util.FieldWorkType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +35,8 @@ public class InitTestData {
 		mongotemplate.dropCollection("user");
 		mongotemplate.dropCollection("role");
 		mongotemplate.dropCollection("person");
+		mongotemplate.dropCollection("land");
+		mongotemplate.dropCollection("fieldWork");
 		
 		sdf.setTimeZone(TimeZone.getTimeZone(appTimeZone));
 		
@@ -97,6 +102,22 @@ public class InitTestData {
 		mongotemplate.insert(pTomas, "person");
 		mongotemplate.insert(pPetra, "person");
 		mongotemplate.insert(pJuli, "person");
+		
+		Land landT = new Land(UUID.randomUUID().toString(), "458", "Bóly", 25000, pTomas);
+		Land landP = new Land(UUID.randomUUID().toString(), "389", "Pécs", 50000, pPetra);
+		Land landS = new Land(UUID.randomUUID().toString(), "222", "Pécs", 36000, pSteve);
+		
+		mongotemplate.insert(landT, "land");
+		mongotemplate.insert(landP, "land");
+		mongotemplate.insert(landS, "land");
+		
+		Date dfwJ = sdf.parse("2012-07-07");
+		FieldWork fwT = new FieldWork(UUID.randomUUID().toString(), pTomas, dfwJ, FieldWorkType.INSECTSPRAY, landT);
+		Date dfwS = sdf.parse("2012-06-17");
+		FieldWork fwS = new FieldWork(UUID.randomUUID().toString(), pSteve, dfwS, FieldWorkType.DUNGWORK, landS);
+		
+		mongotemplate.insert(fwT, "fieldWork");
+		mongotemplate.insert(fwS, "fieldWork");
 		
 	}
 

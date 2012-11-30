@@ -71,7 +71,53 @@ public class Grape {
 	public void setPlantedOn(Land plantedOn) {
 		this.plantedOn = plantedOn;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((planted == null) ? 0 : planted.hashCode());
+		result = prime * result
+				+ ((plantedOn == null) ? 0 : plantedOn.hashCode());
+		result = prime * result + quantity;
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Grape other = (Grape) obj;
+		if (planted == null) {
+			if (other.planted != null)
+				return false;
+		} else if (!planted.equals(other.planted))
+			return false;
+		if (plantedOn == null) {
+			if (other.plantedOn != null)
+				return false;
+		} else if (!plantedOn.equals(other.plantedOn))
+			return false;
+		if (quantity != other.quantity)
+			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Grape [id=" + id + ", type=" + type + ", quantity=" + quantity
+				+ ", planted=" + planted + ", plantedOn=" + plantedOn + "]";
+	}
 	
 	
 

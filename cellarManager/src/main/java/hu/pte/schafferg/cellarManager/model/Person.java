@@ -189,11 +189,16 @@ public class Person {
 		return true;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", zip=" + zip + ", city=" + city + ", address="
+				+ address + ", email=" + email + ", birthDate=" + birthDate
+				+ ", phoneNumber=" + phoneNumber + ", isUser=" + isUser + "]";
+	}
 
 	
-	
-		
+			
 	
 
 }
