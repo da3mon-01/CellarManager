@@ -15,20 +15,20 @@ public class GrapeMust {
 	private double quantityLostAfterRacking;
 	private double mustDegree;
 	private boolean enriched;
-	private double enrichtmentDegree;
+	private double enrichmentDegree;
 	private boolean sweetened;
 	
 	@PersistenceConstructor
 	public GrapeMust(String id, Grape madeFrom, double quantityAfterHarvest,
 			double quantityLostAfterRacking, double mustDegree,
-			boolean enriched, double enrichtmentDegree, boolean sweetened) {
+			boolean enriched, double enrichmentDegree, boolean sweetened) {
 		this.id = id;
 		this.madeFrom = madeFrom;
 		this.quantityAfterHarvest = quantityAfterHarvest;
 		this.quantityLostAfterRacking = quantityLostAfterRacking;
 		this.mustDegree = mustDegree;
 		this.enriched = enriched;
-		this.enrichtmentDegree = enrichtmentDegree;
+		this.enrichmentDegree = enrichmentDegree;
 		this.sweetened = sweetened;
 	}
 
@@ -83,12 +83,12 @@ public class GrapeMust {
 		this.enriched = enriched;
 	}
 
-	public double getEnrichtmentDegree() {
-		return enrichtmentDegree;
+	public double getEnrichmentDegree() {
+		return enrichmentDegree;
 	}
 
-	public void setEnrichtmentDegree(double enrichtmentDegree) {
-		this.enrichtmentDegree = enrichtmentDegree;
+	public void setEnrichmentDegree(double enrichmentDegree) {
+		this.enrichmentDegree = enrichmentDegree;
 	}
 
 	public boolean isSweetened() {
@@ -105,7 +105,7 @@ public class GrapeMust {
 		int result = 1;
 		result = prime * result + (enriched ? 1231 : 1237);
 		long temp;
-		temp = Double.doubleToLongBits(enrichtmentDegree);
+		temp = Double.doubleToLongBits(enrichmentDegree);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result
 				+ ((madeFrom == null) ? 0 : madeFrom.hashCode());
@@ -130,8 +130,8 @@ public class GrapeMust {
 		GrapeMust other = (GrapeMust) obj;
 		if (enriched != other.enriched)
 			return false;
-		if (Double.doubleToLongBits(enrichtmentDegree) != Double
-				.doubleToLongBits(other.enrichtmentDegree))
+		if (Double.doubleToLongBits(enrichmentDegree) != Double
+				.doubleToLongBits(other.enrichmentDegree))
 			return false;
 		if (madeFrom == null) {
 			if (other.madeFrom != null)
@@ -154,12 +154,7 @@ public class GrapeMust {
 
 	@Override
 	public String toString() {
-		return "GrapeMust [id=" + id + ", madeFrom=" + madeFrom
-				+ ", quantityAfterHarvest=" + quantityAfterHarvest
-				+ ", quantityLostAfterRacking=" + quantityLostAfterRacking
-				+ ", mustDegree=" + mustDegree + ", enriched=" + enriched
-				+ ", enrichtmentDegree=" + enrichtmentDegree + ", sweetened="
-				+ sweetened + "]";
+		return "GrapeMust from: "+madeFrom;
 	}
 	
 	

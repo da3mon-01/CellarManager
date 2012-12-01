@@ -157,11 +157,38 @@
 	<bean id="grapeService" class="hu.pte.schafferg.cellarManager.services.GrapeService"
 		scope="session">
 	</bean>
+	<bean id="grapeForm"
+		class="hu.pte.schafferg.cellarManager.ui.components.GrapeForm"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="grapeList"
+		class="hu.pte.schafferg.cellarManager.ui.components.GrapeList"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="grapeView"
+		class="hu.pte.schafferg.cellarManager.ui.GrapeView"
+		init-method="initContent" scope="session">
+	</bean>
+	
 
 	<bean id="grapeMustService"
 		class="hu.pte.schafferg.cellarManager.services.GrapeMustService"
 		scope="session">
 	</bean>
+	<bean id="grapeMustList"
+		class="hu.pte.schafferg.cellarManager.ui.components.GrapeMustList"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="grapeMustForm"
+		class="hu.pte.schafferg.cellarManager.ui.components.GrapeMustForm"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="grapeMustView"
+		class="hu.pte.schafferg.cellarManager.ui.GrapeMustView"
+		init-method="initContent" scope="session">
+	</bean>
+	
+
 	<bean id="wineService" class="hu.pte.schafferg.cellarManager.services.WineService"
 		scope="session">
 	</bean>
@@ -172,4 +199,5 @@
 		scope="session">
 	</bean>
 
+	
 </beans>

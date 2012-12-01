@@ -115,8 +115,7 @@ public class Grape {
 
 	@Override
 	public String toString() {
-		return "Grape [id=" + id + ", type=" + type + ", quantity=" + quantity
-				+ ", planted=" + planted + ", plantedOn=" + plantedOn + "]";
+		return type + "@"+ plantedOn.getLandOff()+"/"+plantedOn.getLandOffId()+" "+quantity+"pcs";
 	}
 	
 	

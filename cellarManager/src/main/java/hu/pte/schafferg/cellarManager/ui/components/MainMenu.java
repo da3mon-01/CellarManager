@@ -27,6 +27,8 @@ public class MainMenu extends CssLayout implements ClickListener {
 	private NativeButton contactsButton = new NativeButton("Contacts", (ClickListener)this);
 	private NativeButton landsButton = new NativeButton("Lands", (ClickListener)this);
 	private NativeButton fieldWorkButton = new NativeButton("Field Work", (ClickListener)this);
+	private NativeButton grapeButton = new NativeButton("Grapes", (ClickListener)this);
+	private NativeButton mustButton = new NativeButton("Grape Musts", (ClickListener)this);
 	private Label adminLabel = new Label("Admin");
 	private Label applicationLabel = new Label("Application");
 	private Label manageLabel = new Label("Manage");
@@ -52,6 +54,8 @@ public class MainMenu extends CssLayout implements ClickListener {
 		this.addComponent(contactsButton);
 		this.addComponent(landsButton);
 		this.addComponent(fieldWorkButton);
+		this.addComponent(grapeButton);
+		this.addComponent(mustButton);
 		
 		this.addComponent(applicationLabel);
 		this.addComponent(userSettingsButton);
@@ -92,8 +96,11 @@ public class MainMenu extends CssLayout implements ClickListener {
 		}else if(event.getButton() == landsButton){
 			application.switchtoLands();
 		}else if(event.getButton() == fieldWorkButton){
-			application.switchToFieldWorkView();
-			
+			application.switchToFieldWorkView();	
+		}else if(event.getButton() == grapeButton){
+			application.switchToGrapeView();
+		}else if(event.getButton() == mustButton){
+			application.switchToMustView();
 		}
 	}
 

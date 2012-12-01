@@ -3,6 +3,8 @@ package hu.pte.schafferg.cellarManager.services;
 
 
 import hu.pte.schafferg.cellarManager.model.FieldWork;
+import hu.pte.schafferg.cellarManager.model.Grape;
+import hu.pte.schafferg.cellarManager.model.GrapeMust;
 import hu.pte.schafferg.cellarManager.model.Land;
 import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.model.Role;
@@ -37,6 +39,8 @@ public class InitTestData {
 		mongotemplate.dropCollection("person");
 		mongotemplate.dropCollection("land");
 		mongotemplate.dropCollection("fieldWork");
+		mongotemplate.dropCollection("grape");
+		mongotemplate.dropCollection("grapeMust");
 		
 		sdf.setTimeZone(TimeZone.getTimeZone(appTimeZone));
 		
@@ -119,6 +123,19 @@ public class InitTestData {
 		mongotemplate.insert(fwT, "fieldWork");
 		mongotemplate.insert(fwS, "fieldWork");
 		
+		Date dGT = sdf.parse("2012-08-08");
+		Grape gT = new Grape(UUID.randomUUID().toString(), "Olaszrizling", 150, dGT, landT);
+		Date dGP = sdf.parse("2012-07-07");
+		Grape gP = new Grape(UUID.randomUUID().toString(), "Királylányka", 185, dGP, landP);
+		
+		mongotemplate.insert(gT, "grape");
+		mongotemplate.insert(gP, "grape");
+		
+		GrapeMust gmT = new GrapeMust(UUID.randomUUID().toString(), gT, 250, 15, 21,true, 3, false);
+		GrapeMust gmP = new GrapeMust(UUID.randomUUID().toString(), gP, 400, 25, 20, false, 0, true);
+		
+		mongotemplate.insert(gmT, "grapeMust");
+		mongotemplate.insert(gmP, "grapeMust");
 	}
 
 

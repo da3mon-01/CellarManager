@@ -4,6 +4,8 @@ import hu.pte.schafferg.cellarManager.services.RoleHelperService;
 import hu.pte.schafferg.cellarManager.services.UserService;
 import hu.pte.schafferg.cellarManager.ui.ContactsView;
 import hu.pte.schafferg.cellarManager.ui.FieldWorkView;
+import hu.pte.schafferg.cellarManager.ui.GrapeMustView;
+import hu.pte.schafferg.cellarManager.ui.GrapeView;
 import hu.pte.schafferg.cellarManager.ui.LandsView;
 import hu.pte.schafferg.cellarManager.ui.UserSettingsView;
 import hu.pte.schafferg.cellarManager.ui.UsersView;
@@ -52,6 +54,10 @@ public class CellarManager extends Application{
 	private LandsView landsView;
 	@Autowired
 	private FieldWorkView fieldWorkView;
+	@Autowired
+	private GrapeView grapeView;
+	@Autowired
+	private GrapeMustView mustView;
 	
 
 
@@ -121,6 +127,14 @@ public class CellarManager extends Application{
 	
 	public void switchToFieldWorkView(){
 		setMainComponent(fieldWorkView);
+	}
+	
+	public void switchToGrapeView(){
+		setMainComponent(grapeView);
+	}
+	
+	public void switchToMustView(){
+		setMainComponent(mustView);
 	}
 
 	public void logout() {
@@ -210,6 +224,22 @@ public class CellarManager extends Application{
 
 	public void setLandsView(LandsView landsView) {
 		this.landsView = landsView;
+	}
+
+	public FieldWorkView getFieldWorkView() {
+		return fieldWorkView;
+	}
+
+	public void setFieldWorkView(FieldWorkView fieldWorkView) {
+		this.fieldWorkView = fieldWorkView;
+	}
+
+	public GrapeView getGrapeView() {
+		return grapeView;
+	}
+
+	public void setGrapeView(GrapeView grapeView) {
+		this.grapeView = grapeView;
 	}
 	
 	
