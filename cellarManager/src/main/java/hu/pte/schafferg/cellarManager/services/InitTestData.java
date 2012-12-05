@@ -2,6 +2,7 @@ package hu.pte.schafferg.cellarManager.services;
 
 
 
+import hu.pte.schafferg.cellarManager.model.Analytic;
 import hu.pte.schafferg.cellarManager.model.FieldWork;
 import hu.pte.schafferg.cellarManager.model.Grape;
 import hu.pte.schafferg.cellarManager.model.GrapeMust;
@@ -41,6 +42,7 @@ public class InitTestData {
 		mongotemplate.dropCollection("fieldWork");
 		mongotemplate.dropCollection("grape");
 		mongotemplate.dropCollection("grapeMust");
+		mongotemplate.dropCollection("analytic");
 		
 		sdf.setTimeZone(TimeZone.getTimeZone(appTimeZone));
 		
@@ -136,6 +138,17 @@ public class InitTestData {
 		
 		mongotemplate.insert(gmT, "grapeMust");
 		mongotemplate.insert(gmP, "grapeMust");
+		
+		Date at1d = sdf.parse("2012-10-09");
+		Analytic aT1 = new Analytic(UUID.randomUUID().toString(), at1d, 1548.0, 1458.0, 1478.0, 1748.0, gmT);
+		Date at2d = sdf.parse("2012-11-09");
+		Analytic aT2 = new Analytic(UUID.randomUUID().toString(), at2d, 1540.0, 1450.0, 1470.0, 1740.0, gmT);
+		Date apd = sdf.parse("2012-07-09");
+		Analytic aP = new Analytic(UUID.randomUUID().toString(), apd, 1369.0, 1236.0, 1852.0, 1745.0, gmP);
+		
+		mongotemplate.save(aT1, "analytic");
+		mongotemplate.save(aT2, "analytic");
+		mongotemplate.save(aP, "analytic");
 	}
 
 

@@ -27,7 +27,7 @@ public class LandsForm extends Form{
 	private boolean newLandMode = false;
 	private static Logger logger = Logger.getLogger(LandsForm.class);
 	@Autowired
-	ContactsService contactService;
+	private ContactsService contactService;
 	
 	public void initContent(){
 		setWriteThrough(false);

@@ -171,8 +171,8 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		GrapeMust selectedGrapeMust = (GrapeMust)select;
 		
 		selection = selectedGrapeMust;
-		BeanItem<GrapeMust> grapeToEdit = convertGrapeMustToBeanItem(selection);
-		grapeMustForm.setItemDataSource(grapeToEdit);
+		BeanItem<GrapeMust> mustToEdit = convertGrapeMustToBeanItem(selection);
+		grapeMustForm.setItemDataSource(mustToEdit);
 		logger.debug("Current selection: " + selection);
 	}
 	

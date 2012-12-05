@@ -31,11 +31,11 @@ public class FieldWorkForm extends Form {
 	private boolean newFieldWorkMode = false;
 	private static Logger logger = Logger.getLogger(FieldWorkForm.class);
 	@Autowired
-	FieldWorkService fieldWorkService;
+	private FieldWorkService fieldWorkService;
 	@Autowired
-	ContactsService contactService;
+	private ContactsService contactService;
 	@Autowired
-	LandService landService;
+	private LandService landService;
 	
 	public void initContent(){
 		setWriteThrough(false);

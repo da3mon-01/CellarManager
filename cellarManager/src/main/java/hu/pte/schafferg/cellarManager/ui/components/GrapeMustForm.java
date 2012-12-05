@@ -28,7 +28,7 @@ public class GrapeMustForm extends Form {
 	private boolean newGrapeMustMode = false;
 	private static Logger logger = Logger.getLogger(GrapeForm.class);
 	@Autowired
-	GrapeService grapeService;
+	private GrapeService grapeService;
 
 	public void initContent(){
 		setWriteThrough(false);

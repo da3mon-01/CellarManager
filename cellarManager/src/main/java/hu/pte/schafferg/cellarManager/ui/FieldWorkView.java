@@ -176,8 +176,8 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 		FieldWork selectedWork = (FieldWork)select;
 		
 		selection = selectedWork;
-		BeanItem<FieldWork> personToEdit = convertFieldWorkToBeanItem(selection);
-		fieldWorkForm.setItemDataSource(personToEdit);
+		BeanItem<FieldWork> fieldworkToEdit = convertFieldWorkToBeanItem(selection);
+		fieldWorkForm.setItemDataSource(fieldworkToEdit);
 		logger.debug("Current selection: "+selection);
 	}
 	

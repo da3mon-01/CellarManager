@@ -188,16 +188,32 @@
 		init-method="initContent" scope="session">
 	</bean>
 	
+	<bean id="analyticService" class="hu.pte.schafferg.cellarManager.services.AnalyticService"
+		scope="session">
+	</bean>
+	<bean id="analyticList"
+		class="hu.pte.schafferg.cellarManager.ui.components.AnalyticList"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="analyticForm"
+		class="hu.pte.schafferg.cellarManager.ui.components.AnalyticForm"
+		scope="session" init-method="initContent">
+	</bean>
+	<bean id="analyticView"
+		class="hu.pte.schafferg.cellarManager.ui.AnalyticView"
+		init-method="initContent" scope="session">
+	</bean>
+
+
 
 	<bean id="wineService" class="hu.pte.schafferg.cellarManager.services.WineService"
 		scope="session">
 	</bean>
-	<bean id="analyticService" class="hu.pte.schafferg.cellarManager.services.AnalyticService"
-		scope="session">
-	</bean>
+	
+	
+	
 	<bean id="saleService" class="hu.pte.schafferg.cellarManager.services.SaleService"
 		scope="session">
 	</bean>
 
-	
 </beans>

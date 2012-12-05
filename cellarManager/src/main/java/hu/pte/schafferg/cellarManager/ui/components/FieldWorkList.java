@@ -23,7 +23,7 @@ public class FieldWorkList extends Table {
 	 */
 	private static final long serialVersionUID = 8876930119158294171L;
 	@Autowired
-	FieldWorkService fieldWorkService;
+	private FieldWorkService fieldWorkService;
 	@Autowired
 	private SimpleDateFormat simpleDateFormat;
 	private static Logger logger = Logger.getLogger(FieldWorkList.class);

@@ -1,7 +1,7 @@
 package hu.pte.schafferg.cellarManager.ui.components;
 
-import hu.pte.schafferg.cellarManager.model.Grape;
-import hu.pte.schafferg.cellarManager.services.GrapeService;
+import hu.pte.schafferg.cellarManager.model.Analytic;
+import hu.pte.schafferg.cellarManager.services.AnalyticService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,41 +16,40 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Table;
 
-public class GrapeList extends Table{
-
+public class AnalyticList extends Table {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6376446782988157087L;
+	private static final long serialVersionUID = -3881079149977751419L;
 	@Autowired
-	private SimpleDateFormat sdf;
+	private AnalyticService analyticService;
 	@Autowired
-	private GrapeService grapeService;
-	private static Logger logger = Logger.getLogger(GrapeList.class);
-	private Object[] listOfVisibleColumns = new Object[]{"type","plantedOn.landOff", "plantedOn.landOffId", "planted", "quantity"};
-	private String[] listOfColumnHeaders = new String[]{"Type", "County Land Office", "Land Office ID", "Date planted", "Quantity [num of plants]"};
-	private List<Grape> grapes = new ArrayList<Grape>();
-	private BeanItemContainer<Grape> grapesContainer = new BeanItemContainer<Grape>(Grape.class);
-	private Object[] ordering = new Object[]{"planted"};
+	private SimpleDateFormat simpleDateFormat;
+	private static Logger logger = Logger.getLogger(AnalyticList.class);
+	private Object[] listOfVisibleColumns = new Object[]{"must", "when", "sulfur", "iron", "sugar", "extract"};
+	private String[] listOfColumnHeaders = new String[]{"Must Tested", "Test Date", "Sulfur [mg]", "Iron [mg]", "Sugar [mg]", "Extract [mg]"};
+	private Object[] ordering = new Object[]{"when"};
 	private boolean[] ascending = new boolean[]{false};
-	
+	private List<Analytic> analytics = new ArrayList<Analytic>();
+	private BeanItemContainer<Analytic> analyticContainer = new BeanItemContainer<Analytic>(Analytic.class);
+
 	public void initContent(){
 		logger.info("InitContent Called");
 		
-		grapesContainer.addNestedContainerProperty("plantedOn.landOff");
-		grapesContainer.addNestedContainerProperty("plantedOn.landOffId");
 		
 		updateTableContents();
 		
 		addStyleName("striped");
 		
-		setContainerDataSource(grapesContainer);
+		setContainerDataSource(analyticContainer);
 		setSelectable(true);
 		setNullSelectionAllowed(false);
 		
 		
 		setWidth("100%");
 		setImmediate(true);
+		
 		
 		setVisibleColumns(listOfVisibleColumns);
 		setColumnHeaders(listOfColumnHeaders);
@@ -59,9 +58,9 @@ public class GrapeList extends Table{
 		
 	}
 	
-	public void create(Grape g) throws RuntimeException{
+	public void create(Analytic a) throws RuntimeException{
 		try {
-			grapeService.create(g);
+			analyticService.create(a);
 		} catch (RuntimeException e) {
 			throw e;
 		}finally {
@@ -69,9 +68,9 @@ public class GrapeList extends Table{
 		}
 	}
 	
-	public void update(Grape g) throws RuntimeException{
+	public void update(Analytic a) throws RuntimeException{
 		try {
-			grapeService.update(g);
+			analyticService.update(a);
 		} catch (Exception e) {
 			throw e;
 		}finally{
@@ -79,9 +78,9 @@ public class GrapeList extends Table{
 		}
 	}
 	
-	public void delete(Grape g) throws RuntimeException {
+	public void delete(Analytic a) throws RuntimeException {
 		try {
-			grapeService.delete(g);
+			analyticService.delete(a);
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -89,17 +88,16 @@ public class GrapeList extends Table{
 		}
 	}
 
+	
 	private void updateTableContents() {
-		grapes.clear();
-		grapesContainer.removeAllItems();
-		grapes = grapeService.readAll();
-		
-		grapesContainer.addAll(grapes);
-		
-		if(grapesContainer.size() != 0){
-			logger.info("Lands Container has stuff in it.");
+		analyticContainer.removeAllItems();
+		analytics.clear();
+		analytics = analyticService.readAll();
+		analyticContainer.addAll(analytics);
+		if(analyticContainer.size()!=0){
+			logger.info("WorkContainer has stuff in it. for ex: " +analyticContainer.firstItemId());
 		}
-		
+
 	}
 	
 	public void addFilter(SimpleStringFilter filter){
@@ -117,32 +115,31 @@ public class GrapeList extends Table{
 	protected String formatPropertyValue(Object rowId, Object colId,
 			Property property) {
 		if(property.getType() == Date.class){
-			return sdf.format((Date)property.getValue());			
+			return simpleDateFormat.format((Date)property.getValue());			
 		}
 		return super.formatPropertyValue(rowId, colId, property);
 	}
 	
-
 	@Override
 	public void attach() {
 		super.attach();
 		updateTableContents();
 	}
 
-	public SimpleDateFormat getSdf() {
-		return sdf;
+	public AnalyticService getAnalyticService() {
+		return analyticService;
 	}
 
-	public void setSdf(SimpleDateFormat sdf) {
-		this.sdf = sdf;
+	public void setAnalyticService(AnalyticService analyticService) {
+		this.analyticService = analyticService;
 	}
 
-	public GrapeService getGrapeService() {
-		return grapeService;
+	public SimpleDateFormat getSimpleDateFormat() {
+		return simpleDateFormat;
 	}
 
-	public void setGrapeService(GrapeService grapeService) {
-		this.grapeService = grapeService;
+	public void setSimpleDateFormat(SimpleDateFormat simpleDateFormat) {
+		this.simpleDateFormat = simpleDateFormat;
 	}
 
 	public Object[] getListOfVisibleColumns() {
@@ -160,22 +157,7 @@ public class GrapeList extends Table{
 	public void setListOfColumnHeaders(String[] listOfColumnHeaders) {
 		this.listOfColumnHeaders = listOfColumnHeaders;
 	}
-
-	public List<Grape> getGrapes() {
-		return grapes;
-	}
-
-	public void setGrapes(List<Grape> grapes) {
-		this.grapes = grapes;
-	}
-
-	public BeanItemContainer<Grape> getGrapesContainer() {
-		return grapesContainer;
-	}
-
-	public void setGrapesContainer(BeanItemContainer<Grape> grapesContainer) {
-		this.grapesContainer = grapesContainer;
-	}
 	
 	
+
 }

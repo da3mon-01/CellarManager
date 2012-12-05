@@ -171,8 +171,8 @@ ValueChangeListener, TextChangeListener {
 		Land selectedLand = (Land)select;
 		
 		selection = selectedLand;
-		BeanItem<Land> personToEdit = convertLandToBeanItem(selection);
-		landsForm.setItemDataSource(personToEdit);
+		BeanItem<Land> landToEdit = convertLandToBeanItem(selection);
+		landsForm.setItemDataSource(landToEdit);
 		logger.debug("Current selection: " + selection.getLandOff()+"/"+selection.getLandOffId());
 	}
 	

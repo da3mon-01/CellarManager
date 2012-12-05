@@ -23,7 +23,7 @@ public class GrapeMustList extends Table {
 	private static final long serialVersionUID = 1346709779366819317L;
 
 	@Autowired
-	GrapeMustService grapeMustService;
+	private GrapeMustService grapeMustService;
 	private static Logger logger = Logger.getLogger(GrapeMustList.class);
 	private Object[] listOfVisibleColumns = new Object[]{"madeFrom.type", "quantity", "quantityAfterHarvest", "quantityLostAfterRacking", "mustDegree", "enriched", "enrichmentDegree", "sweetened"};
 	private String[] listOfColumnHeaders = new String[]{"Type", "Quantity", "Quantity after harvest[L]", "Quantity Lost after racking[L]", "Must Degree[°]", "Enriched?", "Enrichment Degree[°]", "Sweetened?"};

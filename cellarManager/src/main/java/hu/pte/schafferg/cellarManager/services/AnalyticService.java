@@ -34,7 +34,7 @@ public class AnalyticService {
 			throw new ObjectMisMatchException("The saved object does not match the original. Contact an Admin!");
 		}
 		
-		logger.info("Grape was created: "+created);
+		logger.info("Analytic was created: "+created);
 	}
 	
 	public Analytic read(Analytic analytic){

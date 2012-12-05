@@ -28,7 +28,7 @@ public class GrapeForm extends Form {
 	private boolean newGrapeMode = false;
 	private static Logger logger = Logger.getLogger(GrapeForm.class);
 	@Autowired
-	LandService landService;
+	private LandService landService;
 	
 	public void initContent(){
 		setWriteThrough(false);

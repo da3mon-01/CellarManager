@@ -22,7 +22,7 @@ public class LandsList extends Table {
 	 */
 	private static final long serialVersionUID = -6413417016234798538L;
 	@Autowired
-	LandService landService;
+	private LandService landService;
 	private static Logger logger = Logger.getLogger(LandsList.class);
 	private Object[] listOfVisibleColumns = new Object[]{"landOff", "landOffId", "size", "owner.firstName", "owner.lastName", "owner.phoneNumber", "owner.email"};
 	private String[] listOfColumnHeaders = new String[]{"County Land Office", "Land Office ID", "Size [m2]", "Owner First Name", "Owner Last name","Owner Phone Number", "Owner E-mail"};

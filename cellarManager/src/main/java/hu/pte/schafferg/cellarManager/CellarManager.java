@@ -2,6 +2,7 @@ package hu.pte.schafferg.cellarManager;
 
 import hu.pte.schafferg.cellarManager.services.RoleHelperService;
 import hu.pte.schafferg.cellarManager.services.UserService;
+import hu.pte.schafferg.cellarManager.ui.AnalyticView;
 import hu.pte.schafferg.cellarManager.ui.ContactsView;
 import hu.pte.schafferg.cellarManager.ui.FieldWorkView;
 import hu.pte.schafferg.cellarManager.ui.GrapeMustView;
@@ -17,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.Application;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -36,7 +36,6 @@ public class CellarManager extends Application{
 	private Window appWindow;
 	@Autowired
 	private WelcomeView welcomeView;
-	CssLayout menu = new CssLayout();
 	protected static Logger logger = Logger.getLogger(CellarManager.class);
 	@Autowired
 	private UsersView usersView;
@@ -58,6 +57,8 @@ public class CellarManager extends Application{
 	private GrapeView grapeView;
 	@Autowired
 	private GrapeMustView mustView;
+	@Autowired
+	private AnalyticView analyticView;
 	
 
 
@@ -135,6 +136,10 @@ public class CellarManager extends Application{
 	
 	public void switchToMustView(){
 		setMainComponent(mustView);
+	}
+	
+	public void switchToAnalyticView(){
+		setMainComponent(analyticView);
 	}
 
 	public void logout() {
@@ -241,8 +246,14 @@ public class CellarManager extends Application{
 	public void setGrapeView(GrapeView grapeView) {
 		this.grapeView = grapeView;
 	}
-	
-	
+
+	public AnalyticView getAnalyticView() {
+		return analyticView;
+	}
+
+	public void setAnalyticView(AnalyticView analyticView) {
+		this.analyticView = analyticView;
+	}
 	
 	
 
