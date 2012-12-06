@@ -111,9 +111,7 @@ public class Sale {
 
 	@Override
 	public String toString() {
-		return "Sale [id=" + id + ", toWho=" + toWho + ", what=" + what
-				+ ", numOfBottles=" + numOfBottles + ", wineDocID=" + wineDocID
-				+ "]";
+		return what + " sold to "+toWho;
 	}
 	
 	

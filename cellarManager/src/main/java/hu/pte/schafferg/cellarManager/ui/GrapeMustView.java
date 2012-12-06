@@ -243,7 +243,13 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		Button source = event.getButton();
 		
 		if(source == delGrapeMust){
-			openDeleteConfirmWindow();
+			if (selection == null || grapeMustForm.getItemDataSource() == null) {
+				getWindow().showNotification("Warning",
+						"Please select something first!",
+						Notification.TYPE_WARNING_MESSAGE);
+			} else {
+				openDeleteConfirmWindow();
+			}
 		} else if (source == editGrapeMust) {
 			if (selection == null || grapeMustForm.getItemDataSource() == null) {
 				getWindow().showNotification("Warning",

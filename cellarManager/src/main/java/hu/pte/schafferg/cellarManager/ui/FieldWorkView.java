@@ -246,7 +246,13 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 		Button source = event.getButton();
 		
 		if(source == delFieldWork){
-			openDeleteConfirmWindow();
+			if (selection == null || fieldWorkForm.getItemDataSource() == null) {
+				getWindow().showNotification("Warning",
+						"Please select something first!",
+						Notification.TYPE_WARNING_MESSAGE);
+			} else {
+				openDeleteConfirmWindow();
+			}
 		} else if (source == editFieldWork) {
 			if (selection == null || fieldWorkForm.getItemDataSource() == null) {
 				getWindow().showNotification("Warning",

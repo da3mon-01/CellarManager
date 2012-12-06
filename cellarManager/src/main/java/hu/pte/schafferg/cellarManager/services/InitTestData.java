@@ -9,8 +9,11 @@ import hu.pte.schafferg.cellarManager.model.GrapeMust;
 import hu.pte.schafferg.cellarManager.model.Land;
 import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.model.Role;
+import hu.pte.schafferg.cellarManager.model.Sale;
 import hu.pte.schafferg.cellarManager.model.User;
+import hu.pte.schafferg.cellarManager.model.Wine;
 import hu.pte.schafferg.cellarManager.util.FieldWorkType;
+import hu.pte.schafferg.cellarManager.util.WineSweetness;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +46,8 @@ public class InitTestData {
 		mongotemplate.dropCollection("grape");
 		mongotemplate.dropCollection("grapeMust");
 		mongotemplate.dropCollection("analytic");
+		mongotemplate.dropCollection("wine");
+		mongotemplate.dropCollection("sale");
 		
 		sdf.setTimeZone(TimeZone.getTimeZone(appTimeZone));
 		
@@ -149,6 +154,22 @@ public class InitTestData {
 		mongotemplate.save(aT1, "analytic");
 		mongotemplate.save(aT2, "analytic");
 		mongotemplate.save(aP, "analytic");
+		
+		Wine wT = new Wine(UUID.randomUUID().toString(), "A4T59", 17.9, WineSweetness.MEDIUMDRY, gmT, pSteve, 25);
+		Wine wP = new Wine(UUID.randomUUID().toString(), "B5C5U4", 20.4, WineSweetness.SWEET, gmP, pGabe, 15);
+		
+		mongotemplate.save(wT, "wine");
+		mongotemplate.save(wP, "wine");
+		
+		Sale sT1 = new Sale(UUID.randomUUID().toString(), pPetra, wT, 10, "ALOK489");
+		Sale sT2 = new Sale(UUID.randomUUID().toString(), pJuli, wT, 5, "A89IOP");
+		Sale sW1 = new Sale(UUID.randomUUID().toString(), pTomas, wP, 16, "A48JK9");
+		Sale sW2 = new Sale(UUID.randomUUID().toString(), pJani, wP, 9, "BZ954T");
+		
+		mongotemplate.save(sT1, "sale");
+		mongotemplate.save(sT2, "sale");
+		mongotemplate.save(sW1, "sale");
+		mongotemplate.save(sW2, "sale");
 	}
 
 

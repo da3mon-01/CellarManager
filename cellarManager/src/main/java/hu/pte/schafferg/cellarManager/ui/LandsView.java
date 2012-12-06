@@ -240,7 +240,13 @@ ValueChangeListener, TextChangeListener {
 		Button source = event.getButton();
 		
 		if(source == delLand){
-			openDeleteConfirmWindow();
+			if (selection == null || landsForm.getItemDataSource() == null) {
+				getWindow().showNotification("Warning",
+						"Please select something first!",
+						Notification.TYPE_WARNING_MESSAGE);
+			} else {
+				openDeleteConfirmWindow();
+			}
 		} else if (source == editLand) {
 			if (selection == null || landsForm.getItemDataSource() == null) {
 				getWindow().showNotification("Warning",

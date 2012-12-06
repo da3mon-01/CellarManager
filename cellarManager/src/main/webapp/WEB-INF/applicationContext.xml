@@ -209,11 +209,36 @@
 	<bean id="wineService" class="hu.pte.schafferg.cellarManager.services.WineService"
 		scope="session">
 	</bean>
+	<bean id="wineForm"
+		class="hu.pte.schafferg.cellarManager.ui.components.WineForm"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="wineList"
+		class="hu.pte.schafferg.cellarManager.ui.components.WineList"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="wineView"
+		class="hu.pte.schafferg.cellarManager.ui.WineView"
+		init-method="initContent" scope="session">
+	</bean>
 	
 	
 	
 	<bean id="saleService" class="hu.pte.schafferg.cellarManager.services.SaleService"
 		scope="session">
 	</bean>
-
+	<bean id="saleList"
+		class="hu.pte.schafferg.cellarManager.ui.components.SaleList"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="saleForm"
+		class="hu.pte.schafferg.cellarManager.ui.components.SaleForm"
+		init-method="initContent" scope="session">
+	</bean>
+	<bean id="saleView"
+		class="hu.pte.schafferg.cellarManager.ui.SaleView"
+		init-method="initContent" scope="session">
+	</bean>
+	
+	
 </beans>

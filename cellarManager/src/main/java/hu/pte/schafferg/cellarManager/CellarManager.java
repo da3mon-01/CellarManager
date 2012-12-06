@@ -8,9 +8,11 @@ import hu.pte.schafferg.cellarManager.ui.FieldWorkView;
 import hu.pte.schafferg.cellarManager.ui.GrapeMustView;
 import hu.pte.schafferg.cellarManager.ui.GrapeView;
 import hu.pte.schafferg.cellarManager.ui.LandsView;
+import hu.pte.schafferg.cellarManager.ui.SaleView;
 import hu.pte.schafferg.cellarManager.ui.UserSettingsView;
 import hu.pte.schafferg.cellarManager.ui.UsersView;
 import hu.pte.schafferg.cellarManager.ui.WelcomeView;
+import hu.pte.schafferg.cellarManager.ui.WineView;
 import hu.pte.schafferg.cellarManager.ui.components.MainMenu;
 
 import org.apache.log4j.Logger;
@@ -59,6 +61,10 @@ public class CellarManager extends Application{
 	private GrapeMustView mustView;
 	@Autowired
 	private AnalyticView analyticView;
+	@Autowired
+	private WineView wineView;
+	@Autowired
+	private SaleView saleView;
 	
 
 
@@ -140,6 +146,14 @@ public class CellarManager extends Application{
 	
 	public void switchToAnalyticView(){
 		setMainComponent(analyticView);
+	}
+	
+	public void switchToWineView(){
+		setMainComponent(wineView);
+	}
+	
+	public void switchToSaleView(){
+		setMainComponent(saleView);
 	}
 
 	public void logout() {
@@ -254,6 +268,32 @@ public class CellarManager extends Application{
 	public void setAnalyticView(AnalyticView analyticView) {
 		this.analyticView = analyticView;
 	}
+
+	public GrapeMustView getMustView() {
+		return mustView;
+	}
+
+	public void setMustView(GrapeMustView mustView) {
+		this.mustView = mustView;
+	}
+
+	public WineView getWineView() {
+		return wineView;
+	}
+
+	public void setWineView(WineView wineView) {
+		this.wineView = wineView;
+	}
+
+	public SaleView getSaleView() {
+		return saleView;
+	}
+
+	public void setSaleView(SaleView saleView) {
+		this.saleView = saleView;
+	}
+	
+	
 	
 	
 

@@ -11,7 +11,6 @@ public class Wine {
 	@Id
 	private String id;
 	private String obiNumber;
-	private String type;
 	private double alcoholDegree;
 	private WineSweetness sweetness;
 	@DBRef
@@ -20,12 +19,11 @@ public class Wine {
 	private Person bottler;
 	private int numOfBottles;
 	
-	public Wine(String id, String obiNumber, String type, double alcoholDegree,
+	public Wine(String id, String obiNumber, double alcoholDegree,
 			WineSweetness sweetness, GrapeMust madeFrom, Person bottler,
 			int numOfBottles) {
 		this.id = id;
 		this.obiNumber = obiNumber;
-		this.type = type;
 		this.alcoholDegree = alcoholDegree;
 		this.sweetness = sweetness;
 		this.madeFrom = madeFrom;
@@ -54,13 +52,6 @@ public class Wine {
 		this.obiNumber = obiNumber;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public double getAlcoholDegree() {
 		return alcoholDegree;
@@ -102,12 +93,11 @@ public class Wine {
 		this.numOfBottles = numOfBottles;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Wine [id=" + id + ", obiNumber=" + obiNumber + ", type=" + type
-				+ ", alcoholDegree=" + alcoholDegree + ", sweetness="
-				+ sweetness + ", madeFrom=" + madeFrom + ", bottler=" + bottler
-				+ ", numOfBottles=" + numOfBottles + "]";
+		return "Wine:" + obiNumber;
 	}
 
 	@Override
@@ -125,7 +115,6 @@ public class Wine {
 				+ ((obiNumber == null) ? 0 : obiNumber.hashCode());
 		result = prime * result
 				+ ((sweetness == null) ? 0 : sweetness.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -160,15 +149,12 @@ public class Wine {
 			return false;
 		if (sweetness != other.sweetness)
 			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
-			return false;
 		return true;
 	}
+
 	
 	
+		
 	
 
 }
