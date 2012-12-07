@@ -4,6 +4,8 @@ import hu.pte.schafferg.cellarManager.model.Grape;
 import hu.pte.schafferg.cellarManager.model.GrapeMust;
 import hu.pte.schafferg.cellarManager.ui.components.GrapeMustForm;
 import hu.pte.schafferg.cellarManager.ui.components.GrapeMustList;
+import hu.pte.schafferg.cellarManager.ui.components.GrapeMustListOfAnalytics;
+import hu.pte.schafferg.cellarManager.ui.components.GrapeMustListOfWinesMade;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Select;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
@@ -46,13 +49,19 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 	private GrapeMustList grapeMustList;
 	@Autowired
 	private GrapeMustForm grapeMustForm;
+	@Autowired
+	private GrapeMustListOfAnalytics listOfAnalytics;
+	@Autowired
+	private GrapeMustListOfWinesMade listOfWinesMade;
 	private GrapeMust selection = null;
 	private Logger logger = Logger.getLogger(LandsView.class);
 	private boolean newGrapeMustMode = false;
+	private TabSheet mustTab = new TabSheet();
 	
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
+		setWidth("98%");
 		toolbar.setSpacing(true);
 
 		newGrapeMust.addStyleName("big");
@@ -101,10 +110,13 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		grapeMustList.addListener((ValueChangeListener) this);
 		addComponent(grapeMustList);
 		
-		Panel landsDetails = new Panel();
-		landsDetails.setCaption("Grape must Details");
-		landsDetails.addComponent(grapeMustForm);
-		addComponent(landsDetails);
+		Panel mustDetails = new Panel();
+		mustDetails.setCaption("Grape must Details");
+		mustDetails.addComponent(mustTab);
+		mustTab.addTab(grapeMustForm).setCaption("Grape Must");
+		mustTab.addTab(listOfAnalytics).setCaption("Analytics");
+		mustTab.addTab(listOfWinesMade).setCaption("Wines Made");
+		addComponent(mustDetails);
 	}
 	
 	public void createGrapeMust(){
@@ -173,6 +185,8 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		selection = selectedGrapeMust;
 		BeanItem<GrapeMust> mustToEdit = convertGrapeMustToBeanItem(selection);
 		grapeMustForm.setItemDataSource(mustToEdit);
+		listOfAnalytics.setMustData(selection);
+		listOfWinesMade.setMustData(selection);
 		logger.debug("Current selection: " + selection);
 	}
 	
@@ -308,6 +322,22 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 
 	public void setGrapeMustForm(GrapeMustForm grapeMustForm) {
 		this.grapeMustForm = grapeMustForm;
+	}
+
+	public GrapeMustListOfAnalytics getListOfAnalytics() {
+		return listOfAnalytics;
+	}
+
+	public void setListOfAnalytics(GrapeMustListOfAnalytics listOfAnalytics) {
+		this.listOfAnalytics = listOfAnalytics;
+	}
+
+	public GrapeMustListOfWinesMade getListOfWinesMade() {
+		return listOfWinesMade;
+	}
+
+	public void setListOfWinesMade(GrapeMustListOfWinesMade listOfWinesMade) {
+		this.listOfWinesMade = listOfWinesMade;
 	}
 	
 	

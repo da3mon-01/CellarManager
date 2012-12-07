@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Item;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
@@ -69,8 +70,14 @@ public class SaleForm extends Form {
 					soldToSelect.setRequired(true);
 					soldToSelect.setRequiredError("Sold to is required!");
 					field = soldToSelect;
-				}
-				if(pid.equals("what")){
+				}else if(pid.equals("date")){
+					DateField date = new DateField("Sale Date");
+					date.setResolution(DateField.RESOLUTION_DAY);
+					date.setRequired(true);
+					date.setRequiredError("Sale Date is Required");
+					date.setDateFormat("yyyy-MMM-dd");
+					field = date;
+				}else if(pid.equals("what")){
 					List<Wine> wines = wineService.readAll();
 					Select wineSelect = new Select("Item sold:");
 					for(Wine w : wines){

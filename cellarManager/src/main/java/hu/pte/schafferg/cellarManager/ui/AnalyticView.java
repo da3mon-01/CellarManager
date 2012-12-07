@@ -53,6 +53,7 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
+		setWidth("98%");
 		toolbar.setSpacing(true);
 
 		newAnalytic.addStyleName("big");
@@ -101,10 +102,10 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 		analyticList.addListener((ValueChangeListener) this);
 		addComponent(analyticList);
 		
-		Panel landsDetails = new Panel();
-		landsDetails.setCaption("Analytic Details");
-		landsDetails.addComponent(analyticForm);
-		addComponent(landsDetails);
+		Panel analyticDetails = new Panel();
+		analyticDetails.setCaption("Analytic Details");
+		analyticDetails.addComponent(analyticForm);
+		addComponent(analyticDetails);
 	}
 	
 	public void createFieldWork(){

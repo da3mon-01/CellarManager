@@ -1,16 +1,8 @@
 package hu.pte.schafferg.cellarManager.services;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import hu.pte.schafferg.cellarManager.model.FieldWork;
 import hu.pte.schafferg.cellarManager.model.Grape;
 import hu.pte.schafferg.cellarManager.model.Land;
-import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.repo.FieldWorkRepository;
 import hu.pte.schafferg.cellarManager.repo.GrapeRepository;
 import hu.pte.schafferg.cellarManager.repo.LandRepository;
@@ -18,16 +10,24 @@ import hu.pte.schafferg.cellarManager.repo.PersonRepository;
 import hu.pte.schafferg.cellarManager.util.ObjectMisMatchException;
 import hu.pte.schafferg.cellarManager.util.TargetNotFoundInDBException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 public class LandService {
 	
 	@Autowired
-	public LandRepository landRepo;
+	private LandRepository landRepo;
 	@Autowired
-	public GrapeRepository grapeRepo;
+	private GrapeRepository grapeRepo;
 	@Autowired
-	public PersonRepository personRepo;
+	private PersonRepository personRepo;
 	@Autowired
-	public FieldWorkRepository fieldWorkRepo;
+	private FieldWorkRepository fieldWorkRepo;
 	
 	private static Logger logger = Logger.getLogger(LandService.class);
 	
@@ -54,16 +54,37 @@ public class LandService {
 		return landRepo.findAll();
 	}
 	
-	public List<Land> readAllFromOwner(Person owner){
-		return landRepo.findByOwner(owner);
-	}
 	
 	public List<Grape> readAllPlanetOn(Land land){
-		return grapeRepo.findByPlantedOn(land);
+		logger.info(land+"-> searching related Grapes");
+		List<Grape> allGrapes = grapeRepo.findAll();
+		List<Grape> result = new ArrayList<Grape>();
+		
+		for(Grape g: allGrapes){
+			if(g.getPlantedOn().equals(land)){
+				result.add(g);
+			}
+		}
+		
+		logger.info("Found: "+result);
+		
+		return result;
 	}
 	
 	public List<FieldWork> readAllFieldWorkDone(Land land){
-		return fieldWorkRepo.findByOnWhat(land);
+		logger.info(land+"-> searching related Fieldworks");
+		List<FieldWork> allworks = fieldWorkRepo.findAll();
+		List<FieldWork> result = new ArrayList<FieldWork>();
+		
+		for(FieldWork f: allworks){
+			if(f.getOnWhat().equals(land)){
+				result.add(f);
+			}
+		}
+		
+		logger.info("Found: "+result);
+		
+		return result;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
@@ -97,5 +118,39 @@ public class LandService {
 		landRepo.delete(landInDb);
 		
 	}
+
+	public LandRepository getLandRepo() {
+		return landRepo;
+	}
+
+	public void setLandRepo(LandRepository landRepo) {
+		this.landRepo = landRepo;
+	}
+
+	public GrapeRepository getGrapeRepo() {
+		return grapeRepo;
+	}
+
+	public void setGrapeRepo(GrapeRepository grapeRepo) {
+		this.grapeRepo = grapeRepo;
+	}
+
+	public PersonRepository getPersonRepo() {
+		return personRepo;
+	}
+
+	public void setPersonRepo(PersonRepository personRepo) {
+		this.personRepo = personRepo;
+	}
+
+	public FieldWorkRepository getFieldWorkRepo() {
+		return fieldWorkRepo;
+	}
+
+	public void setFieldWorkRepo(FieldWorkRepository fieldWorkRepo) {
+		this.fieldWorkRepo = fieldWorkRepo;
+	}
+	
+	
 
 }

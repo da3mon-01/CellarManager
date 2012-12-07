@@ -64,6 +64,7 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 	public void initContent() {
 		setMargin(true);
 		setSpacing(true);
+		setWidth("98%");
 		toolbar.setSpacing(true);
 
 		newUser.addStyleName("big");

@@ -1,5 +1,7 @@
 package hu.pte.schafferg.cellarManager.model;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,14 +17,16 @@ public class Sale {
 	private Wine what;
 	private int numOfBottles;
 	private String wineDocID;
+	private Date date;
 	
 	public Sale(String id, Person toWho, Wine what, int numOfBottles,
-			String wineDocID) {
+			String wineDocID, Date date) {
 		this.id = id;
 		this.toWho = toWho;
 		this.what = what;
 		this.numOfBottles = numOfBottles;
 		this.wineDocID = wineDocID;
+		this.date = date;
 	}
 
 	public Sale() {
@@ -68,10 +72,19 @@ public class Sale {
 		this.wineDocID = wineDocID;
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + numOfBottles;
 		result = prime * result + ((toWho == null) ? 0 : toWho.hashCode());
 		result = prime * result + ((what == null) ? 0 : what.hashCode());
@@ -89,6 +102,11 @@ public class Sale {
 		if (getClass() != obj.getClass())
 			return false;
 		Sale other = (Sale) obj;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
 		if (numOfBottles != other.numOfBottles)
 			return false;
 		if (toWho == null) {
@@ -111,7 +129,7 @@ public class Sale {
 
 	@Override
 	public String toString() {
-		return what + " sold to "+toWho;
+		return date+" : "+what + " sold to "+toWho;
 	}
 	
 	

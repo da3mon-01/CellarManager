@@ -1,13 +1,15 @@
 package hu.pte.schafferg.cellarManager.services;
 
-import hu.pte.schafferg.cellarManager.model.Person;
+import hu.pte.schafferg.cellarManager.model.Sale;
 import hu.pte.schafferg.cellarManager.model.Wine;
 import hu.pte.schafferg.cellarManager.repo.GrapeMustRepository;
 import hu.pte.schafferg.cellarManager.repo.PersonRepository;
+import hu.pte.schafferg.cellarManager.repo.SaleRepository;
 import hu.pte.schafferg.cellarManager.repo.WineRepository;
 import hu.pte.schafferg.cellarManager.util.ObjectMisMatchException;
 import hu.pte.schafferg.cellarManager.util.TargetNotFoundInDBException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +23,8 @@ public class WineService {
 	private WineRepository wineRepo;
 	@Autowired
 	private GrapeMustRepository grapeMustRepo;
+	@Autowired
+	private SaleRepository saleRepo;
 	@Autowired
 	private PersonRepository personRepo;
 	private static Logger logger = Logger.getLogger(WineService.class);
@@ -49,8 +53,20 @@ public class WineService {
 		return wineRepo.findAll();
 	}
 	
-	public List<Wine> readAllFromABottler(Person bottler){
-		return wineRepo.findByBottler(bottler);
+	public List<Sale> getAllSales(Wine wine){
+		logger.info(wine+"-> searching related Sales");
+		List<Sale> allSales = saleRepo.findAll();
+		List<Sale> result = new ArrayList<Sale>();
+		
+		for(Sale s: allSales){
+			if(s.getWhat().equals(wine)){
+				result.add(s);
+			}
+		}
+		
+		logger.info("Found: "+result);
+		return result;
+		
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
@@ -87,4 +103,37 @@ public class WineService {
 		logger.info("Wine deleted: "+wineInDB);
 	}
 
+	public WineRepository getWineRepo() {
+		return wineRepo;
+	}
+
+	public void setWineRepo(WineRepository wineRepo) {
+		this.wineRepo = wineRepo;
+	}
+
+	public GrapeMustRepository getGrapeMustRepo() {
+		return grapeMustRepo;
+	}
+
+	public void setGrapeMustRepo(GrapeMustRepository grapeMustRepo) {
+		this.grapeMustRepo = grapeMustRepo;
+	}
+
+	public SaleRepository getSaleRepo() {
+		return saleRepo;
+	}
+
+	public void setSaleRepo(SaleRepository saleRepo) {
+		this.saleRepo = saleRepo;
+	}
+
+	public PersonRepository getPersonRepo() {
+		return personRepo;
+	}
+
+	public void setPersonRepo(PersonRepository personRepo) {
+		this.personRepo = personRepo;
+	}
+
+	
 }

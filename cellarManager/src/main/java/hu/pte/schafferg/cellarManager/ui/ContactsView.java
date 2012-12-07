@@ -2,6 +2,10 @@ package hu.pte.schafferg.cellarManager.ui;
 
 import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.ui.components.ContactList;
+import hu.pte.schafferg.cellarManager.ui.components.ContactListOfFieldWork;
+import hu.pte.schafferg.cellarManager.ui.components.ContactListOfLandOwned;
+import hu.pte.schafferg.cellarManager.ui.components.ContactListOfWineBottled;
+import hu.pte.schafferg.cellarManager.ui.components.ContactListOfWineBought;
 import hu.pte.schafferg.cellarManager.ui.components.ContactsForm;
 
 import java.util.Date;
@@ -25,6 +29,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Select;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
@@ -47,11 +52,22 @@ ValueChangeListener, TextChangeListener {
 	private ContactList contactList;
 	@Autowired
 	private ContactsForm contactForm;
+	@Autowired
+	private ContactListOfFieldWork listOfFieldWork;
+	@Autowired
+	private ContactListOfLandOwned listOfLandOwned;
+	@Autowired
+	private ContactListOfWineBottled listOfWineBottled;
+	@Autowired
+	private ContactListOfWineBought listOfWineBought;
 	private Person selection = null;
 	private Logger logger = Logger.getLogger(ContactsView.class);
 	private boolean newPersonMode = false;
+	private TabSheet contactTab = new TabSheet();
 
 	public void initContent(){
+		
+		setWidth("98%");
 		setMargin(true);
 		setSpacing(true);
 		toolbar.setSpacing(true);
@@ -104,7 +120,12 @@ ValueChangeListener, TextChangeListener {
 
 		Panel contactDetails = new Panel();
 		contactDetails.setCaption("Contact Details");
-		contactDetails.addComponent(contactForm);
+		contactDetails.addComponent(contactTab);
+		contactTab.addTab(contactForm).setCaption("Contact");
+		contactTab.addTab(listOfFieldWork).setCaption("Field work done");
+		contactTab.addTab(listOfLandOwned).setCaption("Land owned");
+		contactTab.addTab(listOfWineBottled).setCaption("Wine Bottled");
+		contactTab.addTab(listOfWineBought).setCaption("Wine Bought");
 		addComponent(contactDetails);
 
 	}
@@ -176,6 +197,10 @@ ValueChangeListener, TextChangeListener {
 		selection = selectedPerson;
 		BeanItem<Person> personToEdit = convertPersonToBeanItem(selection);
 		contactForm.setItemDataSource(personToEdit);
+		listOfFieldWork.setContactData(selection);
+		listOfLandOwned.setContactData(selection);
+		listOfWineBottled.setContactData(selection);
+		listOfWineBought.setContactData(selection);
 		logger.debug("Current selection: " + selection.getFirstName()+" "+selection.getLastName());
 	}
 
@@ -313,7 +338,38 @@ ValueChangeListener, TextChangeListener {
 		contactForm.setNewPersonMode(newPersonMode);
 	}
 
+	public ContactListOfFieldWork getListOfFieldWork() {
+		return listOfFieldWork;
+	}
 
+	public void setListOfFieldWork(ContactListOfFieldWork listOfFieldWork) {
+		this.listOfFieldWork = listOfFieldWork;
+	}
 
+	public ContactListOfLandOwned getListOfLandOwned() {
+		return listOfLandOwned;
+	}
+
+	public void setListOfLandOwned(ContactListOfLandOwned listOfLandOwned) {
+		this.listOfLandOwned = listOfLandOwned;
+	}
+
+	public ContactListOfWineBottled getListOfWineBottled() {
+		return listOfWineBottled;
+	}
+
+	public void setListOfWineBottled(ContactListOfWineBottled listOfWineBottled) {
+		this.listOfWineBottled = listOfWineBottled;
+	}
+
+	public ContactListOfWineBought getListOfWineBought() {
+		return listOfWineBought;
+	}
+
+	public void setListOfWineBought(ContactListOfWineBought listOfWineBought) {
+		this.listOfWineBought = listOfWineBought;
+	}
+	
+	
 
 }

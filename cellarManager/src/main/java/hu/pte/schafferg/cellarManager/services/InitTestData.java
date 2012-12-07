@@ -106,7 +106,7 @@ public class InitTestData {
 		Date dTomas = sdf.parse("1986-10-14");
 		Person pTomas = new Person(UUID.randomUUID().toString(), "Tomas", "Johnsasson", 8236, "dasady", "sgdsddgss", "dsad@dasdadasd.hu", dTomas, "+36-20/451-1555", false);
 		Date dPetra = sdf.parse("1986-11-14");
-		Person pPetra = new Person(UUID.randomUUID().toString(), "Petra", "Johnsasson", 8236, "djkjhsady", "gjhgggss", "dsasddgrtgsd.hu", dPetra, "+36-20/451-1785", false);
+		Person pPetra = new Person(UUID.randomUUID().toString(), "Petra", "Johnsasson", 8236, "djkjhsady", "gjhgggss", "dsasddg@rtgsd.hu", dPetra, "+36-20/451-1785", false);
 		Date dJuli = sdf.parse("1985-10-14");
 		Person pJuli = new Person(UUID.randomUUID().toString(), "Juli", "Johnadsson", 8236, "dasdsagrfgsady", "sgdsddgss", "dsad@kljksd.hu", dJuli, "+36-20/451-3555", false);
 		
@@ -161,10 +161,10 @@ public class InitTestData {
 		mongotemplate.save(wT, "wine");
 		mongotemplate.save(wP, "wine");
 		
-		Sale sT1 = new Sale(UUID.randomUUID().toString(), pPetra, wT, 10, "ALOK489");
-		Sale sT2 = new Sale(UUID.randomUUID().toString(), pJuli, wT, 5, "A89IOP");
-		Sale sW1 = new Sale(UUID.randomUUID().toString(), pTomas, wP, 16, "A48JK9");
-		Sale sW2 = new Sale(UUID.randomUUID().toString(), pJani, wP, 9, "BZ954T");
+		Sale sT1 = new Sale(UUID.randomUUID().toString(), pPetra, wT, 10, "ALOK489", sdf.parse("2012-10-14"));
+		Sale sT2 = new Sale(UUID.randomUUID().toString(), pJuli, wT, 5, "A89IOP", sdf.parse("2012-11-15"));
+		Sale sW1 = new Sale(UUID.randomUUID().toString(), pTomas, wP, 16, "A48JK9", sdf.parse("2012-12-01"));
+		Sale sW2 = new Sale(UUID.randomUUID().toString(), pJani, wP, 9, "BZ954T", sdf.parse("2012-12-07"));
 		
 		mongotemplate.save(sT1, "sale");
 		mongotemplate.save(sT2, "sale");

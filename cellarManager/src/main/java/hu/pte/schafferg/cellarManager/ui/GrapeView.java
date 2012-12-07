@@ -55,6 +55,7 @@ public class GrapeView extends VerticalLayout implements ClickListener,
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
+		setWidth("98%");
 		toolbar.setSpacing(true);
 
 		newGrape.addStyleName("big");
@@ -103,10 +104,10 @@ public class GrapeView extends VerticalLayout implements ClickListener,
 		grapesList.addListener((ValueChangeListener) this);
 		addComponent(grapesList);
 		
-		Panel landsDetails = new Panel();
-		landsDetails.setCaption("Grape Details");
-		landsDetails.addComponent(grapesForm);
-		addComponent(landsDetails);
+		Panel grapeDetails = new Panel();
+		grapeDetails.setCaption("Grape Details");
+		grapeDetails.addComponent(grapesForm);
+		addComponent(grapeDetails);
 	}
 	
 	public void createGrape(){

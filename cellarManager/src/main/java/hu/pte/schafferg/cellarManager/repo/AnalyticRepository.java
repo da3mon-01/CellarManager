@@ -9,6 +9,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface AnalyticRepository extends MongoRepository<Analytic, String> {
 	
-	public Analytic findById(String id);
-	public List<Analytic> findByMust(GrapeMust must);
+	Analytic findById(String id);
+	List<Analytic> findByMust(GrapeMust must);
 }

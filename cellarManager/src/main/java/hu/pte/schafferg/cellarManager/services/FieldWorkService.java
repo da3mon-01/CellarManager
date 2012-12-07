@@ -16,9 +16,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public class FieldWorkService {
 	
 	@Autowired
-	public FieldWorkRepository fieldWorkRepo;
+	private FieldWorkRepository fieldWorkRepo;
 	@Autowired
-	public LandRepository landRepo;
+	private LandRepository landRepo;
 	private static Logger logger = Logger.getLogger(FieldWorkService.class);
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
@@ -75,5 +75,23 @@ public class FieldWorkService {
 		fieldWorkRepo.delete(fieldWorkInDB);
 		logger.info("FieldWork deleted: "+fieldWorkInDB);
 	}
+
+	public FieldWorkRepository getFieldWorkRepo() {
+		return fieldWorkRepo;
+	}
+
+	public void setFieldWorkRepo(FieldWorkRepository fieldWorkRepo) {
+		this.fieldWorkRepo = fieldWorkRepo;
+	}
+
+	public LandRepository getLandRepo() {
+		return landRepo;
+	}
+
+	public void setLandRepo(LandRepository landRepo) {
+		this.landRepo = landRepo;
+	}
+	
+	
 
 }

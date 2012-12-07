@@ -82,4 +82,22 @@ public class AnalyticService {
 		logger.info("Analytic deleted: "+analyticInDB);
 	}
 
+	public AnalyticRepository getAnalyticRepo() {
+		return analyticRepo;
+	}
+
+	public void setAnalyticRepo(AnalyticRepository analyticRepo) {
+		this.analyticRepo = analyticRepo;
+	}
+
+	public GrapeMustRepository getGrapeMustRepo() {
+		return grapeMustRepo;
+	}
+
+	public void setGrapeMustRepo(GrapeMustRepository grapeMustRepo) {
+		this.grapeMustRepo = grapeMustRepo;
+	}
+	
+	
+
 }

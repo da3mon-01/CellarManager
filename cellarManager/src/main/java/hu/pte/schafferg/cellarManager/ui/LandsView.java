@@ -2,6 +2,8 @@ package hu.pte.schafferg.cellarManager.ui;
 
 import hu.pte.schafferg.cellarManager.model.Land;
 import hu.pte.schafferg.cellarManager.model.Person;
+import hu.pte.schafferg.cellarManager.ui.components.LandGrapesPlanted;
+import hu.pte.schafferg.cellarManager.ui.components.LandListOfFieldWorkDone;
 import hu.pte.schafferg.cellarManager.ui.components.LandsForm;
 import hu.pte.schafferg.cellarManager.ui.components.LandsList;
 
@@ -24,6 +26,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Select;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
@@ -46,13 +49,19 @@ ValueChangeListener, TextChangeListener {
 	private LandsList landsList;
 	@Autowired
 	private LandsForm landsForm;
+	@Autowired
+	private LandListOfFieldWorkDone listOfWorkDone;
+	@Autowired
+	private LandGrapesPlanted listOfGrapesPlanted;
 	private Land selection = null;
 	private Logger logger = Logger.getLogger(LandsView.class);
 	private boolean newLandMode = false;
+	private TabSheet landTab = new TabSheet();
 	
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
+		setWidth("98%");
 		toolbar.setSpacing(true);
 
 		newLand.addStyleName("big");
@@ -103,7 +112,10 @@ ValueChangeListener, TextChangeListener {
 		
 		Panel landsDetails = new Panel();
 		landsDetails.setCaption("Land Details");
-		landsDetails.addComponent(landsForm);
+		landsDetails.addComponent(landTab);
+		landTab.addTab(landsForm).setCaption("Land");
+		landTab.addTab(listOfWorkDone).setCaption("Field Work Done");
+		landTab.addTab(listOfGrapesPlanted).setCaption("Grapes Planted");
 		addComponent(landsDetails);
 	}
 	
@@ -173,6 +185,8 @@ ValueChangeListener, TextChangeListener {
 		selection = selectedLand;
 		BeanItem<Land> landToEdit = convertLandToBeanItem(selection);
 		landsForm.setItemDataSource(landToEdit);
+		listOfWorkDone.setLandData(selection);
+		listOfGrapesPlanted.setLandData(selection);
 		logger.debug("Current selection: " + selection.getLandOff()+"/"+selection.getLandOffId());
 	}
 	

@@ -1,7 +1,6 @@
 package hu.pte.schafferg.cellarManager.services;
 
 import hu.pte.schafferg.cellarManager.model.Grape;
-import hu.pte.schafferg.cellarManager.model.Land;
 import hu.pte.schafferg.cellarManager.repo.GrapeRepository;
 import hu.pte.schafferg.cellarManager.repo.LandRepository;
 import hu.pte.schafferg.cellarManager.util.ObjectMisMatchException;
@@ -44,10 +43,7 @@ public class GrapeService {
 		return grapeRepo.findAll();
 	}
 	
-	public List<Grape> readAllFromALand(Land land){
-		return grapeRepo.findByPlantedOn(land);
-	}
-	
+
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void update(Grape grape) throws RuntimeException{
 		Grape grapeInDb = grapeRepo.findById(grape.getId());

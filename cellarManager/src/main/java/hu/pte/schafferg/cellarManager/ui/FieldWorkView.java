@@ -57,6 +57,7 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
+		setWidth("98%");
 		toolbar.setSpacing(true);
 
 		newFieldWork.addStyleName("big");
@@ -105,10 +106,10 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 		fieldWorkList.addListener((ValueChangeListener) this);
 		addComponent(fieldWorkList);
 		
-		Panel landsDetails = new Panel();
-		landsDetails.setCaption("FieldWork Details");
-		landsDetails.addComponent(fieldWorkForm);
-		addComponent(landsDetails);
+		Panel workDetails = new Panel();
+		workDetails.setCaption("FieldWork Details");
+		workDetails.addComponent(fieldWorkForm);
+		addComponent(workDetails);
 	}
 	
 	public void createFieldWork(){

@@ -5,6 +5,7 @@ import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.model.Wine;
 import hu.pte.schafferg.cellarManager.ui.components.WineForm;
 import hu.pte.schafferg.cellarManager.ui.components.WineList;
+import hu.pte.schafferg.cellarManager.ui.components.WineSoldItems;
 import hu.pte.schafferg.cellarManager.util.WineSweetness;
 
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Select;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
@@ -47,13 +49,17 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 	private WineList wineList;
 	@Autowired
 	private WineForm wineForm;
+	@Autowired
+	private WineSoldItems listOfSoldItems;
 	private Wine selection = null;
 	private Logger logger = Logger.getLogger(WineView.class);
 	private boolean newWineMode = false;
+	private TabSheet winesheet = new TabSheet();
 	
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
+		setWidth("98%");
 		toolbar.setSpacing(true);
 
 		newWine.addStyleName("big");
@@ -102,10 +108,12 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 		wineList.addListener((ValueChangeListener) this);
 		addComponent(wineList);
 		
-		Panel landsDetails = new Panel();
-		landsDetails.setCaption("Wine Details");
-		landsDetails.addComponent(wineForm);
-		addComponent(landsDetails);
+		Panel wineDetails = new Panel();
+		wineDetails.setCaption("Wine Details");
+		wineDetails.addComponent(winesheet);
+		winesheet.addTab(wineForm).setCaption("Wine");
+		winesheet.addTab(listOfSoldItems).setCaption("Sold Items");
+		addComponent(wineDetails);
 	}
 	
 	public void createWine(){
@@ -174,6 +182,7 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 		selection = selectedWine;
 		BeanItem<Wine> mustToEdit = convertWineToBeanItem(selection);
 		wineForm.setItemDataSource(mustToEdit);
+		listOfSoldItems.setWineData(selection);
 		logger.debug("Current selection: " + selection);
 	}
 	
@@ -310,6 +319,14 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 
 	public void setWineForm(WineForm wineForm) {
 		this.wineForm = wineForm;
+	}
+
+	public WineSoldItems getListOfSoldItems() {
+		return listOfSoldItems;
+	}
+
+	public void setListOfSoldItems(WineSoldItems listOfSoldItems) {
+		this.listOfSoldItems = listOfSoldItems;
 	}
 	
 	

@@ -3,12 +3,15 @@ package hu.pte.schafferg.cellarManager.ui.components;
 import hu.pte.schafferg.cellarManager.model.Sale;
 import hu.pte.schafferg.cellarManager.services.SaleService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Table;
@@ -21,11 +24,15 @@ public class SaleList extends Table {
 	private static final long serialVersionUID = 2236611665177416684L;
 	@Autowired
 	private SaleService saleService;
+	@Autowired
+	private SimpleDateFormat simpleDateFormat;
 	private static Logger logger = Logger.getLogger(WineList.class);
-	private Object[] listOfVisibleColumns = new Object[]{"toWho", "what", "numOfBottles", "wineDocID"};
-	private String[] listOfColumnHeaders = new String[]{"Sold to", "Item sold", "Number of bottles sold", "Wine Documentation ID"};
+	private Object[] listOfVisibleColumns = new Object[]{"toWho", "date", "what", "numOfBottles", "wineDocID"};
+	private String[] listOfColumnHeaders = new String[]{"Buyer", "Sale Date", "Item sold", "Number of bottles sold", "Wine Documentation ID"};
 	private List<Sale> sales = new ArrayList<Sale>();
 	private BeanItemContainer<Sale> saleContainer = new BeanItemContainer<Sale>(Sale.class);
+	private Object[] ordering = new Object[]{"date"};
+	private boolean[] ascending = new boolean[]{false};
 	
 	public void initContent(){
 		logger.info("InitContent Called");
@@ -46,7 +53,7 @@ public class SaleList extends Table {
 		setVisibleColumns(listOfVisibleColumns);
 		setColumnHeaders(listOfColumnHeaders);
 		
-		
+		sort(ordering, ascending);
 	}
 	
 	public void create(Sale s) throws RuntimeException{
@@ -101,6 +108,15 @@ public class SaleList extends Table {
 		f.addContainerFilter(filter);
 		logger.info("Filter added: "+filter.getFilterString()+" in "+filter.getPropertyId());
 		
+	}
+	
+	@Override
+	protected String formatPropertyValue(Object rowId, Object colId,
+			Property property) {
+		if(property.getType() == Date.class){
+			return simpleDateFormat.format((Date)property.getValue());			
+		}
+		return super.formatPropertyValue(rowId, colId, property);
 	}
 	
 	@Override

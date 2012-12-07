@@ -11,10 +11,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface FieldWorkRepository extends MongoRepository<FieldWork, String> {
 	
-	public FieldWork findById(String id);
+	FieldWork findById(String id);
 	
-	public List<FieldWork> findByWho(Person who);
+	List<FieldWork> findByWho(Person who);
 	
-	public List<FieldWork> findByOnWhat(Land onWhat);
+	List<FieldWork> findByOnWhat(Land onWhat);
 
 }

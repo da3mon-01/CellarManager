@@ -1,11 +1,16 @@
 package hu.pte.schafferg.cellarManager.services;
 
+import hu.pte.schafferg.cellarManager.model.Analytic;
 import hu.pte.schafferg.cellarManager.model.GrapeMust;
+import hu.pte.schafferg.cellarManager.model.Wine;
+import hu.pte.schafferg.cellarManager.repo.AnalyticRepository;
 import hu.pte.schafferg.cellarManager.repo.GrapeMustRepository;
 import hu.pte.schafferg.cellarManager.repo.GrapeRepository;
+import hu.pte.schafferg.cellarManager.repo.WineRepository;
 import hu.pte.schafferg.cellarManager.util.ObjectMisMatchException;
 import hu.pte.schafferg.cellarManager.util.TargetNotFoundInDBException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +24,10 @@ public class GrapeMustService {
 	private GrapeMustRepository grapeMustRepo;
 	@Autowired
 	private GrapeRepository grapeRepo;
+	@Autowired
+	private AnalyticRepository analyticRepo;
+	@Autowired
+	private WineRepository wineRepo;
 	private static Logger logger = Logger.getLogger(GrapeMustService.class);
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
@@ -42,6 +51,38 @@ public class GrapeMustService {
 	
 	public List<GrapeMust> readAll(){
 		return grapeMustRepo.findAll();
+	}
+	
+	public List<Analytic> getAllAnalytics(GrapeMust must){
+		logger.info(must+"-> searching related Analytics");
+		List<Analytic> allAnalytic = analyticRepo.findAll();
+		List<Analytic> result = new ArrayList<Analytic>();
+		
+		for(Analytic a: allAnalytic){
+			if(a.getMust().equals(must)){
+				result.add(a);
+			}
+		}
+		
+		logger.info("Found: "+result);
+		
+		return result;
+	}
+	
+	public List<Wine> getAllWineMade(GrapeMust must){
+		logger.info(must+"-> searching related Analytics");
+		List<Wine> allwines = wineRepo.findAll();
+		List<Wine> result = new ArrayList<Wine>();
+		
+		for(Wine w: allwines){
+			if(w.getMadeFrom().equals(must)){
+				result.add(w);
+			}
+		}
+		
+		logger.info("Found: "+result);
+		
+		return result;
 	}
 
 	
@@ -77,5 +118,39 @@ public class GrapeMustService {
 		grapeMustRepo.delete(grapeMustInDB);
 		logger.info("GrapeMust deleted: "+grapeMustInDB);
 	}
+
+	public GrapeMustRepository getGrapeMustRepo() {
+		return grapeMustRepo;
+	}
+
+	public void setGrapeMustRepo(GrapeMustRepository grapeMustRepo) {
+		this.grapeMustRepo = grapeMustRepo;
+	}
+
+	public GrapeRepository getGrapeRepo() {
+		return grapeRepo;
+	}
+
+	public void setGrapeRepo(GrapeRepository grapeRepo) {
+		this.grapeRepo = grapeRepo;
+	}
+
+	public AnalyticRepository getAnalyticRepo() {
+		return analyticRepo;
+	}
+
+	public void setAnalyticRepo(AnalyticRepository analyticRepo) {
+		this.analyticRepo = analyticRepo;
+	}
+
+	public WineRepository getWineRepo() {
+		return wineRepo;
+	}
+
+	public void setWineRepo(WineRepository wineRepo) {
+		this.wineRepo = wineRepo;
+	}
+	
+	
 
 }

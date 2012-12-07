@@ -1,5 +1,7 @@
 package hu.pte.schafferg.cellarManager.ui;
 
+import java.util.Date;
+
 import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.model.Sale;
 import hu.pte.schafferg.cellarManager.model.Wine;
@@ -54,6 +56,7 @@ public class SaleView extends VerticalLayout implements ClickListener,
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
+		setWidth("98%");
 		toolbar.setSpacing(true);
 
 		newSale.addStyleName("big");
@@ -102,10 +105,10 @@ public class SaleView extends VerticalLayout implements ClickListener,
 		saleList.addListener((ValueChangeListener) this);
 		addComponent(saleList);
 		
-		Panel landsDetails = new Panel();
-		landsDetails.setCaption("Sale Details");
-		landsDetails.addComponent(saleForm);
-		addComponent(landsDetails);
+		Panel saleDetails = new Panel();
+		saleDetails.setCaption("Sale Details");
+		saleDetails.addComponent(saleForm);
+		addComponent(saleDetails);
 	}
 	
 	public void createSale(){
@@ -178,11 +181,12 @@ public class SaleView extends VerticalLayout implements ClickListener,
 	}
 	
 	private BeanItem<Sale> convertSaleToBeanItem(Sale sale){
-		return new BeanItem<Sale>(sale, new String[]{"toWho", "what", "numOfBottles", "wineDocID"});
+		return new BeanItem<Sale>(sale, new String[]{"toWho", "date", "what", "numOfBottles", "wineDocID"});
 	}
 	
 	private Sale commitFromForm(Sale sale){
 		sale.setToWho((Person) saleForm.getItemProperty("toWho").getValue());
+		sale.setDate((Date) saleForm.getItemProperty("date").getValue());
 		sale.setWhat((Wine) saleForm.getItemProperty("what").getValue());
 		sale.setNumOfBottles((int) saleForm.getItemProperty("numOfBottles").getValue());
 		sale.setWineDocID((String) saleForm.getItemProperty("wineDocID").getValue());
