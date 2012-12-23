@@ -16,17 +16,12 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<context:property-placeholder
-		properties-ref="appProperties" system-properties-mode="FALLBACK" />
+		location="/WEB-INF/app.properties" system-properties-mode="FALLBACK" />
 
 	<context:annotation-config />
 
 	<context:component-scan base-package="hu.pte.schafferg.cellarManager" />
 
-
-
-	<bean id="appProperties"
-		class="org.springframework.beans.factory.config.PropertiesFactoryBean"
-		p:location="/WEB-INF/app.properties" />
 
 	<bean id="application" class="hu.pte.schafferg.cellarManager.CellarManager"
 		scope="session">
