@@ -79,7 +79,7 @@ public class UserService {
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or #user.username == authentication.name")
 	public User read(User user){
-		return user;
+		return userRepo.findById(user.getId());
 	}
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or #username == authentication.name")
