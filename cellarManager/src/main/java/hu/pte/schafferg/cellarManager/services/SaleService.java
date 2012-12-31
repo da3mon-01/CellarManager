@@ -27,7 +27,7 @@ public class SaleService {
 	private static Logger logger = Logger.getLogger(SaleService.class);
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void create(Sale sale) throws RuntimeException{
+	public Sale create(Sale sale) throws RuntimeException{
 		
 		sale.setId(UUID.randomUUID().toString());
 		
@@ -40,6 +40,8 @@ public class SaleService {
 		}
 		
 		logger.info("Sale was created: "+created);
+		
+		return created;
 	}
 	
 	public Sale read(Sale sale){
@@ -59,7 +61,7 @@ public class SaleService {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void update(Sale sale) throws RuntimeException{
+	public Sale update(Sale sale) throws RuntimeException{
 		Sale saleInDb = saleRepo.findById(sale.getId());
 		
 		if(saleInDb == null){
@@ -77,6 +79,8 @@ public class SaleService {
 		}
 		
 		logger.info("Sale updated: "+saleInDb);
+		
+		return saleInDb;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")

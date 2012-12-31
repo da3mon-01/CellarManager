@@ -21,7 +21,7 @@ public class GrapeService {
 	private static Logger logger = Logger.getLogger(GrapeService.class);
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void create(Grape grape) throws RuntimeException{
+	public Grape create(Grape grape) throws RuntimeException{
 		
 		grape.setId(UUID.randomUUID().toString());
 		
@@ -33,6 +33,8 @@ public class GrapeService {
 		}
 		
 		logger.info("Grape was created: "+created);
+		
+		return created;
 	}
 	
 	public Grape read(Grape grape){
@@ -45,7 +47,7 @@ public class GrapeService {
 	
 
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void update(Grape grape) throws RuntimeException{
+	public Grape update(Grape grape) throws RuntimeException{
 		Grape grapeInDb = grapeRepo.findById(grape.getId());
 		
 		if(grapeInDb == null){
@@ -62,6 +64,8 @@ public class GrapeService {
 		}
 		
 		logger.info("Grape updated: "+grapeInDb);
+		
+		return grapeInDb;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")

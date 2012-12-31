@@ -37,7 +37,7 @@ public class ContactsService {
 	
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void create(Person person) throws RuntimeException{
+	public Person create(Person person) throws RuntimeException{
 		
 		person.setId(UUID.randomUUID().toString());
 		
@@ -48,6 +48,7 @@ public class ContactsService {
 		}
 		
 		logger.info("Person: "+person+" was created");
+		return created;
 		
 	}
 	
@@ -123,7 +124,7 @@ public class ContactsService {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void update(Person person) throws RuntimeException {
+	public Person update(Person person) throws RuntimeException {
 		Person personInDB = personRepo.findById(person.getId());
 		
 		if(personInDB == null){
@@ -140,6 +141,8 @@ public class ContactsService {
 		}
 		
 		logger.info("Person updated: "+personInDB);
+		
+		return personInDB;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")

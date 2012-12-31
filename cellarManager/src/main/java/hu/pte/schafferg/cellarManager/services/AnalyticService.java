@@ -23,7 +23,7 @@ public class AnalyticService {
 	private static Logger logger = Logger.getLogger(AnalyticService.class);
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void create(Analytic analytic) throws RuntimeException{
+	public Analytic create(Analytic analytic) throws RuntimeException{
 		
 		analytic.setId(UUID.randomUUID().toString());
 		
@@ -35,6 +35,8 @@ public class AnalyticService {
 		}
 		
 		logger.info("Analytic was created: "+created);
+		
+		return created;
 	}
 	
 	public Analytic read(Analytic analytic){
@@ -50,7 +52,7 @@ public class AnalyticService {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void update(Analytic analytic) throws RuntimeException{
+	public Analytic update(Analytic analytic) throws RuntimeException{
 		Analytic analyticInDb = analyticRepo.findById(analytic.getId());
 		
 		if(analyticInDb == null){
@@ -67,6 +69,8 @@ public class AnalyticService {
 		}
 		
 		logger.info("Analytic updated: "+analyticInDb);
+		
+		return analyticInDb;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")

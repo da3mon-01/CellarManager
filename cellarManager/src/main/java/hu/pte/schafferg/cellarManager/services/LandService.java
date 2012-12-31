@@ -32,7 +32,7 @@ public class LandService {
 	private static Logger logger = Logger.getLogger(LandService.class);
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void create(Land land) throws RuntimeException{
+	public Land create(Land land) throws RuntimeException{
 		
 		land.setId(UUID.randomUUID().toString());
 		
@@ -44,6 +44,8 @@ public class LandService {
 		}
 		
 		logger.info("Land was created: "+created);
+		
+		return created;
 	}
 	
 	public Land read(Land land){
@@ -88,7 +90,7 @@ public class LandService {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void update(Land land) throws RuntimeException{
+	public Land update(Land land) throws RuntimeException{
 		Land landInDb = landRepo.findById(land.getId());
 		if(landInDb == null){
 			logger.info("Cannot find land in db: "+land);
@@ -104,6 +106,8 @@ public class LandService {
 		}
 		
 		logger.info("Land updated: "+land.getLandOffId());
+		
+		return landInDb;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")

@@ -30,7 +30,7 @@ public class WineService {
 	private static Logger logger = Logger.getLogger(WineService.class);
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void create(Wine wine) throws RuntimeException{
+	public Wine create(Wine wine) throws RuntimeException{
 		
 		wine.setId(UUID.randomUUID().toString());
 		
@@ -43,6 +43,8 @@ public class WineService {
 		}
 		
 		logger.info("Wine was created: "+created);
+		
+		return created;
 	}
 	
 	public Wine read(Wine wine){
@@ -70,7 +72,7 @@ public class WineService {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void update(Wine wine) throws RuntimeException{
+	public Wine update(Wine wine) throws RuntimeException{
 		Wine wineInDb = wineRepo.findById(wine.getId());
 		
 		if(wineInDb == null){
@@ -88,6 +90,8 @@ public class WineService {
 		}
 		
 		logger.info("Wine updated: "+wineInDb);
+		
+		return wineInDb;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")

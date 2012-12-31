@@ -22,7 +22,7 @@ public class FieldWorkService {
 	private static Logger logger = Logger.getLogger(FieldWorkService.class);
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void create(FieldWork fieldWork){
+	public FieldWork create(FieldWork fieldWork){
 		fieldWork.setId(UUID.randomUUID().toString());
 		
 		landRepo.save(fieldWork.getOnWhat());
@@ -33,6 +33,8 @@ public class FieldWorkService {
 		}
 		
 		logger.info("FieldWork was created: "+created);
+		
+		return created;
 	}
 	
 	public FieldWork read(FieldWork fieldWork){
@@ -44,7 +46,7 @@ public class FieldWorkService {
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")
-	public void update(FieldWork fieldWork) throws RuntimeException{
+	public FieldWork update(FieldWork fieldWork) throws RuntimeException{
 		FieldWork fieldWorkInDb = fieldWorkRepo.findById(fieldWork.getId());
 		
 		if(fieldWorkInDb == null){
@@ -61,6 +63,8 @@ public class FieldWorkService {
 		}
 		
 		logger.info("FieldWork updated: "+fieldWorkInDb);
+		
+		return fieldWorkInDb;
 	}
 	
 	@PreAuthorize("hasAuthority('ROLE_USER')")

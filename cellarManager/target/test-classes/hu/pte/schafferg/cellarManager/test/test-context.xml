@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:repository="http://www.springframework.org/schema/data/repository"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+		http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository-1.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<mongo:repositories base-package="hu.pte.schafferg.cellarManager.repo" />
+
+	<mongo:mongo host="localhost" port="27017" />
+
+	<mongo:db-factory dbname="cellarTest" mongo-ref="mongo"/>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"></constructor-arg>
+	</bean>
+
+
+	<context:annotation-config />
+	
+	<bean id="datepropertyeditor"
+		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.Date">
+					<bean class="org.springframework.beans.propertyeditors.CustomDateEditor">
+						<constructor-arg index="0">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg>
+									<value>yyyy-MM-dd</value>
+								</constructor-arg>
+							</bean>
+						</constructor-arg>
+						<constructor-arg index="1">
+							<value>true</value>
+						</constructor-arg>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<context:component-scan base-package="hu.pte.schafferg.cellarManager" />
+
+	<bean id="emailService" class="hu.pte.schafferg.cellarManager.services.EmailService">
+	</bean>
+
+	<bean id="userService" class="hu.pte.schafferg.cellarManager.services.UserService">
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"></property>
+		<property name="port" value="587"></property>
+		<property name="username" value="cellarmanagerapp@gmail.com"></property>
+		<property name="password" value="cellarmail"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="standardPasswordEncoder"
+		class="org.springframework.security.crypto.password.StandardPasswordEncoder">
+	</bean>
+	<bean id="contactsService" class="hu.pte.schafferg.cellarManager.services.ContactsService">
+	</bean>
+	<bean id="landService" class="hu.pte.schafferg.cellarManager.services.LandService">
+	</bean>
+	<bean id="role" class="hu.pte.schafferg.cellarManager.model.Role">
+		<property name="id" value="adsdasdasd"></property>
+		<property name="role" value="2"></property>
+	</bean>
+	<bean id="person1"
+		class="hu.pte.schafferg.cellarManager.model.Person">
+		<property name="firstName" value="adsd"></property>
+		<property name="lastName" value="adsdasda"></property>
+		<property name="city" value="sdadsad"></property>
+		<property name="zip" value="164"></property>
+		<property name="address" value="sdadsd"></property>
+		<property name="birthDate" value="1954-15-15"></property>
+		<property name="email" value="gamedaemon@freemail.hu"></property>
+		<property name="phoneNumber" value="sadsadass"></property>
+		<property name="id" value="asdfghjk"></property>
+	</bean>
+
+
+	<bean id="person2"
+		class="hu.pte.schafferg.cellarManager.model.Person">
+		<property name="firstName" value="asdsda"></property>
+		<property name="lastName" value="adfsadas"></property>
+		<property name="zip" value="168"></property>
+		<property name="city" value="sadsddasd"></property>
+		<property name="email" value="gamedaemon@freemail.hu"></property>
+		<property name="birthDate" value="1948-04-04"></property>
+		<property name="address" value="asdadas"></property>
+		<property name="phoneNumber" value="sadsda"></property>
+		<property name="id" value="sadsadasd"></property>
+	</bean>
+	<bean id="user" class="hu.pte.schafferg.cellarManager.model.User">
+		<property name="id" value="user"></property>
+		<property name="username" value="user"></property>
+		<property name="password" value="iser"></property>
+		<property name="person" ref="person1"></property>
+		<property name="role" ref="role"></property>
+	</bean>
+	<bean id="land1"
+		class="hu.pte.schafferg.cellarManager.model.Land">
+		<property name="landOff" value="adsadad"></property>
+		<property name="landOffId" value="lakdsdas"></property>
+		<property name="owner" ref="person1"></property>
+		<property name="size" value="468"></property>
+		<property name="id" value="klhdfsddfhjl"></property>
+	</bean>
+	<bean id="land2"
+		class="hu.pte.schafferg.cellarManager.model.Land">
+		<property name="id" value="adsasdsadasdad"></property>
+		<property name="landOff" value="asdadsd"></property>
+		<property name="landOffId" value="sadahdka"></property>
+		<property name="size" value="464"></property>
+		<property name="owner" ref="person2"></property>
+	</bean>
+	<bean id="fieldwork"
+		class="hu.pte.schafferg.cellarManager.model.FieldWork">
+		<property name="id" value="asdkjasdla"></property>
+		<property name="who" ref="person1"></property>
+		<property name="when" value="2012-10-10"></property>
+		<property name="onWhat" ref="land1"></property>
+		<property name="work" value="INSECTSPRAY"></property>
+	</bean>
+	<bean id="grape1"
+		class="hu.pte.schafferg.cellarManager.model.Grape">
+		<property name="id" value="asldjasldkjas"></property>
+		<property name="type" value="sadaddadd"></property>
+		<property name="quantity" value="16464"></property>
+		<property name="planted" value="2012-01-01"></property>
+		<property name="plantedOn" ref="land1"></property>
+	</bean>
+	<bean id="grape2"
+		class="hu.pte.schafferg.cellarManager.model.Grape">
+		<property name="id" value="opiuouoi"></property>
+		<property name="quantity" value="46846"></property>
+		<property name="type" value="sadlfhsdklf"></property>
+		<property name="planted" value="2012-02-02"></property>
+		<property name="plantedOn" ref="land2"></property>
+	</bean>
+	<bean id="grapeMust"
+		class="hu.pte.schafferg.cellarManager.model.GrapeMust">
+		<property name="id" value="dkjflsdjfsdlfj"></property>
+		<property name="madeFrom" ref="grape1"></property>
+		<property name="mustDegree" value="1365"></property>
+		<property name="quantityAfterHarvest" value="46464"></property>
+		<property name="quantityLostAfterRacking" value="13"></property>
+		<property name="enriched" value="true"></property>
+		<property name="enrichmentDegree" value="1231"></property>
+		<property name="sweetened" value="true"></property>
+	</bean>
+	<bean id="analytic"
+		class="hu.pte.schafferg.cellarManager.model.Analytic">
+		<property name="id" value="sddadsd"></property>
+		<property name="when" value="2012-12-12"></property>
+		<property name="iron" value="136"></property>
+		<property name="sugar" value="64654"></property>
+		<property name="sulfur" value="4654"></property>
+		<property name="extract" value="4165"></property>
+		<property name="must" ref="grapeMust"></property>
+	</bean>
+	<bean id="wine" class="hu.pte.schafferg.cellarManager.model.Wine">
+		<property name="id" value="dsadasda"></property>
+		<property name="obiNumber" value="sadsdass"></property>
+		<property name="alcoholDegree" value="12"></property>
+		<property name="sweetness" value="SWEET"></property>
+		<property name="numOfBottles" value="12"></property>
+		<property name="madeFrom" ref="grapeMust"></property>
+		<property name="bottler" ref="person1"></property>
+	</bean>
+	<bean id="sale" class="hu.pte.schafferg.cellarManager.model.Sale">
+		<property name="id" value="dklfjasdf"></property>
+		<property name="toWho" ref="person2"></property>
+		<property name="what" ref="wine"></property>
+		<property name="wineDocID" value="464654"></property>
+		<property name="numOfBottles" value="12"></property>
+		<property name="date" value="2012-12-31"></property>
+	</bean>
+	<bean id="analyticService"
+		class="hu.pte.schafferg.cellarManager.services.AnalyticService">
+	</bean>
+	<bean id="fieldworkService"
+		class="hu.pte.schafferg.cellarManager.services.FieldWorkService">
+	</bean>
+	<bean id="mustService"
+		class="hu.pte.schafferg.cellarManager.services.GrapeMustService">
+	</bean>
+	<bean id="grapeService"
+		class="hu.pte.schafferg.cellarManager.services.GrapeService">
+	</bean>
+	<bean id="saleService"
+		class="hu.pte.schafferg.cellarManager.services.SaleService">
+	</bean>
+	<bean id="wineService"
+		class="hu.pte.schafferg.cellarManager.services.WineService">
+	</bean>
+</beans>
