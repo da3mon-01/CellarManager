@@ -11,12 +11,23 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+/**
+ * Service class for sending e-mail
+ * @author Da3mon
+ *
+ */
 public class EmailService {
 	
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 	private static Logger logger = Logger.getLogger(EmailService.class);
 	
+	/**
+	 * Sends out the new password to user from an admin reset.
+	 * @param user
+	 * @param newpass
+	 * @throws MessagingException
+	 */
 	public void sendResetPasswordMail(User user, String newpass) throws MessagingException{
 		
 		MimeMessage message = mailSender.createMimeMessage();
@@ -41,6 +52,12 @@ public class EmailService {
 		
 	}
 	
+	/**
+	 * Sends out a reset password the newly created user.
+	 * @param user
+	 * @param newpass
+	 * @throws MessagingException
+	 */
 	public void sendCreateUserMail(User user, String newpass) throws MessagingException{
 		
 		MimeMessage message = mailSender.createMimeMessage();

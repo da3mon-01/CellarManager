@@ -17,7 +17,11 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-
+/**
+ * Service class for Land objects.
+ * @author Da3mon
+ *
+ */
 public class LandService {
 	
 	@Autowired
@@ -31,6 +35,12 @@ public class LandService {
 	
 	private static Logger logger = Logger.getLogger(LandService.class);
 	
+	/**
+	 * Creates land in db.
+	 * @param land
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Land create(Land land) throws RuntimeException{
 		
@@ -48,15 +58,28 @@ public class LandService {
 		return created;
 	}
 	
+	/**
+	 * Reads land from db.
+	 * @param land
+	 * @return
+	 */
 	public Land read(Land land){
 		return landRepo.findById(land.getId());
 	}
 	
+	/**
+	 * Reads all lands in db.
+	 * @return
+	 */
 	public List<Land> readAll(){
 		return landRepo.findAll();
 	}
 	
-	
+	/**
+	 * Gets all grapes planted on land.
+	 * @param land
+	 * @return
+	 */
 	public List<Grape> readAllPlanetOn(Land land){
 		logger.info(land+"-> searching related Grapes");
 		List<Grape> allGrapes = grapeRepo.findAll();
@@ -73,6 +96,11 @@ public class LandService {
 		return result;
 	}
 	
+	/**
+	 * Gets all fieldwork done on land.
+	 * @param land
+	 * @return
+	 */
 	public List<FieldWork> readAllFieldWorkDone(Land land){
 		logger.info(land+"-> searching related Fieldworks");
 		List<FieldWork> allworks = fieldWorkRepo.findAll();
@@ -89,6 +117,12 @@ public class LandService {
 		return result;
 	}
 	
+	/**
+	 * Updates land in db.
+	 * @param land
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Land update(Land land) throws RuntimeException{
 		Land landInDb = landRepo.findById(land.getId());
@@ -110,6 +144,11 @@ public class LandService {
 		return landInDb;
 	}
 	
+	/**
+	 * Deletes land from db.
+	 * @param land
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void delete(Land land) throws RuntimeException{
 		Land landInDb = landRepo.findById(land.getId());

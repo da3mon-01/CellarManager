@@ -34,6 +34,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for Contacts
+ * @author Da3mon
+ *
+ */
 public class ContactsView extends VerticalLayout implements ClickListener,
 ValueChangeListener, TextChangeListener {
 
@@ -65,6 +70,9 @@ ValueChangeListener, TextChangeListener {
 	private boolean newPersonMode = false;
 	private TabSheet contactTab = new TabSheet();
 
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		
 		setWidth("98%");
@@ -130,6 +138,10 @@ ValueChangeListener, TextChangeListener {
 
 	}
 
+	/**
+	 *
+	 * Calls the table to create an contact in db.
+	 */
 	public void createContact(){
 		if(selection == null || contactForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
@@ -152,6 +164,9 @@ ValueChangeListener, TextChangeListener {
 
 	}
 
+	/**
+	 * Calls the table to update a contact in db.
+	 */
 	public void updateContact(){
 		logger.info("Trying update Person method");
 
@@ -176,6 +191,9 @@ ValueChangeListener, TextChangeListener {
 
 	}
 
+	/**
+	 * Calls the table to delete a contact from db.
+	 */
 	public void deletePerson(){
 		try {
 			contactList.deleteContact(selection);
@@ -191,6 +209,10 @@ ValueChangeListener, TextChangeListener {
 	}
 
 
+	/**
+	 * Changes the current selection
+	 * @param select
+	 */
 	private void changeCurrentSelection(Object select){
 		Person selectedPerson = (Person)select;
 
@@ -204,6 +226,11 @@ ValueChangeListener, TextChangeListener {
 		logger.debug("Current selection: " + selection.getFirstName()+" "+selection.getLastName());
 	}
 
+	/**
+	 * Converts the selection to BeanItem
+	 * @param person
+	 * @return
+	 */
 	private BeanItem<Person> convertPersonToBeanItem(Person person){
 		return new BeanItem<Person>(person, new String[]{
 				"firstName", "lastName", "phoneNumber", "email", "birthDate", "city", "zip", "address"
@@ -211,6 +238,11 @@ ValueChangeListener, TextChangeListener {
 
 	}
 
+	/**
+	 * Saves the parameters from the Form to the selection.
+	 * @param person
+	 * @return
+	 */
 	private Person commitFromForm(Person person){
 		person.setFirstName((String) contactForm.getItemProperty("firstName").getValue());
 		person.setLastName((String) contactForm.getItemProperty("lastName").getValue());

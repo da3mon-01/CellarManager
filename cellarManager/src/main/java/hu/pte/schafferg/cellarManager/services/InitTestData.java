@@ -24,7 +24,11 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
-
+/**
+ * Service class to load initial test data into the database
+ * @author Da3mon
+ *
+ */
 public class InitTestData {
 	
 	@Autowired
@@ -36,7 +40,10 @@ public class InitTestData {
 	StandardPasswordEncoder sde;
 	String appTimeZone;
 	
-	
+	/**
+	 * Loads the data into the database.
+	 * @throws ParseException
+	 */
 	public void init() throws ParseException{
 		mongotemplate.dropCollection("user");
 		mongotemplate.dropCollection("role");

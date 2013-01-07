@@ -16,6 +16,9 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Table;
 
+/**
+ * List of all analytics
+ */
 public class AnalyticList extends Table {
 	
 	/**
@@ -34,6 +37,9 @@ public class AnalyticList extends Table {
 	private List<Analytic> analytics = new ArrayList<Analytic>();
 	private BeanItemContainer<Analytic> analyticContainer = new BeanItemContainer<Analytic>(Analytic.class);
 
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -58,6 +64,11 @@ public class AnalyticList extends Table {
 		
 	}
 	
+	/**
+	 * Calls the service to create a
+	 * @param a
+	 * @throws RuntimeException
+	 */
 	public void create(Analytic a) throws RuntimeException{
 		try {
 			analyticService.create(a);
@@ -68,6 +79,11 @@ public class AnalyticList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to update a
+	 * @param a
+	 * @throws RuntimeException
+	 */
 	public void update(Analytic a) throws RuntimeException{
 		try {
 			analyticService.update(a);
@@ -78,6 +94,11 @@ public class AnalyticList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to delete a
+	 * @param a
+	 * @throws RuntimeException
+	 */
 	public void delete(Analytic a) throws RuntimeException {
 		try {
 			analyticService.delete(a);
@@ -88,7 +109,10 @@ public class AnalyticList extends Table {
 		}
 	}
 
-	
+
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		analyticContainer.removeAllItems();
 		analytics.clear();
@@ -100,6 +124,10 @@ public class AnalyticList extends Table {
 
 	}
 	
+	/**
+	 * Adds a filter to the table
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

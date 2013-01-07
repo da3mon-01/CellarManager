@@ -32,6 +32,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for FieldWorks
+ * @author Da3mon
+ *
+ */
 public class FieldWorkView extends VerticalLayout implements ClickListener,
 		ValueChangeListener, TextChangeListener {
 	
@@ -54,6 +59,9 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 	private Logger logger = Logger.getLogger(LandsView.class);
 	private boolean newFieldWorkMode = false;
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
@@ -112,6 +120,9 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 		addComponent(workDetails);
 	}
 	
+	/**
+	 * Calls the table to create a fieldwork in db.
+	 */
 	public void createFieldWork(){
 		if(selection == null || fieldWorkForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
@@ -134,6 +145,9 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Calls the table to update a fieldwork in db.
+	 */
 	public void updateFieldWork(){
 		logger.info("Trying update FieldWork method");
 
@@ -158,6 +172,9 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Calls the table to delete a fieldwork in db.
+	 */
 	public void deleteFieldWork(){
 		try {
 			fieldWorkList.delete(selection);
@@ -172,7 +189,10 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 		
 	}
 	
-	
+	/**
+	 * Changes the current selection
+	 * @param select
+	 */
 	private void changeCurrentSelection(Object select){
 		FieldWork selectedWork = (FieldWork)select;
 		
@@ -182,11 +202,21 @@ public class FieldWorkView extends VerticalLayout implements ClickListener,
 		logger.debug("Current selection: "+selection);
 	}
 	
+	/**
+	 * Converts the selection to BeanItem
+	 * @param work
+	 * @return
+	 */
 	private BeanItem<FieldWork> convertFieldWorkToBeanItem(FieldWork work){
 		return new BeanItem<FieldWork>(work, new String[]{ "who", "when", "work", "onWhat"});
 
 	}
 	
+	/**
+	 * Saves the parameters from the Form to the selection.
+	 * @param work
+	 * @return
+	 */
 	private FieldWork commitFromForm(FieldWork work){
 		work.setOnWhat((Land) fieldWorkForm.getItemProperty("onWhat").getValue());
 		work.setWhen((Date) fieldWorkForm.getItemProperty("when").getValue());

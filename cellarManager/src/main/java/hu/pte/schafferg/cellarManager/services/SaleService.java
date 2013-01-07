@@ -1,8 +1,6 @@
 package hu.pte.schafferg.cellarManager.services;
 
-import hu.pte.schafferg.cellarManager.model.Person;
 import hu.pte.schafferg.cellarManager.model.Sale;
-import hu.pte.schafferg.cellarManager.model.Wine;
 import hu.pte.schafferg.cellarManager.repo.PersonRepository;
 import hu.pte.schafferg.cellarManager.repo.SaleRepository;
 import hu.pte.schafferg.cellarManager.repo.WineRepository;
@@ -15,7 +13,11 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-
+/**
+ * Service class for Sale Objects
+ * @author Da3mon
+ *
+ */
 public class SaleService {
 	
 	@Autowired
@@ -26,6 +28,12 @@ public class SaleService {
 	private SaleRepository saleRepo;
 	private static Logger logger = Logger.getLogger(SaleService.class);
 	
+	/**
+	 * Creates sale in db
+	 * @param sale
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Sale create(Sale sale) throws RuntimeException{
 		
@@ -44,22 +52,30 @@ public class SaleService {
 		return created;
 	}
 	
+	/**
+	 * Reads sale from db.
+	 * @param sale
+	 * @return
+	 */
 	public Sale read(Sale sale){
 		return saleRepo.findById(sale.getId());
 	}
 	
+	/**
+	 * Reads all sales from db.
+	 * @return
+	 */
 	public List<Sale> readAll(){
 		return saleRepo.findAll();
 	}
 	
-	public List<Sale> readAllFromBuyer(Person buyer){
-		return saleRepo.findByToWho(buyer);
-	}
-	
-	public List<Sale> readAllWhatWineSold(Wine wine){
-		return saleRepo.findByWhat(wine);
-	}
-	
+
+	/**
+	 * Updates sale in db.
+	 * @param sale
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Sale update(Sale sale) throws RuntimeException{
 		Sale saleInDb = saleRepo.findById(sale.getId());
@@ -83,6 +99,11 @@ public class SaleService {
 		return saleInDb;
 	}
 	
+	/**
+	 * Deletes sale from db.
+	 * @param sale
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void delete(Sale sale) throws RuntimeException{
 		Sale saleInDB = saleRepo.findById(sale.getId());

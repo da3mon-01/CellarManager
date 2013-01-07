@@ -16,6 +16,11 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeButton;
 
+/**
+ * Main Menu of the App
+ * @author Da3mon
+ *
+ */
 public class MainMenu extends CssLayout implements ClickListener {
 	/**
 	 * 
@@ -40,6 +45,9 @@ public class MainMenu extends CssLayout implements ClickListener {
 	@Autowired
 	private RoleHelperService roleHelper;
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setStyleName("sidebar-menu");
 		appLogo = new Embedded();

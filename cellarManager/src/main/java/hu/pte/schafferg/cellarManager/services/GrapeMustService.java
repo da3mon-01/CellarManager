@@ -17,7 +17,11 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-
+/**
+ * Service class for GrapeMust objects
+ * @author Da3mon
+ *
+ */
 public class GrapeMustService {
 	
 	@Autowired
@@ -30,6 +34,12 @@ public class GrapeMustService {
 	private WineRepository wineRepo;
 	private static Logger logger = Logger.getLogger(GrapeMustService.class);
 	
+	/**
+	 * Creates a GrapeMust in db
+	 * @param grapeMust
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public GrapeMust create(GrapeMust grapeMust) throws RuntimeException{
 		
@@ -46,14 +56,28 @@ public class GrapeMustService {
 		return created;
 	}
 	
+	/**
+	 * Reads a GrapeMust from db.
+	 * @param grapeMust
+	 * @return
+	 */
 	public GrapeMust read(GrapeMust grapeMust){
 		return grapeMustRepo.findById(grapeMust.getId());
 	}
 	
+	/**
+	 * Reads all GrapeMusts from db.
+	 * @return
+	 */
 	public List<GrapeMust> readAll(){
 		return grapeMustRepo.findAll();
 	}
 	
+	/**
+	 * Gets all analytics done on must.
+	 * @param must
+	 * @return
+	 */
 	public List<Analytic> getAllAnalytics(GrapeMust must){
 		logger.info(must+"-> searching related Analytics");
 		List<Analytic> allAnalytic = analyticRepo.findAll();
@@ -70,6 +94,11 @@ public class GrapeMustService {
 		return result;
 	}
 	
+	/**
+	 * Gets all wine made from must.
+	 * @param must
+	 * @return
+	 */
 	public List<Wine> getAllWineMade(GrapeMust must){
 		logger.info(must+"-> searching related Analytics");
 		List<Wine> allwines = wineRepo.findAll();
@@ -86,7 +115,12 @@ public class GrapeMustService {
 		return result;
 	}
 
-	
+	/**
+	 * Updates a Grapemust in db.
+	 * @param grapeMust
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public GrapeMust update(GrapeMust grapeMust) throws RuntimeException{
 		GrapeMust grapeMustInDb = grapeMustRepo.findById(grapeMust.getId());
@@ -109,6 +143,11 @@ public class GrapeMustService {
 		return grapeMustInDb;
 	}
 	
+	/**
+	 * Deletes a grapemust from db.
+	 * @param grapeMust
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void delete(GrapeMust grapeMust) throws RuntimeException{
 		GrapeMust grapeMustInDB = grapeMustRepo.findById(grapeMust.getId());

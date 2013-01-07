@@ -4,7 +4,11 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
 import org.apache.log4j.Logger;
 import org.springframework.aop.interceptor.CustomizableTraceInterceptor;
-
+/**
+ * 
+ * @author Da3mon
+ *	This class prints trace level logs based on the spring-aop.xml config.
+ */
 public class TraceInterceptor extends CustomizableTraceInterceptor {
 	
 	protected static Logger logger4j = Logger.getLogger(TraceInterceptor.class);

@@ -1,5 +1,10 @@
 package hu.pte.schafferg.cellarManager.util;
 
+/**
+ * Exception indicating two objects do not match.
+ * @author Da3mon
+ *
+ */
 public class ObjectMisMatchException extends RuntimeException {
 
 	public ObjectMisMatchException() {

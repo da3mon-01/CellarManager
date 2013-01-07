@@ -13,6 +13,11 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Table;
 
+/**
+ * Table of all Wines
+ * @author Da3mon
+ *
+ */
 public class WineList extends Table {
 	
 	/**
@@ -27,6 +32,9 @@ public class WineList extends Table {
 	private List<Wine> wines = new ArrayList<Wine>();
 	private BeanItemContainer<Wine> wineContainer = new BeanItemContainer<Wine>(Wine.class);
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -49,6 +57,11 @@ public class WineList extends Table {
 		
 	}
 	
+	/**
+	 * Calls the service to create w
+	 * @param w
+	 * @throws RuntimeException
+	 */
 	public void create(Wine w) throws RuntimeException{
 		try {
 			wineService.create(w);
@@ -59,6 +72,11 @@ public class WineList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to update w
+	 * @param w
+	 * @throws RuntimeException
+	 */
 	public void update(Wine w) throws RuntimeException{
 		try {
 			wineService.update(w);
@@ -69,6 +87,11 @@ public class WineList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to delete w
+	 * @param w
+	 * @throws RuntimeException
+	 */
 	public void delete(Wine w) throws RuntimeException {
 		try {
 			wineService.delete(w);
@@ -79,6 +102,9 @@ public class WineList extends Table {
 		}
 	}
 
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		wines.clear();
 		wineContainer.removeAllItems();
@@ -92,6 +118,10 @@ public class WineList extends Table {
 		
 	}
 	
+	/**
+	 * Adds a filter
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

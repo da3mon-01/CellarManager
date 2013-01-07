@@ -13,6 +13,11 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
 
+/**
+ * Form for Contacts
+ * @author Da3mon
+ *
+ */
 public class ContactsForm extends Form {
 	
 	/**
@@ -29,6 +34,9 @@ public class ContactsForm extends Form {
 
 	private static Logger logger = Logger.getLogger(ContactsForm.class);
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setWriteThrough(false);
 		setWidth("500px");

@@ -20,7 +20,11 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-
+/**
+ * Service class for Person objects (contacts).
+ * @author Da3mon
+ *
+ */
 public class ContactsService {
 	
 	@Autowired
@@ -35,7 +39,12 @@ public class ContactsService {
 	@Autowired
 	private WineRepository wineRepo;
 	
-	
+	/**
+	 * Creates a contact in db.
+	 * @param person
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Person create(Person person) throws RuntimeException{
 		
@@ -52,16 +61,30 @@ public class ContactsService {
 		
 	}
 	
+	/**
+	 * Reads a contact from db.
+	 * @param person
+	 * @return
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Person read(Person person){
 		return personRepo.findById(person.getId());
 	}
 	
+	/**
+	 * Reads all contacts from db.
+	 * @return
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public List<Person> readAll(){
 		return personRepo.findAll();
 	}
 	
+	/**
+	 * Gets all the fieldwork done by person.
+	 * @param person
+	 * @return
+	 */
 	public List<FieldWork> getAllFieldWorkDone(Person person){
 		logger.info(person+"-> searching related Fieldworks");
 		List<FieldWork> allworks = fieldWorkRepo.findAll();
@@ -78,6 +101,11 @@ public class ContactsService {
 		return result;
 	}
 	
+	/**
+	 * Gets all the land owned by person.
+	 * @param person
+	 * @return
+	 */
 	public List<Land> getAllLandsOwned(Person person){
 		logger.info(person+"-> searching related Lands");
 		List<Land> allLands = landRepo.findAll();
@@ -93,6 +121,11 @@ public class ContactsService {
 		return result;
 	}
 	
+	/**
+	 * Gets all the sales sold to person.
+	 * @param person
+	 * @return
+	 */
 	public List<Sale> getAllSales(Person person){
 		logger.info(person+"-> searching related Sales");
 		List<Sale> allSales = saleRepo.findAll();
@@ -108,6 +141,11 @@ public class ContactsService {
 		return result;
 	}
 	
+	/**
+	 * Gets all the wines bottled by person
+	 * @param person
+	 * @return
+	 */
 	public List<Wine> getAllWinesBottled(Person person){
 		logger.info(person+"-> searching related Sales");
 		List<Wine> allWines = wineRepo.findAll();
@@ -123,6 +161,12 @@ public class ContactsService {
 		return result;
 	}
 	
+	/**
+	 * Updates a person in db.
+	 * @param person
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Person update(Person person) throws RuntimeException {
 		Person personInDB = personRepo.findById(person.getId());
@@ -145,6 +189,11 @@ public class ContactsService {
 		return personInDB;
 	}
 	
+	/**
+	 * Deletes a person from db
+	 * @param person
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void delete(Person person) throws RuntimeException{
 		Person personInDB = personRepo.findById(person.getId());

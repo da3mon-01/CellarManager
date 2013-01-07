@@ -1,5 +1,10 @@
 package hu.pte.schafferg.cellarManager.util;
 
+/**
+ * Exception indication Target was not found in the database.
+ * @author Da3mon
+ *
+ */
 public class TargetNotFoundInDBException extends RuntimeException {
 
 	/**

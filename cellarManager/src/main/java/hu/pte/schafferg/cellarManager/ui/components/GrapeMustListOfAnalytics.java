@@ -16,6 +16,11 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for all Analytics done on a GrapeMust
+ * @author Da3mon
+ *
+ */
 public class GrapeMustListOfAnalytics extends Table {
 	
 	/**
@@ -36,6 +41,9 @@ public class GrapeMustListOfAnalytics extends Table {
 	private boolean[] ascending = new boolean[]{false};
 	
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -57,6 +65,9 @@ public class GrapeMustListOfAnalytics extends Table {
 		sort(ordering, ascending);
 	}
 	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		analyticContainer.removeAllItems();
 		analytics.clear();
@@ -70,6 +81,10 @@ public class GrapeMustListOfAnalytics extends Table {
 
 	}
 	
+	/**
+	 * Sets the GrapeMust
+	 * @param must
+	 */
 	public void setMustData(GrapeMust must){
 		this.must = must;
 		logger.info(this.must+" selected");

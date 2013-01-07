@@ -14,6 +14,11 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 
+/**
+ * Form for users
+ * @author Da3mon
+ *
+ */
 public class UserForm extends Form {
 	/**
 	 * 
@@ -27,7 +32,9 @@ public class UserForm extends Form {
 	private boolean newUserMode = false;
 	private static Logger logger = Logger.getLogger(UserForm.class);
 	
-	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setWriteThrough(false);
 		setWidth("500px");

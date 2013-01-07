@@ -16,6 +16,11 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for the Fieldworks related to a contact
+ * @author Da3mon
+ *
+ */
 public class ContactListOfFieldWork extends Table {
 	
 	/**
@@ -36,6 +41,9 @@ public class ContactListOfFieldWork extends Table {
 	private boolean[] ascending = new boolean[]{false};
 	
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -59,6 +67,9 @@ public class ContactListOfFieldWork extends Table {
 		sort(ordering, ascending);
 	}
 	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		workContainer.removeAllItems();
 		works.clear();
@@ -72,6 +83,10 @@ public class ContactListOfFieldWork extends Table {
 
 	}
 	
+	/**
+	 * Sets the contact
+	 * @param person
+	 */
 	public void setContactData(Person person){
 		this.worker = person;
 		logger.info(worker+" selected");

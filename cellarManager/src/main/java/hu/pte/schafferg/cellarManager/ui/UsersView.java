@@ -35,6 +35,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for Users
+ * @author Da3mon
+ *
+ */
 public class UsersView extends VerticalLayout implements ValueChangeListener,
 		ClickListener, TextChangeListener {
 
@@ -61,6 +66,9 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 	@Autowired
 	private RoleHelperService roleHelper;
 
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent() {
 		setMargin(true);
 		setSpacing(true);
@@ -124,6 +132,10 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 
 	}
 
+	/**
+	 * Changes the current selection
+	 * @param user
+	 */
 	private void changeCurrentSelection(Object user) {
 		User selection = (User) user;
 		selectedUser = selection;
@@ -135,6 +147,11 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 
 	}
 
+	/**
+	 * Converts the selection to a BeanItem
+	 * @param user
+	 * @return
+	 */
 	private BeanItem<User> convertUserToBeanItem(User user) {
 
 		BeanItem<User> editedUser = new BeanItem<User>(user,
@@ -162,6 +179,11 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 		return editedUser;
 	}
 
+	/**
+	 * Saves parameters from Form to the selection
+	 * @param user
+	 * @return
+	 */
 	private User commitToUserFromForm(User user) {
 		user.setUsername((String) userForm.getItemProperty("username")
 				.getValue());
@@ -191,6 +213,9 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 
 	}
 
+	/**
+	 * Calls the table to create a user in db.
+	 */
 	private void createUser() {
 		if(selectedUser == null || userForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
@@ -217,6 +242,9 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 
 	}
 
+	/**
+	 * Calls the table to update a user in db.
+	 */
 	private void updateUser() {
 		logger.info("Trying update user method");
 
@@ -242,6 +270,9 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 		
 	}
 
+	/**
+	 * Calls the table to delete a user in db.
+	 */
 	private void deleteUser() {
 		try {
 			userList.deleteUser(selectedUser);
@@ -255,6 +286,9 @@ public class UsersView extends VerticalLayout implements ValueChangeListener,
 		userForm.setItemDataSource(null);
 	}
 
+	/**
+	 * Calls the table to reset the password of the selected user.
+	 */
 	protected void resetPassword() {
 		
 		try {

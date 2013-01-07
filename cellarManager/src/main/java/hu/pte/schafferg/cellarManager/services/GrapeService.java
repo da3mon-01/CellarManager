@@ -12,7 +12,11 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-
+/**
+ * Service class for Grape Objects.
+ * @author Da3mon
+ *
+ */
 public class GrapeService {
 	@Autowired
 	private GrapeRepository grapeRepo;
@@ -20,6 +24,12 @@ public class GrapeService {
 	private LandRepository landRepo;
 	private static Logger logger = Logger.getLogger(GrapeService.class);
 	
+	/**
+	 * Creates a grape in db.
+	 * @param grape
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Grape create(Grape grape) throws RuntimeException{
 		
@@ -37,15 +47,30 @@ public class GrapeService {
 		return created;
 	}
 	
+	/**
+	 * Reads a grape from db.
+	 * @param grape
+	 * @return
+	 */
 	public Grape read(Grape grape){
 		return grapeRepo.findById(grape.getId());
 	}
 	
+	/**
+	 * Reads all grapes in db.
+	 * @return
+	 */
 	public List<Grape> readAll(){
 		return grapeRepo.findAll();
 	}
 	
 
+	/**
+	 * Updates grape in db.
+	 * @param grape
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Grape update(Grape grape) throws RuntimeException{
 		Grape grapeInDb = grapeRepo.findById(grape.getId());
@@ -68,6 +93,11 @@ public class GrapeService {
 		return grapeInDb;
 	}
 	
+	/**
+	 * Deletes grape from db
+	 * @param grape
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void delete(Grape grape) throws RuntimeException{
 		Grape grapeInDB = grapeRepo.findById(grape.getId());

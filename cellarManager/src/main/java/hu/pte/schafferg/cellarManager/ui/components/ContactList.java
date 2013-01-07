@@ -20,6 +20,11 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for contacts
+ * @author Da3mon
+ *
+ */
 public class ContactList extends Table {
 
 	/**
@@ -36,6 +41,9 @@ public class ContactList extends Table {
 	private List<Person> contacts = new ArrayList<Person>();
 	private BeanItemContainer<Person> contactsContainer = new BeanItemContainer<Person>(Person.class);
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -93,6 +101,11 @@ public class ContactList extends Table {
 		
 	}
 	
+	/**
+	 * Calls the service to create p
+	 * @param p
+	 * @throws RuntimeException
+	 */
 	public void createContact(Person p) throws RuntimeException{
 		try {
 			contactsService.create(p);
@@ -103,6 +116,11 @@ public class ContactList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to update p
+	 * @param p
+	 * @throws RuntimeException
+	 */
 	public void updateContact(Person p) throws RuntimeException{
 		try {
 			contactsService.update(p);
@@ -113,6 +131,11 @@ public class ContactList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to delete p
+	 * @param p
+	 * @throws RuntimeException
+	 */
 	public void deleteContact(Person p) throws RuntimeException {
 		try {
 			contactsService.delete(p);
@@ -123,6 +146,9 @@ public class ContactList extends Table {
 		}
 	}
 
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		contacts.clear();
 		contactsContainer.removeAllItems();
@@ -135,6 +161,10 @@ public class ContactList extends Table {
 		
 	}
 	
+	/**
+	 * Adds a filter to the table
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

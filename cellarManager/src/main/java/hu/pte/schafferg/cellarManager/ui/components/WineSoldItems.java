@@ -16,6 +16,11 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 
+/**
+ * Table of all sales related to a Wine
+ * @author Da3mon
+ *
+ */
 public class WineSoldItems extends Table {
 	
 	/**
@@ -35,6 +40,9 @@ public class WineSoldItems extends Table {
 	private Object[] ordering = new Object[]{"date"};
 	private boolean[] ascending = new boolean[]{false};
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -58,6 +66,9 @@ public class WineSoldItems extends Table {
 		
 	}
 	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		saleContainer.removeAllItems();
 		sales.clear();
@@ -71,6 +82,10 @@ public class WineSoldItems extends Table {
 
 	}
 	
+	/**
+	 * Sets the Wine
+	 * @param wine
+	 */
 	public void setWineData(Wine wine){
 		this.wine = wine;
 		logger.info(wine+" selected");

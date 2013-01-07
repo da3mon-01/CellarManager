@@ -16,6 +16,11 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 
+/**
+ * Tables for Lands owned by a contact
+ * @author Da3mon
+ *
+ */
 public class ContactListOfLandOwned extends Table {
 	
 	/**
@@ -33,6 +38,9 @@ public class ContactListOfLandOwned extends Table {
 	private List<Land> lands = new ArrayList<Land>();
 	private BeanItemContainer<Land> landContainer = new BeanItemContainer<Land>(Land.class);
 
+	/**
+	 * Builds the  GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -54,6 +62,9 @@ public class ContactListOfLandOwned extends Table {
 		
 	}
 	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		landContainer.removeAllItems();
 		lands.clear();
@@ -67,6 +78,10 @@ public class ContactListOfLandOwned extends Table {
 
 	}
 	
+	/**
+	 * Sets the contact
+	 * @param person
+	 */
 	public void setContactData(Person person){
 		this.worker = person;
 		logger.info(worker+" selected");

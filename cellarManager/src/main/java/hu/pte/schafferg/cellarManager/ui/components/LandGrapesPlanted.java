@@ -16,6 +16,11 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 
+/**
+ * Table of all Grapes planted on a Land
+ * @author Da3mon
+ *
+ */
 public class LandGrapesPlanted extends Table {
 	
 	/**
@@ -34,7 +39,9 @@ public class LandGrapesPlanted extends Table {
 	private BeanItemContainer<Grape> grapeContainer = new BeanItemContainer<Grape>(Grape.class);
 	
 	
-	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -56,6 +63,9 @@ public class LandGrapesPlanted extends Table {
 		
 	}
 	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		grapeContainer.removeAllItems();
 		grapes.clear();
@@ -69,6 +79,10 @@ public class LandGrapesPlanted extends Table {
 
 	}
 	
+	/**
+	 * Sets the Land
+	 * @param land
+	 */
 	public void setLandData(Land land){
 		this.land = land;
 		logger.info(this.land+" selected");

@@ -18,6 +18,11 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 
+/**
+ * Form for analytics
+ * @author Da3mon
+ *
+ */
 public class AnalyticForm extends Form {
 	
 	/**
@@ -30,7 +35,9 @@ public class AnalyticForm extends Form {
 	@Autowired
 	private GrapeMustService grapeMustService;
 	
-	
+	/**
+	 * Build the GUI
+	 */
 	public void initContent(){
 		setWriteThrough(false);
 		setWidth("500px");

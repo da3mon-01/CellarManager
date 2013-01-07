@@ -31,6 +31,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for Sales
+ * @author Da3mon
+ *
+ */
 public class SaleView extends VerticalLayout implements ClickListener,
 		TextChangeListener, ValueChangeListener {
 	
@@ -53,6 +58,9 @@ public class SaleView extends VerticalLayout implements ClickListener,
 	private Logger logger = Logger.getLogger(SaleView.class);
 	private boolean newSaleMode = false;
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
@@ -111,6 +119,9 @@ public class SaleView extends VerticalLayout implements ClickListener,
 		addComponent(saleDetails);
 	}
 	
+	/**
+	 * Calls the table to create a sale in db.
+	 */
 	public void createSale(){
 		if(selection == null || saleForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
@@ -133,6 +144,9 @@ public class SaleView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Calls the table to update a sale in db.
+	 */
 	public void updateSale(){
 		logger.info("Trying update Person method");
 
@@ -157,6 +171,9 @@ public class SaleView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Calls the table to delete a sale from db.
+	 */
 	public void deleteSale(){
 		try {
 			saleList.delete(selection);
@@ -171,6 +188,10 @@ public class SaleView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Changes current selection
+	 * @param select
+	 */
 	private void changeCurrentSelection(Object select){
 		Sale selectedSale = (Sale)select;
 		
@@ -180,10 +201,20 @@ public class SaleView extends VerticalLayout implements ClickListener,
 		logger.debug("Current selection: " + selection);
 	}
 	
+	/**
+	 * Converts the selection to BeanItem
+	 * @param sale
+	 * @return
+	 */
 	private BeanItem<Sale> convertSaleToBeanItem(Sale sale){
 		return new BeanItem<Sale>(sale, new String[]{"toWho", "date", "what", "numOfBottles", "wineDocID"});
 	}
 	
+	/**
+	 * Saves parameters from Form to the selection
+	 * @param sale
+	 * @return
+	 */
 	private Sale commitFromForm(Sale sale){
 		sale.setToWho((Person) saleForm.getItemProperty("toWho").getValue());
 		sale.setDate((Date) saleForm.getItemProperty("date").getValue());

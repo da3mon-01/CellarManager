@@ -17,6 +17,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+/**
+ * Service class for Wine objects.
+ * @author Da3mon
+ *
+ */
 public class WineService {
 	
 	@Autowired
@@ -29,6 +34,12 @@ public class WineService {
 	private PersonRepository personRepo;
 	private static Logger logger = Logger.getLogger(WineService.class);
 	
+	/**
+	 * Creates wine in db.
+	 * @param wine
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Wine create(Wine wine) throws RuntimeException{
 		
@@ -47,14 +58,28 @@ public class WineService {
 		return created;
 	}
 	
+	/**
+	 * Reads wine from db.
+	 * @param wine
+	 * @return
+	 */
 	public Wine read(Wine wine){
 		return wineRepo.findById(wine.getId());
 	}
 	
+	/**
+	 * Reads all wines from db.
+	 * @return
+	 */
 	public List<Wine> readAll(){
 		return wineRepo.findAll();
 	}
 	
+	/**
+	 * Gets all sales related to wine.
+	 * @param wine
+	 * @return
+	 */
 	public List<Sale> getAllSales(Wine wine){
 		logger.info(wine+"-> searching related Sales");
 		List<Sale> allSales = saleRepo.findAll();
@@ -71,6 +96,12 @@ public class WineService {
 		
 	}
 	
+	/**
+	 * Updates wine in db.
+	 * @param wine
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Wine update(Wine wine) throws RuntimeException{
 		Wine wineInDb = wineRepo.findById(wine.getId());
@@ -94,6 +125,11 @@ public class WineService {
 		return wineInDb;
 	}
 	
+	/**
+	 * Deletes wine from db.
+	 * @param wine
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void delete(Wine wine) throws RuntimeException{
 		Wine wineInDB = wineRepo.findById(wine.getId());

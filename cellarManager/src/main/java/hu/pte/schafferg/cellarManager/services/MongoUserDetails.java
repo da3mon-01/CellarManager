@@ -16,11 +16,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+/**
+ * Service class that gets the User trying to log in, and creates a UserDetails.User object for it.
+ * @author Da3mon
+ *
+ */
 public class MongoUserDetails implements UserDetailsService {
 	
 	@Autowired
 	private UserRepository userRepo;
 
+	/**
+	 * Gets the User from db.
+	 */
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 		
@@ -41,6 +49,11 @@ public class MongoUserDetails implements UserDetailsService {
 						 getAuthorities(userInDB.getRole().getRole()));
 	}
 
+	/**
+	 * Returns a collection of authorities granted to the user trying to log in.
+	 * @param role
+	 * @return
+	 */
 	private Collection<? extends GrantedAuthority> getAuthorities(Integer role) {
 		List<String> listOfRoles = new ArrayList<String>();
 		if(role.intValue() == 1){

@@ -31,6 +31,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for GrapeMust
+ * @author Da3mon
+ *
+ */
 public class GrapeMustView extends VerticalLayout implements ClickListener,
 		TextChangeListener, ValueChangeListener {
 	
@@ -58,6 +63,9 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 	private boolean newGrapeMustMode = false;
 	private TabSheet mustTab = new TabSheet();
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
@@ -119,6 +127,9 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		addComponent(mustDetails);
 	}
 	
+	/**
+	 * Calls the table to create a GrapeMust in db.
+	 */
 	public void createGrapeMust(){
 		if(selection == null || grapeMustForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
@@ -141,6 +152,9 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Calls the table to update a GrapeMust in db.
+	 */
 	public void updateGrapeMust(){
 		logger.info("Trying update Person method");
 
@@ -165,6 +179,9 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Calls the table to delete a GrapeMust from db.
+	 */
 	public void deleteGrapeMust(){
 		try {
 			grapeMustList.delete(selection);
@@ -179,6 +196,10 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Changes the current selection
+	 * @param select
+	 */
 	private void changeCurrentSelection(Object select){
 		GrapeMust selectedGrapeMust = (GrapeMust)select;
 		
@@ -190,10 +211,20 @@ public class GrapeMustView extends VerticalLayout implements ClickListener,
 		logger.debug("Current selection: " + selection);
 	}
 	
+	/**
+	 * Converts the selection to BeanItem
+	 * @param must
+	 * @return
+	 */
 	private BeanItem<GrapeMust> convertGrapeMustToBeanItem(GrapeMust must){
 		return new BeanItem<GrapeMust>(must, new String[]{"madeFrom", "quantityAfterHarvest", "quantityLostAfterRacking", "mustDegree", "enriched", "enrichmentDegree", "sweetened"});
 	}
 	
+	/**
+	 * Saves the parameters from the Form to the selection.
+	 * @param must
+	 * @return
+	 */
 	private GrapeMust commitFromForm(GrapeMust must){
 		must.setMadeFrom((Grape) grapeMustForm.getItemProperty("madeFrom").getValue());
 		must.setMustDegree((double) grapeMustForm.getItemProperty("mustDegree").getValue());

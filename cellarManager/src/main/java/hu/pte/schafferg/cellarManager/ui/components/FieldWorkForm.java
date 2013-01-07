@@ -21,6 +21,11 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Select;
 
+/**
+ * Form for FieldWorks
+ * @author Da3mon
+ *
+ */
 public class FieldWorkForm extends Form {
 	
 	/**
@@ -37,6 +42,9 @@ public class FieldWorkForm extends Form {
 	@Autowired
 	private LandService landService;
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setWriteThrough(false);
 		setWidth("500px");

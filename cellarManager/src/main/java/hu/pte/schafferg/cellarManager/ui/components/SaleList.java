@@ -16,6 +16,11 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for all Sales
+ * @author Da3mon
+ *
+ */
 public class SaleList extends Table {
 	
 	/**
@@ -34,6 +39,9 @@ public class SaleList extends Table {
 	private Object[] ordering = new Object[]{"date"};
 	private boolean[] ascending = new boolean[]{false};
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -56,6 +64,11 @@ public class SaleList extends Table {
 		sort(ordering, ascending);
 	}
 	
+	/**
+	 * Calls the service to create s
+	 * @param s
+	 * @throws RuntimeException
+	 */
 	public void create(Sale s) throws RuntimeException{
 		try {
 			saleService.create(s);
@@ -66,6 +79,11 @@ public class SaleList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to update s
+	 * @param s
+	 * @throws RuntimeException
+	 */
 	public void update(Sale s) throws RuntimeException{
 		try {
 			saleService.update(s);
@@ -76,6 +94,11 @@ public class SaleList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to delete s
+	 * @param s
+	 * @throws RuntimeException
+	 */
 	public void delete(Sale s) throws RuntimeException {
 		try {
 			saleService.delete(s);
@@ -86,6 +109,9 @@ public class SaleList extends Table {
 		}
 	}
 
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		sales.clear();
 		saleContainer.removeAllItems();
@@ -99,6 +125,10 @@ public class SaleList extends Table {
 		
 	}
 	
+	/**
+	 * Adds a filter
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

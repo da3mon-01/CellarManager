@@ -1,5 +1,10 @@
 package hu.pte.schafferg.cellarManager.util;
 
+/**
+ * Enum of all FieldWork types
+ * @author Da3mon
+ *
+ */
 public enum FieldWorkType {
 	INSECTSPRAY("Insect spraying"), 
 	DUNGWORK("Dung work"), 

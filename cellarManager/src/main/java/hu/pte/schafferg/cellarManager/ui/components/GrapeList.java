@@ -16,6 +16,11 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for all grapes
+ * @author Da3mon
+ *
+ */
 public class GrapeList extends Table{
 
 	/**
@@ -34,6 +39,9 @@ public class GrapeList extends Table{
 	private Object[] ordering = new Object[]{"planted"};
 	private boolean[] ascending = new boolean[]{false};
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -59,6 +67,11 @@ public class GrapeList extends Table{
 		
 	}
 	
+	/**
+	 * Calls the service to create g
+	 * @param g
+	 * @throws RuntimeException
+	 */
 	public void create(Grape g) throws RuntimeException{
 		try {
 			grapeService.create(g);
@@ -69,6 +82,11 @@ public class GrapeList extends Table{
 		}
 	}
 	
+	/**
+	 * Calls the service to update g
+	 * @param g
+	 * @throws RuntimeException
+	 */
 	public void update(Grape g) throws RuntimeException{
 		try {
 			grapeService.update(g);
@@ -79,6 +97,11 @@ public class GrapeList extends Table{
 		}
 	}
 	
+	/**
+	 * Calls the service to delete g
+	 * @param g
+	 * @throws RuntimeException
+	 */
 	public void delete(Grape g) throws RuntimeException {
 		try {
 			grapeService.delete(g);
@@ -89,6 +112,9 @@ public class GrapeList extends Table{
 		}
 	}
 
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		grapes.clear();
 		grapesContainer.removeAllItems();
@@ -102,6 +128,10 @@ public class GrapeList extends Table{
 		
 	}
 	
+	/**
+	 * Adds a filter
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

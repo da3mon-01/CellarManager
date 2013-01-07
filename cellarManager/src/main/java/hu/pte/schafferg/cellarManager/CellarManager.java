@@ -26,6 +26,20 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.themes.Reindeer;
 
+
+/**
+ * @author Da3mon
+ *
+ *	Main application class, that gets loaded by the Spring Application Servlet.
+ */
+/**
+ * @author Da3mon
+ *
+ */
+/**
+ * @author Da3mon
+ *
+ */
 public class CellarManager extends Application{
 
 	/**
@@ -68,7 +82,9 @@ public class CellarManager extends Application{
 	
 
 
-
+	/**
+	 * Initializes the application.
+	 */
 	@Override
 	public void init() {
 		VerticalLayout layout = new VerticalLayout();
@@ -104,6 +120,9 @@ public class CellarManager extends Application{
 
 	}
 
+	/**
+	 * Sets the current user in the App.
+	 */
 	private void setCurrentUser() {
 		setUser(null);
 		hu.pte.schafferg.cellarManager.model.User loggedInUser = new hu.pte.schafferg.cellarManager.model.User();
@@ -113,56 +132,91 @@ public class CellarManager extends Application{
 		
 	}
 
-	
+	/**
+	 * Switches the main component to Users.
+	 */
 	public void switchtoUsers() {
 		setMainComponent(usersView);
 		
 	}
 
+	/**
+	 * Switches the main component to Contacts.
+	 */
 	public void switchtoContacts() {
 		setMainComponent(contacts);		
 	}
 
+	/**
+	 * Switches the main component to UserSettings.
+	 */
 	public void switchtoUserSettings() {
 		setMainComponent(userSettingsView);
 		
 	}
 	
+	/**
+	 * Switches the main component to Lands.
+	 */
 	public void switchtoLands(){
 		setMainComponent(landsView);
 	}
 	
+	/**
+	 * Switches the main component to FieldWorkView.
+	 */
 	public void switchToFieldWorkView(){
 		setMainComponent(fieldWorkView);
 	}
 	
+	/**
+	 * Switches the main component to GrapeView.
+	 */
 	public void switchToGrapeView(){
 		setMainComponent(grapeView);
 	}
 	
+	/**
+	 * Switches the main component to MustView.
+	 */
 	public void switchToMustView(){
 		setMainComponent(mustView);
 	}
 	
+	/**
+	 * Switches the main component to AnalyticView.
+	 */
 	public void switchToAnalyticView(){
 		setMainComponent(analyticView);
 	}
 	
+	/**
+	 * Switches the main component to WineView.
+	 */
 	public void switchToWineView(){
 		setMainComponent(wineView);
 	}
 	
+	/**
+	 * Switches the main component to SaleView.
+	 */
 	public void switchToSaleView(){
 		setMainComponent(saleView);
 	}
 
+	/**
+	 * Logs out the current user.
+	 */
 	public void logout() {
 		logger.info("Logging out current User.");
 		this.close();
 		
 	}
 	
-	
+	/**
+	 * Sets the main component to c
+	 * @param c
+	 */
 	public void setMainComponent(Component c){
 		horizontalSplit.setSecondComponent(c);
 		logger.info("Main component set to: "+ c.getClass().getSimpleName());

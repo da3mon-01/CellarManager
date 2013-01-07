@@ -1,5 +1,10 @@
 package hu.pte.schafferg.cellarManager.util;
 
+/**
+ * Exception indicating the Username a user trying to take is already being used.
+ * @author Da3mon
+ *
+ */
 public class UserNameInUseException extends RuntimeException {
 
 	/**

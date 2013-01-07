@@ -17,6 +17,11 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 
+/**
+ * Form for Lands
+ * @author Da3mon
+ *
+ */
 public class LandsForm extends Form{
 	
 	/**
@@ -29,6 +34,9 @@ public class LandsForm extends Form{
 	@Autowired
 	private ContactsService contactService;
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setWriteThrough(false);
 		setWidth("500px");

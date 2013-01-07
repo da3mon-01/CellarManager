@@ -16,6 +16,11 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for the Wines bottled by a contact
+ * @author Da3mon
+ *
+ */
 public class ContactListOfWineBottled extends Table {
 	
 	/**
@@ -33,6 +38,9 @@ public class ContactListOfWineBottled extends Table {
 	private List<Wine> wines = new ArrayList<Wine>();
 	private BeanItemContainer<Wine> wineContainer = new BeanItemContainer<Wine>(Wine.class);
 
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -54,6 +62,9 @@ public class ContactListOfWineBottled extends Table {
 		
 	}
 	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		wineContainer.removeAllItems();
 		wines.clear();
@@ -67,6 +78,10 @@ public class ContactListOfWineBottled extends Table {
 
 	}
 	
+	/**
+	 * Sets the contact.
+	 * @param person
+	 */
 	public void setContactData(Person person){
 		this.worker = person;
 		logger.info(worker+" selected");

@@ -16,6 +16,11 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 
+/**
+ * Table of all Wines made from a GrapeMust
+ * @author Da3mon
+ *
+ */
 public class GrapeMustListOfWinesMade extends Table {
 	
 	/**
@@ -34,7 +39,9 @@ public class GrapeMustListOfWinesMade extends Table {
 	private BeanItemContainer<Wine> analyticContainer = new BeanItemContainer<Wine>(Wine.class);
 	
 	
-	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -56,6 +63,9 @@ public class GrapeMustListOfWinesMade extends Table {
 		
 	}
 	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		analyticContainer.removeAllItems();
 		analytics.clear();
@@ -69,6 +79,10 @@ public class GrapeMustListOfWinesMade extends Table {
 
 	}
 	
+	/**
+	 * Sets the GrapeMust
+	 * @param must
+	 */
 	public void setMustData(GrapeMust must){
 		this.must = must;
 		logger.info(this.must+" selected");

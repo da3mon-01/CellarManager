@@ -16,6 +16,11 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 
+/**
+ * Table of all FieldWork done on Land
+ * @author Da3mon
+ *
+ */
 public class LandListOfFieldWorkDone extends Table {
 	
 	/**
@@ -35,7 +40,9 @@ public class LandListOfFieldWorkDone extends Table {
 	private Object[] ordering = new Object[]{"when"};
 	private boolean[] ascending = new boolean[]{false};
 	
-	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -59,6 +66,9 @@ public class LandListOfFieldWorkDone extends Table {
 		sort(ordering, ascending);
 	}
 	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		workContainer.removeAllItems();
 		works.clear();
@@ -72,6 +82,10 @@ public class LandListOfFieldWorkDone extends Table {
 
 	}
 	
+	/**
+	 * Sets the land
+	 * @param land
+	 */
 	public void setLandData(Land land){
 		this.land = land;
 		logger.info(this.land+" selected");

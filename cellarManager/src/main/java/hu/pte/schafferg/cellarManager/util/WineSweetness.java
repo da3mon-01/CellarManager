@@ -1,5 +1,10 @@
 package hu.pte.schafferg.cellarManager.util;
 
+/**
+ * Enum all wine-sweetness levels.
+ * @author Da3mon
+ *
+ */
 public enum WineSweetness {
 	SWEET("Sweet"), 
 	MEDIUM("Medium"), 

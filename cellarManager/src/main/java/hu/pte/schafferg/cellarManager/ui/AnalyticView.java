@@ -28,6 +28,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for Analytics
+ * @author Da3mon
+ *
+ */
 public class AnalyticView extends VerticalLayout implements ClickListener,
 		TextChangeListener, ValueChangeListener {
 	
@@ -50,6 +55,9 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 	private Logger logger = Logger.getLogger(AnalyticView.class);
 	private boolean newAnalyticMode = false;
 	
+	/**
+	 * Creates the GUI
+	 */
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
@@ -108,7 +116,10 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 		addComponent(analyticDetails);
 	}
 	
-	public void createFieldWork(){
+	/**
+	 * Calls the table to create an analytic in db.
+	 */
+	public void createAnalytic(){
 		if(selection == null || analyticForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
 					"Please click New first!",
@@ -130,7 +141,10 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 		
 	}
 	
-	public void updateFieldWork(){
+	/**
+	 * Calls the table to update an analytic in db.
+	 */
+	public void updateAnalytic(){
 		logger.info("Trying update FieldWork method");
 
 		if (selection == null || analyticForm.getItemDataSource() == null) {
@@ -154,7 +168,10 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 		
 	}
 	
-	public void deleteFieldWork(){
+	/**
+	 * Calls the table to delete an analytic from db.
+	 */
+	public void deleteAnalytic(){
 		try {
 			analyticList.delete(selection);
 		} catch (RuntimeException e) {
@@ -168,6 +185,10 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Changes selected object
+	 * @param select
+	 */
 	private void changeCurrentSelection(Object select){
 		Analytic selectedWork = (Analytic)select;
 		
@@ -177,11 +198,21 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 		logger.debug("Current selection: "+selection);
 	}
 	
+	/**
+	 * Converts the selected object to beanItem
+	 * @param analytic
+	 * @return
+	 */
 	private BeanItem<Analytic> convertAnalyticToBeanItem(Analytic analytic){
 		return new BeanItem<Analytic>(analytic, new String[]{ "must", "when", "sulfur", "sugar", "iron", "extract"});
 
 	}
 	
+	/**
+	 * Saves the parameter from form to the selection.
+	 * @param analytic
+	 * @return
+	 */
 	private Analytic commitFromForm(Analytic analytic){
 		analytic.setMust((GrapeMust) analyticForm.getItemProperty("must").getValue());
 		analytic.setSulfur((double) analyticForm.getItemProperty("sulfur").getValue());
@@ -204,7 +235,7 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 
 					public void onClose(ConfirmDialog dialog) {
 						if (dialog.isConfirmed()) {
-							deleteFieldWork();
+							deleteAnalytic();
 						}
 
 					}
@@ -269,9 +300,9 @@ public class AnalyticView extends VerticalLayout implements ClickListener,
 			analyticForm.commit();
 
 			if(newAnalyticMode){
-				createFieldWork();
+				createAnalytic();
 			}else{
-				updateFieldWork();
+				updateAnalytic();
 			}
 
 			analyticForm.setReadOnly(true);

@@ -21,6 +21,11 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View in UserSettings
+ * @author Da3mon
+ *
+ */
 public class UserSettingsView extends VerticalLayout implements ClickListener{
 	/**
 	 * 
@@ -37,7 +42,9 @@ public class UserSettingsView extends VerticalLayout implements ClickListener{
 	private Button saveButton = new Button("Save");
 	private Logger logger = Logger.getLogger(UserSettingsView.class);
 
-	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		
 		setSpacing(true);
@@ -74,6 +81,9 @@ public class UserSettingsView extends VerticalLayout implements ClickListener{
 
 
 
+	/**
+	 * Changes the users password
+	 */
 	private void changePassword() {
 		if(!passwordForm.isValid()){
 			getWindow().showNotification("Warning", "Have you entered everything correctly?", Notification.TYPE_WARNING_MESSAGE);

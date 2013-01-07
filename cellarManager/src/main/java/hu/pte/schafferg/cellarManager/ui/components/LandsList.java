@@ -15,6 +15,11 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for all Lands
+ * @author Da3mon
+ *
+ */
 public class LandsList extends Table {
 
 	/**
@@ -29,6 +34,9 @@ public class LandsList extends Table {
 	private List<Land> lands = new ArrayList<Land>();
 	private BeanItemContainer<Land> landsContainer = new BeanItemContainer<Land>(Land.class);
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -71,6 +79,11 @@ public class LandsList extends Table {
 		
 	}
 	
+	/**
+	 * Calls the service to create l
+	 * @param l
+	 * @throws RuntimeException
+	 */
 	public void create(Land l) throws RuntimeException{
 		try {
 			landService.create(l);
@@ -81,6 +94,11 @@ public class LandsList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to update l
+	 * @param l
+	 * @throws RuntimeException
+	 */
 	public void update(Land l) throws RuntimeException{
 		try {
 			landService.update(l);
@@ -91,6 +109,11 @@ public class LandsList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to delete l
+	 * @param l
+	 * @throws RuntimeException
+	 */
 	public void delete(Land l) throws RuntimeException {
 		try {
 			landService.delete(l);
@@ -101,6 +124,9 @@ public class LandsList extends Table {
 		}
 	}
 
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		lands.clear();
 		landsContainer.removeAllItems();
@@ -114,6 +140,10 @@ public class LandsList extends Table {
 		
 	}
 	
+	/**
+	 * Adds a filter
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

@@ -22,6 +22,11 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for all users
+ * @author Da3mon
+ *
+ */
 public class UserList extends Table {
 
 	/**
@@ -48,6 +53,9 @@ public class UserList extends Table {
 
 	}
 
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 
 		logger.debug("Addcomponent Called");
@@ -93,6 +101,9 @@ public class UserList extends Table {
 
 	}
 
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		userContainer.removeAllItems();
 		users.clear();
@@ -104,6 +115,11 @@ public class UserList extends Table {
 
 	}
 	
+	/**
+	 * Calls the service to create userToCreate
+	 * @param userToCreate
+	 * @throws MessagingException
+	 */
 	public void createUser(User userToCreate) throws MessagingException{
 		
 		try {
@@ -116,6 +132,10 @@ public class UserList extends Table {
 
 	}
 	
+	/**
+	 * Calls the service to update selectedUser
+	 * @param selectedUser
+	 */
 	public void updateUser(User selectedUser){
 		try {
 			userService.update(selectedUser).equals(selectedUser);
@@ -127,6 +147,10 @@ public class UserList extends Table {
 		
 	}
 
+	/**
+	 * Calls the service to delete selecterUser
+	 * @param selectedUser
+	 */
 	public void deleteUser(User selectedUser) {
 		try {
 			userService.delete(selectedUser);
@@ -138,6 +162,11 @@ public class UserList extends Table {
 		
 	}
 	
+	/**
+	 * Calls the service to reset the password of user
+	 * @param user
+	 * @throws Exception
+	 */
 	public void resetPassword(User user) throws Exception{
 		
 		
@@ -150,6 +179,10 @@ public class UserList extends Table {
 		}
 	}
 	
+	/**
+	 * Adds a filter to the table.
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

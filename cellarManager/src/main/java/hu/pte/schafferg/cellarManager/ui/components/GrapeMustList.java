@@ -15,6 +15,11 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for all GrapeMusts
+ * @author Da3mon
+ *
+ */
 public class GrapeMustList extends Table {
 	
 	/**
@@ -30,6 +35,9 @@ public class GrapeMustList extends Table {
 	private List<GrapeMust> musts = new ArrayList<GrapeMust>();
 	private BeanItemContainer<GrapeMust> mustsContainer = new BeanItemContainer<GrapeMust>(GrapeMust.class);
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -108,6 +116,11 @@ public class GrapeMustList extends Table {
 		
 	}
 	
+	/**
+	 * Calls the service to create g
+	 * @param g
+	 * @throws RuntimeException
+	 */
 	public void create(GrapeMust g) throws RuntimeException{
 		try {
 			grapeMustService.create(g);
@@ -118,6 +131,11 @@ public class GrapeMustList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to update g
+	 * @param g
+	 * @throws RuntimeException
+	 */
 	public void update(GrapeMust g) throws RuntimeException{
 		try {
 			grapeMustService.update(g);
@@ -128,6 +146,11 @@ public class GrapeMustList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to delete g
+	 * @param g
+	 * @throws RuntimeException
+	 */
 	public void delete(GrapeMust g) throws RuntimeException {
 		try {
 			grapeMustService.delete(g);
@@ -138,6 +161,9 @@ public class GrapeMustList extends Table {
 		}
 	}
 
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		musts.clear();
 		mustsContainer.removeAllItems();
@@ -151,6 +177,10 @@ public class GrapeMustList extends Table {
 		
 	}
 	
+	/**
+	 * Adds a filter
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

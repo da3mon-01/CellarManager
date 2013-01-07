@@ -13,6 +13,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+/**
+ * Service class for Fieldwork objects.
+ * @author Da3mon
+ *
+ */
 public class FieldWorkService {
 	
 	@Autowired
@@ -21,6 +26,11 @@ public class FieldWorkService {
 	private LandRepository landRepo;
 	private static Logger logger = Logger.getLogger(FieldWorkService.class);
 	
+	/**
+	 * Creates a FieldWork in db.
+	 * @param fieldWork
+	 * @return
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public FieldWork create(FieldWork fieldWork){
 		fieldWork.setId(UUID.randomUUID().toString());
@@ -37,14 +47,29 @@ public class FieldWorkService {
 		return created;
 	}
 	
+	/**
+	 * Reads a FieldWork in db.
+	 * @param fieldWork
+	 * @return
+	 */
 	public FieldWork read(FieldWork fieldWork){
 		return fieldWorkRepo.findById(fieldWork.getId());
 	}
 	
+	/**
+	 * Reads all FieldWork from db.
+	 * @return
+	 */
 	public List<FieldWork> readAll(){
 		return fieldWorkRepo.findAll();
 	}
 	
+	/**
+	 * Updates a FieldWork in db.
+	 * @param fieldWork
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public FieldWork update(FieldWork fieldWork) throws RuntimeException{
 		FieldWork fieldWorkInDb = fieldWorkRepo.findById(fieldWork.getId());
@@ -67,6 +92,11 @@ public class FieldWorkService {
 		return fieldWorkInDb;
 	}
 	
+	/**
+	 * Deletes a FieldWork from db.
+	 * @param fieldWork
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void delete(FieldWork fieldWork) throws RuntimeException{
 		FieldWork fieldWorkInDB = fieldWorkRepo.findById(fieldWork.getId());

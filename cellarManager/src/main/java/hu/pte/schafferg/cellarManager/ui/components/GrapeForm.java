@@ -18,6 +18,11 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Select;
 import com.vaadin.ui.TextField;
 
+/**
+ * Form for Grapes.
+ * @author Da3mon
+ *
+ */
 public class GrapeForm extends Form {
 	
 	/**
@@ -30,6 +35,9 @@ public class GrapeForm extends Form {
 	@Autowired
 	private LandService landService;
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setWriteThrough(false);
 		setWidth("500px");

@@ -30,6 +30,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for Grapes
+ * @author Da3mon
+ *
+ */
 public class GrapeView extends VerticalLayout implements ClickListener,
 		TextChangeListener, ValueChangeListener {
 	
@@ -52,6 +57,9 @@ public class GrapeView extends VerticalLayout implements ClickListener,
 	private Logger logger = Logger.getLogger(LandsView.class);
 	private boolean newGrapeMode = false;
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
@@ -110,6 +118,9 @@ public class GrapeView extends VerticalLayout implements ClickListener,
 		addComponent(grapeDetails);
 	}
 	
+	/**
+	 * Calls the table to create a grape in db.
+	 */
 	public void createGrape(){
 		if(selection == null || grapesForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
@@ -132,6 +143,9 @@ public class GrapeView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Calls the table to update a grape in db.
+	 */
 	public void updateGrape(){
 		logger.info("Trying update Person method");
 
@@ -156,6 +170,9 @@ public class GrapeView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Calls the table to delete a grape from db.
+	 */
 	public void deleteGrape(){
 		try {
 			grapesList.delete(selection);
@@ -170,6 +187,10 @@ public class GrapeView extends VerticalLayout implements ClickListener,
 		
 	}
 	
+	/**
+	 * Changes the current selection
+	 * @param select
+	 */
 	private void changeCurrentSelection(Object select){
 		Grape selectedGrape = (Grape)select;
 		
@@ -179,10 +200,20 @@ public class GrapeView extends VerticalLayout implements ClickListener,
 		logger.debug("Current selection: " + selection);
 	}
 	
+	/**
+	 * Converts the selection to BeanItem
+	 * @param grape
+	 * @return
+	 */
 	private BeanItem<Grape> convertGrapeToBeanItem(Grape grape){
 		return new BeanItem<Grape>(grape, new String[]{"type","plantedOn", "planted", "quantity"});
 	}
 	
+	/**
+	 * Saves the parameters from From to the selection
+	 * @param grape
+	 * @return
+	 */
 	private Grape commitFromForm(Grape grape){
 		grape.setType((String) grapesForm.getItemProperty("type").getValue());
 		grape.setPlantedOn((Land) grapesForm.getItemProperty("plantedOn").getValue());

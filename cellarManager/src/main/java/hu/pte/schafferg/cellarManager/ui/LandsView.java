@@ -31,6 +31,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for Lands
+ * @author Da3mon
+ *
+ */
 public class LandsView extends VerticalLayout implements ClickListener,
 ValueChangeListener, TextChangeListener {
 	
@@ -58,6 +63,9 @@ ValueChangeListener, TextChangeListener {
 	private boolean newLandMode = false;
 	private TabSheet landTab = new TabSheet();
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
@@ -119,6 +127,9 @@ ValueChangeListener, TextChangeListener {
 		addComponent(landsDetails);
 	}
 	
+	/**
+	 * Calls the table to create a land in db.
+	 */
 	public void createLand(){
 		if(selection == null || landsForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
@@ -141,6 +152,9 @@ ValueChangeListener, TextChangeListener {
 		
 	}
 	
+	/**
+	 * Calls the table to update a land in db.
+	 */
 	public void updateLand(){
 		logger.info("Trying update Person method");
 
@@ -165,6 +179,9 @@ ValueChangeListener, TextChangeListener {
 		
 	}
 	
+	/**
+	 * Calls the table to delete a land from db.
+	 */
 	public void deleteLand(){
 		try {
 			landsList.delete(selection);
@@ -179,6 +196,10 @@ ValueChangeListener, TextChangeListener {
 		
 	}
 	
+	/**
+	 * Changes the selection
+	 * @param select
+	 */
 	private void changeCurrentSelection(Object select){
 		Land selectedLand = (Land)select;
 		
@@ -190,10 +211,20 @@ ValueChangeListener, TextChangeListener {
 		logger.debug("Current selection: " + selection.getLandOff()+"/"+selection.getLandOffId());
 	}
 	
+	/**
+	 * Converts the selection to BeanItem
+	 * @param land
+	 * @return
+	 */
 	private BeanItem<Land> convertLandToBeanItem(Land land){
 		return new BeanItem<Land>(land, new String[]{"landOffId", "landOff", "size", "owner"});
 	}
 	
+	/**
+	 * Saves the parameters from the Form to the selection
+	 * @param land
+	 * @return
+	 */
 	private Land commitFromForm(Land land){
 		land.setLandOff((String) landsForm.getItemProperty("landOff").getValue());
 		land.setLandOffId((String) landsForm.getItemProperty("landOffId").getValue());

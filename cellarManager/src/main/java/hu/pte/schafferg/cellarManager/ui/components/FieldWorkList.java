@@ -16,6 +16,11 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Table;
 
+/**
+ * Table for all FieldWorks
+ * @author Da3mon
+ *
+ */
 public class FieldWorkList extends Table {
 	
 	/**
@@ -32,6 +37,9 @@ public class FieldWorkList extends Table {
 	private List<FieldWork> works = new ArrayList<FieldWork>();
 	private BeanItemContainer<FieldWork> workContainer = new BeanItemContainer<FieldWork>(FieldWork.class);
 
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		logger.info("InitContent Called");
 		
@@ -57,6 +65,11 @@ public class FieldWorkList extends Table {
 		
 	}
 	
+	/**
+	 * Calls the service to create f
+	 * @param f
+	 * @throws RuntimeException
+	 */
 	public void create(FieldWork f) throws RuntimeException{
 		try {
 			fieldWorkService.create(f);
@@ -67,6 +80,11 @@ public class FieldWorkList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to update f
+	 * @param f
+	 * @throws RuntimeException
+	 */
 	public void update(FieldWork f) throws RuntimeException{
 		try {
 			fieldWorkService.update(f);
@@ -77,6 +95,11 @@ public class FieldWorkList extends Table {
 		}
 	}
 	
+	/**
+	 * Calls the service to delete f
+	 * @param f
+	 * @throws RuntimeException
+	 */
 	public void delete(FieldWork f) throws RuntimeException {
 		try {
 			fieldWorkService.delete(f);
@@ -87,7 +110,9 @@ public class FieldWorkList extends Table {
 		}
 	}
 
-	
+	/**
+	 * Updates the tables contents.
+	 */
 	private void updateTableContents() {
 		workContainer.removeAllItems();
 		works.clear();
@@ -99,6 +124,10 @@ public class FieldWorkList extends Table {
 
 	}
 	
+	/**
+	 * Adds a filter.
+	 * @param filter
+	 */
 	public void addFilter(SimpleStringFilter filter){
 		Filterable f = (Filterable)getContainerDataSource();
 		if(filter != null){

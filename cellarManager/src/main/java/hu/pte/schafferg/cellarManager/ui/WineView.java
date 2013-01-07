@@ -32,6 +32,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window.Notification;
 
+/**
+ * View for Wines
+ * @author Da3mon
+ *
+ */
 public class WineView extends VerticalLayout implements ClickListener, TextChangeListener, ValueChangeListener{
 	
 	/**
@@ -56,6 +61,9 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 	private boolean newWineMode = false;
 	private TabSheet winesheet = new TabSheet();
 	
+	/**
+	 * Builds the GUI
+	 */
 	public void initContent(){
 		setMargin(true);
 		setSpacing(true);
@@ -116,6 +124,9 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 		addComponent(wineDetails);
 	}
 	
+	/**
+	 * Calls the table to create a wine in db.
+	 */
 	public void createWine(){
 		if(selection == null || wineForm.getItemDataSource() == null){
 			getWindow().showNotification("Save Failed",
@@ -138,6 +149,9 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 		
 	}
 	
+	/**
+	 * Calls the table to update a wine in db.
+	 */
 	public void updateWine(){
 		logger.info("Trying update Person method");
 
@@ -162,6 +176,9 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 		
 	}
 	
+	/**
+	 * Calls the table to delete a wine in db.
+	 */
 	public void deleteWine(){
 		try {
 			wineList.delete(selection);
@@ -176,6 +193,10 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 		
 	}
 	
+	/**
+	 * Changes the current selection
+	 * @param select
+	 */
 	private void changeCurrentSelection(Object select){
 		Wine selectedWine = (Wine)select;
 		
@@ -186,10 +207,20 @@ public class WineView extends VerticalLayout implements ClickListener, TextChang
 		logger.debug("Current selection: " + selection);
 	}
 	
+	/**
+	 * Converts the selection to a BeanItem
+	 * @param wine
+	 * @return
+	 */
 	private BeanItem<Wine> convertWineToBeanItem(Wine wine){
 		return new BeanItem<Wine>(wine, new String[]{"obiNumber", "alcoholDegree", "sweetness", "madeFrom", "bottler", "numOfBottles"});
 	}
 	
+	/**
+	 * Saves the parameters from the Form to the selection
+	 * @param wine
+	 * @return
+	 */
 	private Wine commitFromForm(Wine wine){
 		wine.setObiNumber((String) wineForm.getItemProperty("obiNumber").getValue());
 		wine.setAlcoholDegree((double) wineForm.getItemProperty("alcoholDegree").getValue());

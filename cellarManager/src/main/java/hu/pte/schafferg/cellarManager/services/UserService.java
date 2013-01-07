@@ -22,7 +22,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 
-
+/**
+ * Service class for User objects.
+ * @author Da3mon
+ *
+ */
 public class UserService {
 
 	@Autowired
@@ -39,7 +43,12 @@ public class UserService {
 	EmailService mailService;
 	
 
-
+	/**
+	 * Creates user in db.
+	 * @param user
+	 * @return
+	 * @throws MessagingException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public User create(User user) throws MessagingException{
 		User userToCreate = user;
@@ -77,21 +86,39 @@ public class UserService {
 		return user;
 	}
 
+	/**
+	 * Reads user from db.
+	 * @param user
+	 * @return
+	 */
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or #user.username == authentication.name")
 	public User read(User user){
 		return userRepo.findById(user.getId());
 	}
 
+	/**
+	 * Reads a user based on username.
+	 * @param username
+	 * @return
+	 */
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or #username == authentication.name")
 	public User readByUserName(String username) {
 		return userRepo.findByUsername(username);
 	}
 
+	/**
+	 * Reads all users from db.
+	 * @return
+	 */
 	public List<User> readAll(){
 		return userRepo.findAll();
 	}
 
-
+	/**
+	 * Updates user in db.
+	 * @param user
+	 * @return
+	 */
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or #user.username == authentication.name")
 	public User update(User user){
 		User existingUser = userRepo.findById(user.getId());
@@ -134,6 +161,11 @@ public class UserService {
 
 	}
 	
+	/**
+	 * Resets user's password.
+	 * @param user
+	 * @throws Exception
+	 */
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public void resetPassword(User user) throws Exception{
 		User existingUser = userRepo.findById(user.getId());
@@ -156,6 +188,10 @@ public class UserService {
 			
 	}
 
+	/**
+	 * Deletes user from db.
+	 * @param user
+	 */
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public void delete(User user){
 		User existingUser = userRepo.findById(user.getId());
@@ -173,6 +209,10 @@ public class UserService {
 		logger.info("User "+existingUser.getUsername()+" was deleted");
 	}
 	
+	/**
+	 * Generates a random password.
+	 * @return
+	 */
 	public String generateRandomPassword(){
 		Random rng = new Random();
 		StringBuffer sb = new StringBuffer();

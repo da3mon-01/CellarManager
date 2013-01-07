@@ -13,7 +13,11 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-
+/**
+ * Service class for Analytic Objects
+ * @author Da3mon
+ *
+ */
 public class AnalyticService {
 	
 	@Autowired
@@ -22,6 +26,12 @@ public class AnalyticService {
 	private GrapeMustRepository grapeMustRepo;
 	private static Logger logger = Logger.getLogger(AnalyticService.class);
 	
+	/**
+	 * Creates an Analytic in db.
+	 * @param analytic
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Analytic create(Analytic analytic) throws RuntimeException{
 		
@@ -39,18 +49,38 @@ public class AnalyticService {
 		return created;
 	}
 	
+	/**
+	 * Reads an Analytic from db.
+	 * @param analytic
+	 * @return
+	 */
 	public Analytic read(Analytic analytic){
 		return analyticRepo.findById(analytic.getId());
 	}
 	
+	/**
+	 * Reads all analytics from db.
+	 * @return
+	 */
 	public List<Analytic> readAll(){
 		return analyticRepo.findAll();
 	}
-	
+	/**
+	 * Returns a list of analytics based on must. DOESNT WORK, will be fixed in
+	 * Spring-Data MongoDB 1.1.0
+	 * @param must
+	 * @return
+	 */
 	public List<Analytic> readAllFromAMust(GrapeMust must){
 		return analyticRepo.findByMust(must);
 	}
 	
+	/**
+	 * Updates an analytic in db.
+	 * @param analytic
+	 * @return
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public Analytic update(Analytic analytic) throws RuntimeException{
 		Analytic analyticInDb = analyticRepo.findById(analytic.getId());
@@ -73,6 +103,11 @@ public class AnalyticService {
 		return analyticInDb;
 	}
 	
+	/**
+	 * Deletes an analytic from db
+	 * @param analytic
+	 * @throws RuntimeException
+	 */
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public void delete(Analytic analytic) throws RuntimeException{
 		Analytic analyticInDB = analyticRepo.findById(analytic.getId());
